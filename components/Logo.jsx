@@ -1,5 +1,6 @@
+"use client"
+import {useTheme} from "next-themes"
 import Image from "next/image"
-import { useTheme } from "./theme-provider"
 
 export const Logo = ({width = 128}) => {
     const {theme} = useTheme()
