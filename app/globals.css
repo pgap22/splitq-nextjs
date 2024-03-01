@@ -2,32 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+
+@layer base {
+    :root {
+        --text-secundary: #949191;
+
+        --aqua-gradient: 90deg, #02AAB0 0%, #00CCAC 97.5%, #00CDAC 100%;
+        --blue-gradient: 90deg, #00C6FF 0%, #0072FF 100%;
+
+        --yellow-bg-notification: #FBC02D35;
+        --yellow-border-notification: #FBC02D49;
+        --yellow-text-notification: #5C5517;
+
+        --light-blue: #0093ED;
+
+
+        --gradient-principal: 90deg, #A297E5 0%, #A29FE5 25.42%, #A4BDE5 95.93%;
+        --background: #F9F9F9;
+        --foreground: #FFFFFF;
+        --border: #E2E2E2;
+        --action-bg-button: #000000;
+        --action-text-button: #FFFFFF;
+        --text: #18181B;
+        --rounded: 4px;
+
+    }
+
+    .dark {
+        --gradient-principal: 90deg, #AA2A7F 0%, #C13874 42.5%, #BF4040 100%;
+        --background: #1B1C1E;
+        --foreground: #262626;
+        --border: #414141;
+        --action-bg-button: #FFFFFF;
+        --action-text-button: #000000;
+        --text: #FFFFFF;
+        --yellow-text-notification: white;
+    }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
+
+
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    background-color: var(--background);
+    color: var(--text);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+input{
+    background-color: transparent;
+    color: var(--text);
+}
+
+.border-gradient {
+    background: linear-gradient(to right, var(--background), var(--background)),
+    linear-gradient(var(--gradient-principal));
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    border-color: transparent;
+}
+
+.text-gradient{
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
