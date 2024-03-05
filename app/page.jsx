@@ -1,3 +1,4 @@
+"use client"
 import HeaderComponent from "@/components/index/HeaderComponent";
 import TituloColor from "@/components/index/TituloColor"
 import ButtonComponent from "@/components/index/buttonComponent"
@@ -18,11 +19,11 @@ function UserIndex() {
       <p className=" font-black p-2 text-center text-[#828282] text-base">Descubre una nueva manera de comprar con SplitQ - Una novedosa logistica que facilita tus compras</p>
 
       <div className="flex justify-center mb-8">
-        <button className="border border-gradient rounded-md w-fit font-black px-12 py-2">Empieza Ya!</button>
+        <button className="px-12 py-2 font-black border rounded-md border-gradient w-fit">Empieza Ya!</button>
       </div>
 
       <TituloColor texto={"Pasos para usar SplitQ"} />
-      <div className=" w-screen flex flex-col justify-center items-center mt-8 gap-8">
+      <div className="flex flex-col items-center justify-center w-screen gap-8 mt-8 ">
         <MainBox>
 
           <TituloBox texto={"Crear una cuenta"} imagen={<MdPersonAddAlt />} />
@@ -37,8 +38,8 @@ function UserIndex() {
           <Texto texto={"Necesitas ir al Punto de Recarga para depositar el saldo que deseas"} />
           <Texto texto={"Luego necesitaras mostrar tu QR"} />
 
-          <div className="flex gap-2 items-center">
-            <Image width={220} height={300} src="/imgPrueba.jpg" className=" max-w-full rounded-2xl" />
+          <div className="flex items-center gap-2">
+            <Image width={220} height={300} src="/imgPrueba.jpg" className="max-w-full rounded-2xl" />
             <Texto texto={"Tu cuenta contara con QR que servira como tu tarjeta virtual"} />
           </div>
         </MainBox>
