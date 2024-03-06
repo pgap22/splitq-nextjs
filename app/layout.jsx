@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
       <body className={lato.className}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >

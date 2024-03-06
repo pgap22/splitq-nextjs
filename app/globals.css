@@ -28,15 +28,17 @@
 
     }
 
-    .dark {
-        --gradient-principal: 90deg, #AA2A7F 0%, #C13874 42.5%, #BF4040 100%;
-        --background: #1B1C1E;
-        --foreground: #262626;
-        --border: #414141;
-        --action-bg-button: #FFFFFF;
-        --action-text-button: #000000;
-        --text: #FFFFFF;
-        --yellow-text-notification: white;
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --gradient-principal: 90deg, #AA2A7F 0%, #C13874 42.5%, #BF4040 100%;
+            --background: #1B1C1E;
+            --foreground: #262626;
+            --border: #414141;
+            --action-bg-button: #FFFFFF;
+            --action-text-button: #000000;
+            --text: #FFFFFF;
+            --yellow-text-notification: white;
+        }
     }
 }
 
@@ -48,20 +50,27 @@ body {
     color: var(--text);
 }
 
-input{
+input {
     background-color: transparent;
     color: var(--text);
 }
 
 .border-gradient {
     background: linear-gradient(to right, var(--background), var(--background)),
-    linear-gradient(var(--gradient-principal));
+        linear-gradient(var(--gradient-principal));
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    border-color: transparent;
+}
+.border-aqua-gradient {
+    background: linear-gradient(to right, var(--background), var(--background)),
+        linear-gradient(var(--aqua-gradient));
     background-clip: padding-box, border-box;
     background-origin: padding-box, border-box;
     border-color: transparent;
 }
 
-.text-gradient{
+.text-gradient {
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
