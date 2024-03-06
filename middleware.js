@@ -4,7 +4,7 @@ import authConfig from "./auth.config";
 const {auth} = NextAuth(authConfig)
 
 export default auth((req)=>{
-    console.log("xd")
+    
 })
 
 export const config = {

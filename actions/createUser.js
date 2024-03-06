@@ -1,6 +1,7 @@
 "use server"
 import prisma from "@/lib/db";
 import { getUserByEmail } from "./user";
+import bcryptjs from "bcryptjs"
 // import prismaDev from "@/lib/dbDev";
 export async function createUser(data) {
     if (!data.name || !data.lastname || !data.email || !data.password) return { error: "Campos vacios" }
@@ -9,7 +10,14 @@ export async function createUser(data) {
 
     if(userExistEmail) return { error: "Ya existe ese usuario con ese correo" }
 
-    const user = await prisma.users.create({data})
+    const passwordHash = await bcryptjs.hash(data.password, 5);
+
+    const user = await prisma.users.create({
+        data: {
+            ...data,
+            password: passwordHash,
+        }
+    })
 
     console.log(user)
 }

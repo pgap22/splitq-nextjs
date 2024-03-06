@@ -1,31 +1,52 @@
-import { Input } from "@/components/ui/Input";
+"use client"
+import login from "@/actions/login";
+import FormInput from "@/components/form/FormInput";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
 
-export default async function LoginPage() {
+export default function LoginPage() {
+    const { register, formState, handleSubmit } = useForm({
+        defaultValues: {
+            email: "",
+            password: ""
+        }
+    });
+
+    const submitLogin = async (data)=>{
+       const loginResult =  await login(data)
+       console.log(loginResult)
+    }
+
     return (
-        <div className='flex flex-col gap-4'>
+        <form onSubmit={handleSubmit(submitLogin)} noValidate className='flex flex-col gap-4'>
             <h1 className='font-bold text-2xl text-center'>Iniciar Sesion</h1>
             <p className='text-text-secundary text-center'>Accede a nuestra plataforma</p>
-            <div  className="flex flex-col w-full">
-                <label className='font-normal'>Email</label>
-                <Input
+
+            <div className="flex flex-col gap-4 w-full">
+                <FormInput
+                    label={"Email"}
                     placeholder={"Email"}
-                    name={"email"}
-                    type={"email"}
+                    type={"text"}
+                    error={formState.errors.email?.message}
+                    register={register("email", { required: { value: true, message: "Email esta vacio" }, pattern: { value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/, message: "Debe ser un correo valido" } })}
                 />
-            </div>
-            <div className="flex flex-col w-full">
-                <label className='font-normal'>Contraseña</label>
-                <Input
+                <FormInput
+                    label={"Contraseña"}
                     placeholder={"Contraseña"}
-                    name={"password"}
                     type={"password"}
+                    error={formState.errors.password?.message}
+                    register={register("password", { required: { value: true, message: "Contraseña esta vacia" }, minLength: { value: 8, message: "Minimo 8 caracteres" } })}
                 />
             </div>
             <p className='text-text-secundary text-sm underline'>Olvidaste tu contraseña?</p>
-            {/* <button className='p-3 bg-action-bg-button text-action-text-button rounded-md font-bold'>Iniciar Sesion</button> */}
-            <Button className="font-bold">Iniciar Sesion</Button>
-        </div>
+            <div className="flex flex-col">
+                    <Button  className="font-bold">
+                       Iniciar Sesion
+                    </Button>
+                    <Link className=" text-text-secundary underline  text-center mt-2" href={"/auth/signup"}>¿No tienes cuenta? Crea tu cuenta</Link>
+                </div>
+        </form>
     )
 }
 

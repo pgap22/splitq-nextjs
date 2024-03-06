@@ -10,7 +10,7 @@ const FormLayout = ({ children }) => {
                     <Logo width={150} />
                 </Link>
             </div>
-            <div className='p-6'>
+            <div className='p-6 md:max-w-lg mx-auto'>
                 <div className='flex flex-col p-5 bg-foreground rounded-lg border-border border'>
                     {children}
                 </div>

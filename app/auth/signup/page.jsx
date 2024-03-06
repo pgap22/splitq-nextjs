@@ -4,6 +4,7 @@ import Loader from "@/components/Loader";
 import FormInput from "@/components/form/FormInput";
 import AlertWarning from "@/components/ui/AlertWarning";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { MdOutlineWarningAmber } from "react-icons/md";
@@ -72,9 +73,12 @@ export default function SignUp() {
                     register={register("password", { required: { value: true, message: "Contraseña esta vacia" }, minLength: { value: 8, message: "Minimo 8 caracteres" } })}
                     error={formState.errors.password?.message}
                 />
-                <Button disabled={loading} type="submit" className="font-bold">
-                    {loading ? <Loader /> : "Crear Cuenta"}
-                </Button>
+                <div className="flex flex-col">
+                    <Button disabled={loading} type="submit" className="font-bold">
+                        {loading ? <Loader /> : "Crear Cuenta"}
+                    </Button>
+                    <Link className=" text-text-secundary underline  text-center mt-2" href={"/auth/login"}>¿Ya tienes cuenta? Inicia Sesion</Link>
+                </div>
             </form>
 
 
