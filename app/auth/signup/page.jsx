@@ -2,6 +2,7 @@
 import { createUser } from "@/actions/createUser";
 import Loader from "@/components/Loader";
 import FormInput from "@/components/form/FormInput";
+import AlertWarning from "@/components/ui/AlertWarning";
 import { Button } from "@/components/ui/button";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
