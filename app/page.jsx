@@ -38,7 +38,6 @@ function UserIndex() {
           <IconBox Icon={MdOutlineAccountBalanceWallet} />
           <p>Necesitas ir al Punto de Recarga para depositar el saldo que deseas</p>
           <p>Luego necesitaras mostrar tu QR</p>
-          <Image width={220} height={300} src="/imgPrueba.jpg" className="max-w-full rounded-2xl" />
           <p>Tu cuenta contara con QR que servira como tu tarjeta virtual</p>
         </Border>
 
@@ -54,7 +53,7 @@ function UserIndex() {
         </Border>
       </section>
 
-      <section className="mt-4 px-4">
+      {/* <section className="mt-4 px-4">
         <h2 className="text-center font-black text-gradient bg-aqua-gradient mb-2 text-3xl">QRewards</h2>
         <div className="border-4 rounded-lg p-4 text-center border-aqua-gradient">
           <h3 className="text-xl font-bold">Consigue articulos utilizando <span className="text-gradient font-black bg-aqua-gradient">QRewards</span></h3>
@@ -62,7 +61,7 @@ function UserIndex() {
             <h3 className="text-gradient bg-blue-gradient font-black text-xl">PgapCoins</h3>
           </Border>
         </div>
-      </section>
+      </section> */}
     </div>
   )
 }
