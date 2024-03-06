@@ -74,3 +74,8 @@ input {
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+input:valid + .label-valid{
+    @apply text-blue-500
+}
+

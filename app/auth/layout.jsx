@@ -1,11 +1,14 @@
 import { Logo } from "@/components/Logo"
+import Link from "next/link"
 
 
-const FormLayout = ({children}) => {
+const FormLayout = ({ children }) => {
     return (
         <>
             <div className='flex flex-col justify-center items-center mt-10'>
-                <Logo width={150} />
+                <Link href={"/"}>
+                    <Logo width={150} />
+                </Link>
             </div>
             <div className='p-6'>
                 <div className='flex flex-col p-5 bg-foreground rounded-lg border-border border'>

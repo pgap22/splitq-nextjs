@@ -1,9 +1,10 @@
 import HeaderComponent from "@/components/index/HeaderComponent"
 import Border from "@/components/ui/Border"
 import Image from "next/image";
-import { MdOutlineAccountBalanceWallet, MdOutlineCheckCircle,  MdOutlineLocalMall,  MdPersonAddAlt1 } from "react-icons/md"
+import { MdOutlineAccountBalanceWallet, MdOutlineCheckCircle, MdOutlineLocalMall, MdPersonAddAlt1 } from "react-icons/md"
 import { Button } from "@/components/ui/button"
 import IconBox from "@/components/ui/IconBox"
+import Link from "next/link";
 
 
 function UserIndex() {
@@ -16,7 +17,7 @@ function UserIndex() {
       <p className="p-2 text-center text-[#828282] text-base">Descubre una nueva manera de comprar con SplitQ - Una novedosa logistica que facilita tus compras</p>
 
       <div className="flex justify-center mb-8">
-        <button className="px-12 py-2 font-black border rounded-md border-gradient w-fit">Empieza Ya!</button>
+          <Link href={"/auth/signup"} className="px-12 py-2 font-black border rounded-md border-gradient w-fit">Empieza Ya!</Link>
       </div>
 
       <h2 className="capitalize font-black text-center md:text-6xl text-2xl">Pasos para usar <span className="text-gradient bg-gradient-principal">SplitQ</span></h2>
@@ -25,7 +26,12 @@ function UserIndex() {
           <IconBox Icon={MdPersonAddAlt1} />
           <p>Primero necesitaras una cuenta para usar SplitQ</p>
           <p>Rellena los datos que te solicitamos para crear tu cuenta, esta te servira para ingresar a nuestra plataforma</p>
-          <Button className="font-bold">Crear Cuenta</Button>
+          <Button asChild className="font-bold">
+            <Link href={"/auth/signup"}>
+              Crear Cuenta
+            </Link>
+          </Button>
+
         </Border>
 
         <Border icon title={"Recarga de saldo"}>
@@ -35,7 +41,7 @@ function UserIndex() {
           <Image width={220} height={300} src="/imgPrueba.jpg" className="max-w-full rounded-2xl" />
           <p>Tu cuenta contara con QR que servira como tu tarjeta virtual</p>
         </Border>
-        
+
         <Border icon title={"Compra"}>
           <IconBox Icon={MdOutlineLocalMall} />
           <p>Busca el producto que quieras comprar y añadelo al carrito</p>
