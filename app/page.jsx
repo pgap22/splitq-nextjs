@@ -1,11 +1,7 @@
-"use client"
 import HeaderComponent from "@/components/index/HeaderComponent"
-import ButtonComponent from "@/components/index/buttonComponent"
 import Border from "@/components/ui/Border"
-import Texto from "@/components/index/Texto"
-import TituloBox from "@/components/index/TituloBox"
 import Image from "next/image";
-import { MdOutlineAccountBalanceWallet, MdOutlineCheckCircle, MdOutlineChecklist, MdOutlineLocalMall, MdPerson, MdPersonAddAlt, MdPersonAddAlt1 } from "react-icons/md"
+import { MdOutlineAccountBalanceWallet, MdOutlineCheckCircle,  MdOutlineLocalMall,  MdPersonAddAlt1 } from "react-icons/md"
 import { Button } from "@/components/ui/button"
 import IconBox from "@/components/ui/IconBox"
 

@@ -5,7 +5,7 @@ function Border({ children,className, title, icon = false }) {
     return (
         <div className={cn("border-border text-[#949191] text-sm border rounded-xl flex flex-col p-4 gap-2", className)}>
             {
-                icon && <div className="flex text-white items-center font-bold gap-2">
+                icon && <div className="flex text-text items-center font-bold gap-2">
                     {children[0]}
                     <h3 className="text-lg">{title}</h3>
                 </div>

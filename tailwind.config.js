@@ -28,6 +28,7 @@ module.exports = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        text: "var(--text)",
         border: "var(--border)",
         "action-bg-button": "var(--action-bg-button)",
         "action-text-button": "var(--action-text-button)",
