@@ -1,6 +1,6 @@
 "use server"
 import prisma from "@/lib/db";
-import { getUserByEmail } from "./user";
+import { getUserByEmail } from "@/lib/user";
 import bcryptjs from "bcryptjs"
 // import prismaDev from "@/lib/dbDev";
 export async function createUser(data) {

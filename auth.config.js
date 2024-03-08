@@ -1,6 +1,6 @@
 import Credentials from "next-auth/providers/credentials"
 import bcryptjs from "bcryptjs"
-import { getUserByEmail } from "./actions/user";
+import { getUserByEmail } from "./lib/user";
 
 export default {
     providers: [Credentials({
