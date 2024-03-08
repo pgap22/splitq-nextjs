@@ -1,8 +1,7 @@
 "use client"
-import dynamic from "next/dynamic"
+import { useMediaQuery } from "@/hooks/useMediaQuery"
 import {BarLoader} from "react-spinners"
-const useMediaQuery = dynamic(()=> import("@uidotdev/usehooks"))
-export default function Loader({invert=true}){
+export default function Loader({invert=false}){
     const isDark = useMediaQuery("(prefers-color-scheme: dark)")
     return(
         <BarLoader color={(isDark || invert) ? "black" : "white"}/>

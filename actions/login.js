@@ -1,6 +1,8 @@
 "use server"
 
 import { signIn } from "@/auth"
+import { AuthError } from "next-auth";
+import { redirect } from "next/navigation";
 
 export default async function login(data) {
     try {
@@ -8,8 +10,16 @@ export default async function login(data) {
             ...data,
             redirect: false
         });
-        return true
     } catch (error) {
-        return { error: "Usuario o contraseñas son invalidas" }
+        console.log(error)
+        if(error instanceof AuthError){
+            if(error.type == "CredentialsSignin"){
+                return { error: "Usuario o contraseñas son invalidas" }
+            }
+        }
+
+        return {error: "Hubo error en el servidor"}
     }
+
+    return redirect("/home")
 }
