@@ -19,5 +19,4 @@ export async function createUser(data) {
         }
     })
 
-    console.log(user)
 }

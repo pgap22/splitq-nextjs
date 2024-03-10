@@ -1,6 +1,7 @@
 "use server"
 
 import { signIn } from "@/auth"
+import { LOGIN_REDIRECT } from "@/auth.routes";
 import { AuthError } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -21,5 +22,5 @@ export default async function login(data) {
         return {error: "Hubo error en el servidor"}
     }
 
-    return redirect("/home")
+    return redirect(LOGIN_REDIRECT)
 }

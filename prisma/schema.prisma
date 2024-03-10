@@ -19,4 +19,5 @@ model Users{
   lastname String
   email String
   password String
+  role String @default("user")
 }

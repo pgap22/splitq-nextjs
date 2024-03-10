@@ -1,9 +1,12 @@
 "use client"
-import { useMediaQuery } from "@/hooks/useMediaQuery"
+import { useTheme } from "next-themes"
 import {BarLoader} from "react-spinners"
 export default function Loader({invert=false}){
-    const isDark = useMediaQuery("(prefers-color-scheme: dark)")
+    const {systemTheme, theme} = useTheme();
+   
+    const currentTheme = theme == "system" ? systemTheme : theme
+
     return(
-        <BarLoader color={(isDark || invert) ? "black" : "white"}/>
+        <BarLoader color={invert ? (currentTheme=="dark" ? "white" : "black") : (currentTheme=="light" ? "white" : "black")}/>
     )
 }
