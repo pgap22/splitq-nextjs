@@ -1,6 +1,5 @@
 import { logout } from "@/actions/logout";
 import { authUser } from "@/lib/authUser";
-import Link from "next/link";
 
 
 export default async function Home() {
@@ -8,11 +7,10 @@ export default async function Home() {
 
     return (
         <div>
-            <p>{JSON.stringify(user)}</p>
+            <p>Home Admin ! {user.name}</p>
             <form action={logout}>
                 <button>Cerrar sesion</button>
             </form>
-            <Link href={"/home/test"}>HOME</Link>
         </div>
     )
 }

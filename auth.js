@@ -9,8 +9,8 @@ export const {
     signOut
 } = NextAuth({
     callbacks: {
-        async jwt({token,session,user}) {
-            if(user){
+        async jwt({ token, user }) {
+            if (user) {
                 token.lastname = user.lastname
                 token.id = user.id
                 token.role = user.role
@@ -18,7 +18,7 @@ export const {
             return token
         },
         async session({ session, token }) {
-            if(token){
+            if (token) {
                 session.user.lastname = token.lastname
                 session.user.id = token.id
                 session.user.role = token.role
