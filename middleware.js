@@ -16,7 +16,7 @@ export default auth((req)=>{
    if(isAPI) return
 
    if(!isPublic && !logged) return NextResponse.redirect(new URL(NOAUTH_REDIRECT, req.url))
-   if(isPublic && logged) return NextResponse.redirect(LOGIN_REDIRECT)
+   if(isPublic && logged) return NextResponse.redirect(new URL(LOGIN_REDIRECT, req.url))
 })
 
 export const config = {
