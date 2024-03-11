@@ -1,3 +1,5 @@
+SplitQ © 2024 by Gerardo Saz,Christopher Echverria,Joaquín Morataya, Ricardo Guevara is licensed under CC BY-NC 4.0 
+
 ## Licencia ⚖️
 Este proyecto está bajo la licencia Atribución-NoComercial-CompartirIgual 4.0 Internacional (**CC BY-NC-SA 4.0**) la cual dicta que:
 
