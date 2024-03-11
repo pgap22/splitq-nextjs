@@ -2,7 +2,7 @@
 ## Licencia ⚖️
 ![cc](https://cdn.discordapp.com/attachments/883104637601869845/1216562889494761552/image.png?ex=6600d77b&is=65ee627b&hm=60ba6af18f4dee1f3039c9a1b8de5aa300f7241dae9306821b42641b32145904&)
 
-SplitQ © 2024 por Gerardo Saz ,Christopher Echverria ,Joaquín Morataya y Ricardo Guevara esta licenciada bajo **CC BY-NC 4.0 **
+SplitQ © 2024 por Gerardo Saz ,Christopher Echverria ,Joaquín Morataya y Ricardo Guevara esta licenciada bajo **CC BY-NC 4.0**
 Esta licencia exige que los reutilizadores den crédito al creador. Permite a los reutilizadores distribuir, remezclar, adaptar y crear a partir del material en cualquier medio o formato, únicamente con fines no comerciales.
 
 
