@@ -1,9 +1,10 @@
-import { logout } from "@/actions/logout";
 import { Logo } from "@/components/Logo";
 import IconBox from "@/components/ui/IconBox";
 import { authUser } from "@/lib/authUser";
 import { Settings } from "lucide-react";
 import { MdOutline10K, MdOutlineSettings, MdOutlineStorefront, MdOutlineVerifiedUser } from "react-icons/md";
+import HeaderAdmin from "./headerAdmin";
+import Link from "next/link";
 
 
 export default async function Home() {
@@ -17,23 +18,26 @@ export default async function Home() {
                     width={150}
                 /> */}
                 <h1 className="text-3xl font-bold">Bienvenido al panel de administracion</h1>
-                <IconBox
+                {/* <IconBox
                     Icon={MdOutlineSettings}
-                />
+                /> */}
+                <HeaderAdmin />
             </div>
 
             <div>
                 <p className="text-xl font-bold text-text-secundary p-4">Vendedores</p>
                 <div>
+                    <Link href={"/admin/profileManager"}>
+                        <ActionLayout
+                            description={"Crear Perfil"}
+                        >
+                            <IconBox
+                                Icon={MdOutlineStorefront}
+                            />
+                        </ActionLayout>
+                    </Link>
                     <ActionLayout
-                        description={"Crear vendedores"}
-                    >
-                        <IconBox
-                            Icon={MdOutlineStorefront}
-                        />
-                    </ActionLayout>
-                    <ActionLayout
-                        description={"Administrar vendedores"}
+                        description={"Administrar Perfiles"}
                     >
                         <IconBox
                             Icon={MdOutlineStorefront}
@@ -61,10 +65,6 @@ export default async function Home() {
                     </ActionLayout>
                 </div>
             </div>
-
-            {/* <form action={logout}>
-                <button>Cerrar sesion</button>
-            </form> */}
         </div>
     )
 }
@@ -75,13 +75,5 @@ const ActionLayout = ({ children, description }) => {
             {children}
             <p className="text-md font-bold">{description}</p>
         </section>
-    )
-}
-
-const FloatingMenu = ({style, close}) =>{
-    return(
-        <div>
-            
-        </div>
     )
 }
