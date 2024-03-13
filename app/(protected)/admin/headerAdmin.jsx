@@ -31,12 +31,14 @@ function HeaderAdmin() {
                         <MdSettings className='md:hidden' onClick={toggleView} size={24} />
                         <div className='hidden md:flex gap-4'>
                             <div className='justify-center flex text-text-secundary'>
-                                <Button>
-                                    <form className='flex text-lg items-center gap-3' action={logout}>
+
+                                <form className='flex text-lg items-center gap-3' action={logout}>
+                                    <Button className="font-bold flex gap-2">
                                         <MdLogout />
-                                        <button>Cerrar sesion</button>
-                                    </form>
-                                </Button>
+                                        <p>Cerrar sesion</p>
+                                    </Button>
+                                </form>
+
                             </div>
                         </div>
                     </div>
