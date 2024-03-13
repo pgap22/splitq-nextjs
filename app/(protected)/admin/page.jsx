@@ -27,7 +27,7 @@ export default async function Home() {
             <div>
                 <p className="text-xl font-bold text-text-secundary p-4">Vendedores</p>
                 <div>
-                    <Link href={"/admin/profileManager"}>
+                    <Link href={"/admin/createProfile"}>
                         <ActionLayout
                             description={"Crear Perfil"}
                         >
