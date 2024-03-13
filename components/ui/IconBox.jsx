@@ -1,10 +1,23 @@
-export default function IconBox({ Icon }) {
+import { cn } from "@/lib/utils"
+import { cva } from "class-variance-authority"
+
+export default function IconBox({className, Icon, variant, size = 22 }) {
+    const iconvariants = cva("w-10 aspect-square border flex items-center justify-center",{
+      variants: {
+        variant:{
+          gradientCircle: "border-gradient bg-gradient-principal rounded-full",
+          square: "rounded-md bg-foreground border-border",
+          squareGradient: "border-gradient bg-gradient-principal rounded-md"
+        }
+      },
+      defaultVariants:{
+        variant: "gradientCircle"
+      }
+    })
     return (
-      <div className="flex items-center font-bold gap-2">
-        <div className="w-10 aspect-square border border-gradient bg-gradient-principal flex items-center justify-center rounded-full">
-          <Icon size={20} />
+        <div className={cn(className,iconvariants({variant}))}>
+          <Icon size={size} />
         </div>
-      </div>
     )
   }
   

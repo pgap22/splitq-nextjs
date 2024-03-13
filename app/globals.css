@@ -28,8 +28,7 @@
 
     }
 
-    @media (prefers-color-scheme: dark) {
-        :root {
+        *.dark {
             --gradient-principal: 90deg, #AA2A7F 0%, #C13874 42.5%, #BF4040 100%;
             --background: #1B1C1E;
             --foreground: #262626;
@@ -38,8 +37,9 @@
             --action-text-button: #000000;
             --text: #FFFFFF;
             --yellow-text-notification: white;
+            
         }
-    }
+   
 }
 
 
@@ -78,9 +78,16 @@ input {
 input:valid + .label-valid{
     @apply text-blue-500
 }
+
+
 .icon-gradient{
-    fill: url(#mygradient);
+    fill: url(#mygradientlight);
 }
+
+html.dark .icon-gradient{
+    fill: url(#mygradientdark);
+}
+
 .nav {
     border-top: 3px solid;
     border-image: linear-gradient(var(--gradient-principal)) 1 0 0 0;
