@@ -12,6 +12,7 @@ export default async function Home() {
                 <Logo />
                 <IconBox Icon={MdOutlineSettings} />
             </div>
+            Desde Menu Principal
             <form action={logout}>
                 <button>Cerrar sesion</button>
             </form>

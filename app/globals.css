@@ -78,8 +78,12 @@ input {
 input:valid + .label-valid{
     @apply text-blue-500
 }
-
+.icon-gradient{
+    fill: url(#mygradient);
+}
 .nav {
     border-top: 3px solid;
     border-image: linear-gradient(var(--gradient-principal)) 1 0 0 0;
   }
+
+
