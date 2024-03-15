@@ -21,11 +21,11 @@ export default async function NavLayout({ children }) {
                 <Link href={"/home/cart"}>
                     <MdOutlineShoppingCart size={26} />
                 </Link>
-                <div className="absolute border-gradient border-2 w-14 aspect-square flex justify-center items-center rounded-full bg-gradient-principal -top-1/2">
+                <Link href={"/home"} className="absolute border-gradient border-2 w-14 aspect-square flex justify-center items-center rounded-full bg-gradient-principal -top-1/2">
                     <GradientIcon>
                         <MdOutlineHome className="icon-gradient" size={28} />
                     </GradientIcon>
-                </div>
+                </Link>
             </div>
         </>
     )
