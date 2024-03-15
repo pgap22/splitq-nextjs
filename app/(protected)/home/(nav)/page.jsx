@@ -13,10 +13,9 @@ export default async function Home() {
                 <Logo />
                 <SettingButtonUser user={user}/>
             </div>
-            Desde Menu Principal
-            <form action={logout}>
-                <button>Cerrar sesion</button>
-            </form>
+            <section>
+                
+            </section>
         </>
     )
 }
