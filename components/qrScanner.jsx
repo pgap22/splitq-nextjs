@@ -1,37 +1,45 @@
 "use client"
 
-import QrScanner from "qr-scanner"
-import { Button, buttonVariants } from "./ui/button"
-import { useState, useTransition } from "react"
-import Image from "next/image";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { Button } from "./ui/button"
+import { animated, useTransition } from "@react-spring/web";
+import QrScanner from "qr-scanner";
+import { cn } from "@/lib/utils";
 
 
 export default function QrScannerButton() {
-    const [state, setState] = useState();
-    const [image, setImage] = useState();
-    const [loading, startTransition] = useTransition()
-    const qrScan = (e) => {
-        startTransition(async () => {
-            const file = window.URL.createObjectURL(e.target.files[0])
-            QrScanner.scanImage(file).then(result => console.log(result))
-                .catch(error => console.log(error || 'No QR code found.'));
-            setImage(file)
-        })
+    const [modal, setModal] = useState(false);
+    const [qrReader, setQrReader] = useState()
+    const ref = useRef();
+    const transitionQR = useTransition(modal, {
+        from: { opacity: 0 },
+        enter: { opacity: 1 },
+        leave: { opacity: 0 },
+        config: { duration: 150 }
+    });
+
+    const toggleModal = () => {
+        setModal(!modal)
     }
-    // QrScanner.scanImage
+
+    useEffect(()=>{
+        if(modal){
+            const qrReader = new QrScanner(ref.current, (result)=> console.log(result), {returnDetailedScanResult: true});
+            setQrReader(qrReader)
+        }
+    },[modal])
 
     return (
         <>
+            <Button onClick={toggleModal}>Escaneela</Button>
+            {transitionQR((style, item) => item ? (
+                <animated.div className={"bg-background inset-0 fixed z-10"} style={style}>
+                    <Button onClick={()=>{qrReader.start()}}>adkwopdkawopd</Button>
+                </animated.div>
+            ) : "")
+            }
 
-            <label className="mb-5" htmlFor="photo-qr">
-                <div className={buttonVariants()}>
-                    escaneela
-                </div>
-            </label>
-            <input onChange={qrScan} hidden type="file" accept="image/*" id="photo-qr" name="photo-qr" capture="camera" />
-            {loading ? "Cargando" : ""}
-            {image &&
-                <Image src={image} width={200} height={200} />}
+            <video ref={ref} id="qr-reader" className={cn("absolute bottom-0 left-1/2 aspect-square bg-red-500 -translate-x-1/2 -translate-y-1/2 z-10")}></video>
         </>
     )
 }
