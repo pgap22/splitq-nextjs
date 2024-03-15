@@ -19,6 +19,5 @@ export async function createUser(data) {
             password: passwordHash,
         }
     })
-    console.log(user)
 
 }
