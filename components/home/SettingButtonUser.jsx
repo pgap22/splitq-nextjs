@@ -15,12 +15,16 @@ export default function SettingButtonUser({ user }) {
         from: { opacity: 0 },
         enter: { opacity: 1 },
         leave: { opacity: 0 },
+        config: {duration: 50}
+
     });
 
     const transitionsMenu = useTransition(menuSetting, {
         from: { translateX: "100%" },
         enter: { translateX: "0%" },
         leave: { translateX: "100%" },
+        config: {duration: 120}
+
     });
 
     const toggleView = () => {

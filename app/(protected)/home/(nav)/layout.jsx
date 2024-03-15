@@ -1,3 +1,4 @@
+import SearchHome from "@/components/home/SearchHome";
 import GradientIcon from "@/components/ui/GradientIcon";
 import Link from "next/link";
 import { MdOutlineConfirmationNumber, MdOutlineCreditCard, MdOutlineHome, MdOutlineSearch, MdOutlineShoppingCart } from "react-icons/md";
@@ -7,15 +8,12 @@ export default async function NavLayout({ children }) {
 
     return (
         <>
-
-
             {children}
-
             <div className="fixed bottom-0 justify-items-center nav w-full grid grid-cols-4 py-4">
                 <Link href={"/home/qr-card"}>
                     <MdOutlineCreditCard size={26} />
                 </Link>
-                <MdOutlineSearch size={26} />
+                <SearchHome />
                 <Link href={"/home/tickets"}>
                     <MdOutlineConfirmationNumber size={26} />
 
