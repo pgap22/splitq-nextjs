@@ -77,7 +77,7 @@ export default function CreateProfile() {
                                 <SelectGroup>
                                     <SelectLabel>Rol</SelectLabel>
                                     <SelectItem className="!bg-background" value="mod">Moderador</SelectItem>
-                                    <SelectItem className="!bg-background" value="vendedor">Vendedor</SelectItem>
+                                    <SelectItem className="!bg-background" value="seller">Vendedor</SelectItem>
                                 </SelectGroup>
                             </SelectContent>
                         </Select>}
