@@ -33,16 +33,16 @@ function HeaderComponent() {
                         <div className='flex gap-2 items-center'>
                             <ThemeToggle />
                             <MdMenu className='md:hidden' onClick={toggleView} size={24} />
-                        </div>
-                        <div className='hidden md:flex gap-4'>
-                            <Button asChild className="font-bold px-4 text-sm">
-                                <Link href={"/auth/login"}>
-                                    Iniciar Sesion
-                                </Link>
-                            </Button>
+                            <div className='hidden md:flex gap-2'>
+                                <Button asChild className="font-bold px-4 text-sm">
+                                    <Link href={"/auth/login"}>
+                                        Iniciar Sesion
+                                    </Link>
+                                </Button>
 
-                            <Link href={"/auth/signup"} className=" px-4 bg-gradient-principal text-center bg-gradient font-bold text-sm p-2 rounded-md border-gradient border ">Crear Cuenta</Link>
+                                <Link href={"/auth/signup"} className=" px-4 bg-gradient-principal text-center bg-gradient font-bold text-sm p-2 rounded-md border-gradient border ">Crear Cuenta</Link>
 
+                            </div>
                         </div>
 
                     </div>
