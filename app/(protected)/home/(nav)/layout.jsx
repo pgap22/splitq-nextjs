@@ -11,7 +11,7 @@ export default async function NavLayout({ children }) {
             <main className="p-4">
                 {children}
             </main>
-            <div className="fixed bottom-0 justify-items-center nav w-full grid grid-cols-4 py-4">
+            <div className="fixed bg-foreground bottom-0 justify-items-center nav w-full grid grid-cols-4 py-4">
                 <Link href={"/home/qr-card"}>
                     <MdOutlineCreditCard size={26} />
                 </Link>

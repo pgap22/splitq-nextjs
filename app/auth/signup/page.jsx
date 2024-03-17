@@ -24,6 +24,7 @@ export default function SignUp() {
     const signup = (data) => {
         setWarning(false)
         startTransition(async () => {
+            data.email = data.email.toLowerCase().trim();
             const result = await createUser(data);
             if (result) {
                 setWarning(result.error)

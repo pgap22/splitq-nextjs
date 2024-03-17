@@ -21,6 +21,7 @@ export default function LoginPage() {
     const submitLogin = (data) => {
         setWarning(false);
         startTransition(async () => {
+            data.email = data.email.toLowerCase().trim();
             const loginResult = await login(data)
             if(loginResult.error){
                 setWarning(loginResult.error);
