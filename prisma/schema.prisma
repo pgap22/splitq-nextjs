@@ -21,3 +21,8 @@ model Users{
   password String
   role String @default("user")
 }
+
+model Categories{
+  id String @default(uuid()) @id
+  name String
+}

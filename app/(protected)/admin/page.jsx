@@ -43,19 +43,22 @@ export default async function Home() {
                             Icon={MdOutlineStorefront}
                         />
                     </ActionLayout>
+                    
                 </div>
             </div>
 
             <div className="mt-8">
                 <p className="text-xl font-bold text-text-secundary p-4">Categoria</p>
                 <div>
-                    <ActionLayout
-                        description={"Crear categoria"}
-                    >
-                        <IconBox
-                            Icon={MdOutlineStorefront}
-                        />
-                    </ActionLayout>
+                <Link href={"/admin/createCategories"}>
+                        <ActionLayout
+                            description={"Crear Categoria"}
+                        >
+                            <IconBox
+                                Icon={MdOutlineStorefront}
+                            />
+                        </ActionLayout>
+                    </Link>
                     <ActionLayout
                         description={"Administrar categorias"}
                     >
