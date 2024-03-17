@@ -16,7 +16,7 @@ function UserIndex() {
       <ContainerCenter className={"max-w-fit"}>
         <h1 className="capitalize font-black text-center md:text-6xl text-2xl">Recarga, Compra y <span className="text-gradient bg-gradient-principal">Disfruta</span></h1>
 
-        <p className="p-2 text-center text-[#828282] text-base">Descubre una nueva manera de comprar con SplitQ - Una novedosa logistica que facilita tus compras</p>
+        <p className="p-2 text-center text-text-secundary text-base">Descubre una nueva manera de comprar con SplitQ - Una novedosa logistica que facilita tus compras</p>
 
         <div className="flex justify-center mb-8">
           <Link href={"/auth/signup"} className="px-12 py-2 font-black border rounded-md border-gradient w-fit">Empieza Ya!</Link>

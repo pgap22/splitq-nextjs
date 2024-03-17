@@ -5,7 +5,7 @@
 
 @layer base {
     :root {
-        --text-secundary: #949191;
+        --text-secundary: #A4A8A3;
 
         --aqua-gradient: 90deg, #02AAB0 0%, #00CCAC 97.5%, #00CDAC 100%;
         --blue-gradient: 90deg, #00C6FF 0%, #0072FF 100%;
