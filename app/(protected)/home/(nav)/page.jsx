@@ -1,6 +1,7 @@
 import { logout } from "@/actions/logout";
 import { Logo } from "@/components/Logo";
 import SettingButtonUser from "@/components/home/SettingButtonUser";
+import ThemeToggle from "@/components/ui/theme-toggle";
 import { authUser } from "@/lib/authUser";
 
 
@@ -11,10 +12,13 @@ export default async function Home() {
         <>
             <div className="flex justify-between items-center">
                 <Logo />
-                <SettingButtonUser user={user}/>
+                <div className="flex gap-2 items-center">
+                    <ThemeToggle size={22} />
+                    <SettingButtonUser user={user} />
+                </div>
             </div>
             <section>
-                
+
             </section>
         </>
     )

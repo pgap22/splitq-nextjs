@@ -7,6 +7,7 @@ import { animated, useTransition } from '@react-spring/web'
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import ContainerCenter from '../ui/ContainerCenter';
+import ThemeToggle from '../ui/theme-toggle';
 
 function HeaderComponent() {
     const [viewComponent, setView] = useState(false)
@@ -29,7 +30,10 @@ function HeaderComponent() {
                 <ContainerCenter className={"max-w-5xl"}>
                     <div className='justify-between w-full items-center flex'>
                         <Logo />
-                        <MdMenu className='md:hidden' onClick={toggleView} size={24} />
+                        <div className='flex gap-2 items-center'>
+                            <ThemeToggle />
+                            <MdMenu className='md:hidden' onClick={toggleView} size={24} />
+                        </div>
                         <div className='hidden md:flex gap-4'>
                             <Button asChild className="font-bold px-4 text-sm">
                                 <Link href={"/auth/login"}>
@@ -40,6 +44,7 @@ function HeaderComponent() {
                             <Link href={"/auth/signup"} className=" px-4 bg-gradient-principal text-center bg-gradient font-bold text-sm p-2 rounded-md border-gradient border ">Crear Cuenta</Link>
 
                         </div>
+
                     </div>
                 </ContainerCenter>
             </div>
@@ -62,7 +67,6 @@ function FloatingMenu({ style, close }) {
                             Iniciar Sesion
                         </Link>
                     </Button>
-
                     <Link href={"/auth/signup"} className="bg-gradient-principal text-center bg-gradient font-bold text-sm p-2 rounded-md border-gradient border ">Crear Cuenta</Link>
                 </div>
             </div>
