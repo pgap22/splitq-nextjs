@@ -8,6 +8,7 @@ import Loader from "./Loader";
 import IconBox from "./ui/IconBox";
 import { MdOutlineArrowBack } from "react-icons/md";
 import { cn } from "@/lib/utils";
+import { Dialog, DialogHeader, DialogContent, DialogDescription, DialogTitle} from "./ui/dialog";
 
 export default function QrScannerButton({ children, onValue = () => { } }) {
     const [modal, setModal] = useState(false);
@@ -16,7 +17,7 @@ export default function QrScannerButton({ children, onValue = () => { } }) {
     const [loadingCams, startCamList] = React.useTransition();
     const [qrEnabled, setQREnabled] = useState(false);
 
-
+    const [errorCAM, setErrorCAM] = useState();
 
     const ref = useRef();
 
@@ -49,7 +50,10 @@ export default function QrScannerButton({ children, onValue = () => { } }) {
     const openModal = () => {
         startCamList(async () => {
             const cameras = await QrScanner.listCameras();
-            if (!cameras.length) return alert("No hay camaras")
+            if (!cameras.length) {
+                setErrorCAM(true);
+                return;
+            }
 
             toggleModal();
         })
@@ -75,7 +79,14 @@ export default function QrScannerButton({ children, onValue = () => { } }) {
 
     return (
         <>
-
+            <Dialog open={errorCAM} onOpenChange={setErrorCAM}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>No hay camaras disponibles</DialogTitle>
+                        <DialogDescription>SplitQ no tiene acceso a las camaras de tu dipositivo</DialogDescription>
+                    </DialogHeader>
+                </DialogContent>
+            </Dialog>
 
             <Button disabled={loadingCams} onClick={openModal}>{children}</Button>
             {transitionQR((style, item) => item ? (
