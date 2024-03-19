@@ -6,7 +6,7 @@ export default async function RedirectPage() {
     if(user.role == "user") return redirect("/home")
     if(user.role == "admin") return redirect("/admin")
     if(user.role == "seller") return redirect("/seller")
-    // if(user.role == "mod") return redirect("/mod")
+    if(user.role == "mod") return redirect("/mod")
 
     return(
         <p>
