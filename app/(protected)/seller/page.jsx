@@ -20,7 +20,12 @@ export default async function SellerHome() {
                 <div className="flex gap-2 items-center">
                     <ThemeToggle />
                     <SettingButton user={user}>
-                        pon aca lo q sea xd
+                        <div>
+                            <h3 className="text-text-secundary p-4 pb-2 font-bold text-lg">Historial</h3>
+                            <div className="border-t border-border border-b p-4">
+                                <p className="font-bold">Historial de acciones</p>
+                            </div>
+                        </div>
                     </SettingButton>
                 </div>
             </div>
