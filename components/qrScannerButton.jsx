@@ -13,6 +13,7 @@ export default function QrScannerButton({ children, onValue = () => { } }) {
     const [modal, setModal] = useState(false);
     const [qrReader, setQrReader] = useState()
     const [loadingQRCAM, startQRCAM] = React.useTransition();
+    const [loadingCams, startCamList] = React.useTransition();
     const [qrEnabled, setQREnabled] = useState(false);
 
 
@@ -45,9 +46,20 @@ export default function QrScannerButton({ children, onValue = () => { } }) {
         toggleModal()
     }
 
+    const openModal = () => {
+        startCamList(async () => {
+            const cameras = await QrScanner.listCameras();
+            if (!cameras.length) return alert("No hay camaras")
+
+            toggleModal();
+        })
+
+    }
+
     useEffect(() => {
 
-        
+
+
         if (modal && !qrReader) {
             const qrReaderInstance = new QrScanner(ref.current, onValue, { returnDetailedScanResult: true, highlightScanRegion: true, });
             startQRScanning(qrReaderInstance)
@@ -65,7 +77,7 @@ export default function QrScannerButton({ children, onValue = () => { } }) {
         <>
 
 
-            <Button onClick={toggleModal}>{children}</Button>
+            <Button disabled={loadingCams} onClick={openModal}>{children}</Button>
             {transitionQR((style, item) => item ? (
                 <animated.div className={"bg-background flex justify-center  items-center inset-0 fixed z-10"} style={style}>
                     {loadingQRCAM && <Loader invert />}

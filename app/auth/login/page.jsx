@@ -54,7 +54,7 @@ export default function LoginPage() {
             </div>
             <p className='text-text-secundary text-sm underline'>Olvidaste tu contraseña?</p>
             <div className="flex flex-col">
-                <Button className="font-bold">
+                <Button disabled={loading} className="font-bold">
                     {loading ? <Loader /> : "Iniciar Sesion"}
                 </Button>
                 <Link className=" text-text-secundary underline  text-center mt-2" href={"/auth/signup"}>¿No tienes cuenta? Crea tu cuenta</Link>
