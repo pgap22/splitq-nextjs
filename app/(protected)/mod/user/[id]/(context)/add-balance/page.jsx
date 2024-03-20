@@ -17,18 +17,25 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer"
+import { useState } from "react";
+import FormInput from "@/components/form/FormInput";
 export default function AddBalance() {
     const { userDetails } = useUserDetail();
-    const { register, getValues, setValue } = useForm({
+    const { handleSubmit, register, getValues, setValue, formState: { errors } } = useForm({
         defaultValues: {
-            balance: 0
+            balance: null
         }
     });
+    const [drawer, setDrawer] = useState(false);
 
     const setPrice = (value) => {
-        // alert(sumDecimal(getValues("balance"), value))
         setValue("balance", sumDecimal(getValues("balance"), value))
     }
+
+    const submitBalance = () => {
+        setDrawer(true)
+    }
+
 
     return (
         <>
@@ -40,7 +47,7 @@ export default function AddBalance() {
                     <h1 className="font-bold text-xl">Recarga de "{userDetails.name} {userDetails.lastname}"</h1>
                 </div>
 
-                <form className="flex flex-col">
+                <form noValidate onSubmit={handleSubmit(submitBalance)} className="flex flex-col">
                     <p>Cuanto saldro añadira ?</p>
                     <div className="grid grid-cols-4 gap-2 mb-2">
                         <PriceButton setPrice={setPrice} value={1}>$1.00</PriceButton>
@@ -48,20 +55,28 @@ export default function AddBalance() {
                         <PriceButton setPrice={setPrice} value={0.10}>$0.10</PriceButton>
                         <PriceButton setPrice={setPrice} value={0.05}>$0.05</PriceButton>
                     </div>
-                    <Input {...register("balance")} type="number" className="bg-foreground mb-2" placeholder="$0" />
-                    <Drawer>
-                        <DrawerTrigger className="w-full">
-                            <Button className="w-full" type="button">Agregar Saldo</Button>
-                        </DrawerTrigger>
+                    <div>
+                        <FormInput
+                            register={register("balance", { required: { value: true, message: "Este campo es requerido" } })}
+                            type="number"
+                            className="bg-foreground mb-2"
+                            placeholder="$0"
+                            error={errors.balance?.message}
+
+                        />
+                    </div>
+                    <Button className="mt-2" type="submit">Agregar Saldo</Button>
+                    <Drawer open={drawer} onOpenChange={setDrawer}>
                         <DrawerContent>
                             <DrawerHeader>
-                                <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-                                <DrawerDescription>This action cannot be undone.</DrawerDescription>
+                                <DrawerTitle>Estas seguro de agregar este saldo ?</DrawerTitle>
+                                <DrawerDescription>Saldo anterior: ${+userDetails.balance}</DrawerDescription>
+                                <DrawerDescription>Saldo despues de la recarga: ${sumDecimal(+userDetails.balance, getValues("balance"))}</DrawerDescription>
                             </DrawerHeader>
                             <DrawerFooter>
-                                <Button>Submit</Button>
+                                <Button>Confirmar Recarga</Button>
                                 <DrawerClose className="w-full">
-                                   <Button className="w-full">Cancel</Button>
+                                    <Button variant="outline" className="w-full">Cancel</Button>
                                 </DrawerClose>
                             </DrawerFooter>
                         </DrawerContent>

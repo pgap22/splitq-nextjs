@@ -18,7 +18,7 @@ export default function LayoutGetUserDetail({params, children}) {
 
     if (!userDetails.name) return (
         <div className="flex h-screen justify-center items-center">
-            <Loader invert />
+            <Loader invert/>
         </div>
     )
 
