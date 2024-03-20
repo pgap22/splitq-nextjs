@@ -8,6 +8,9 @@ import { use } from "react";
 import FormInput from "@/components/form/FormInput";
 import FormTextArea from "@/components/form/FormTextArea";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import Input from "@/components/ui/Input";
+import { Button } from "@/components/ui/button";
+import FormAddProduct from "@/components/form/FormAddProduct";
 
 export default async function AddProduct() {
     const user = await authUser()
@@ -28,31 +31,7 @@ export default async function AddProduct() {
                     </div>
                 </SettingButton>
             </div>
-            <h1>Añadir producto</h1>
-            <div>
-                <FormInput
-                    label={"Nombre del producto"}
-                    placeholder={"Nombre del producto"}
-                    type={"text"}
-                />
-                <FormTextArea
-                    placeholder={"Escribe acá"}
-                    label={"Descripcion del producto"}
-                />
-                <Select>
-                {/* className={cn("!bg-background !text-text-secundary !border", formState.errors.role?.message ? "!border-red-500" : getValues("role") ? "!border-blue-500" : "!border-border")} */}
-                    <SelectTrigger>
-                        <SelectValue placeholder="Seleccione el rol" />
-                    </SelectTrigger>
-                    <SelectContent className="!bg-foreground">
-                        <SelectGroup>
-                            <SelectLabel>Rol</SelectLabel>
-                            <SelectItem className="!bg-background" value="mod">Moderador</SelectItem>
-                            <SelectItem className="!bg-background" value="seller">Vendedor</SelectItem>
-                        </SelectGroup>
-                    </SelectContent>
-                </Select>
-            </div>
+            <FormAddProduct></FormAddProduct>
         </>
     )
 }
