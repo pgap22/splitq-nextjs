@@ -13,16 +13,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+
+
 model Users{
   id String @default(uuid()) @id
   name String
   lastname String?
   email String
   password String
+  balance String?
   role String @default("user")
+
+  logs Logs[]
 }
 
 model Categories{
   id String @default(uuid()) @id
   name String
+}
+
+model Logs{
+  id  String @default(uuid()) @id
+  type LogsType
+  productID String?
+  userID String
+  price String?
+
+  user Users @relation(fields: [userID], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+}
+
+enum LogsType{
+  recharge
+  shop
+  refound
+  reclaim
 }
