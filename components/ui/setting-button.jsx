@@ -1,13 +1,12 @@
 "use client"
 import { MdOutlineLogout, MdOutlineSettings } from "react-icons/md";
 import IconBox from "../ui/IconBox";
-import { logout } from "@/actions/logout";
 import { Button } from "../ui/button";
 import { useTransition, animated } from "@react-spring/web";
 import { useRef, useState } from "react";
 import { useOnClickOutside } from "usehooks-ts";
 
-export default function SettingButton({ user, children }) {
+export default function SettingButton({ user, children, logout }) {
     const [menuSetting, setMenuSetting] = useState(false);
     const [bgMenu, setbgMenu] = useState(false);
 

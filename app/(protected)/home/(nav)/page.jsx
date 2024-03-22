@@ -14,11 +14,13 @@ export default async function Home() {
                 <Logo />
                 <div className="flex gap-2 items-center">
                     <ThemeToggle size={22} />
-                    <SettingButtonUser user={user} />
+                    <SettingButtonUser logout={logout} user={user} />
                 </div>
             </div>
             <section>
-
+                <form action={logout}>
+                    <button>Prueba</button>
+                </form>
             </section>
         </>
     )
