@@ -68,13 +68,16 @@ export default function QrScannerButton({ children, onValue = () => { } }) {
 
     }
 
+    const onQrFunction = (data)=>{
+        alert("xd")
+        setQrLoaded(true)
+        onValue(data)
+    }
+
     useEffect(() => {
 
         if (modal && !qrReader) {
-            const qrReaderInstance = new QrScanner(ref.current, (data)=>{
-                setQrLoaded(true)
-                onValue(data)
-            }, { returnDetailedScanResult: true, highlightScanRegion: true, });
+            const qrReaderInstance = new QrScanner(ref.current, onQrFunction, { returnDetailedScanResult: true, highlightScanRegion: true, });
             startQRScanning(qrReaderInstance)
             setQrReader(qrReaderInstance)
         }
