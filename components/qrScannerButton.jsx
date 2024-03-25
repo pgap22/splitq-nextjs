@@ -9,9 +9,7 @@ import IconBox from "./ui/IconBox";
 import { MdOutlineArrowBack } from "react-icons/md";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogHeader, DialogContent, DialogDescription, DialogTitle } from "./ui/dialog";
-import { Loader2 } from "lucide-react";
-import { DotLoader, GridLoader, HashLoader } from "react-spinners";
-import QRLoader from "./QrLoader";
+import QRLoader from "./QRLoader";
 import { useOnClickOutside } from "usehooks-ts";
 
 export default function QrScannerButton({ children, onValue = () => { } }) {
