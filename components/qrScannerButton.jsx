@@ -8,7 +8,11 @@ import Loader from "./Loader";
 import IconBox from "./ui/IconBox";
 import { MdOutlineArrowBack } from "react-icons/md";
 import { cn } from "@/lib/utils";
-import { Dialog, DialogHeader, DialogContent, DialogDescription, DialogTitle} from "./ui/dialog";
+import { Dialog, DialogHeader, DialogContent, DialogDescription, DialogTitle } from "./ui/dialog";
+import { Loader2 } from "lucide-react";
+import { DotLoader, GridLoader, HashLoader } from "react-spinners";
+import QRLoader from "./QrLoader";
+import { useOnClickOutside } from "usehooks-ts";
 
 export default function QrScannerButton({ children, onValue = () => { } }) {
     const [modal, setModal] = useState(false);
@@ -16,11 +20,15 @@ export default function QrScannerButton({ children, onValue = () => { } }) {
     const [loadingQRCAM, startQRCAM] = React.useTransition();
     const [loadingCams, startCamList] = React.useTransition();
     const [qrEnabled, setQREnabled] = useState(false);
-
+    const [qrLoaded, setQrLoaded] = useState(false);
     const [errorCAM, setErrorCAM] = useState();
-
+   
+    const qrRefLoaded = useRef();
     const ref = useRef();
 
+    useOnClickOutside(qrRefLoaded, ()=>{
+        setQrLoaded(false)
+    })
 
     const transitionQR = useTransition(modal, {
         from: { opacity: 0 },
@@ -63,7 +71,10 @@ export default function QrScannerButton({ children, onValue = () => { } }) {
     useEffect(() => {
 
         if (modal && !qrReader) {
-            const qrReaderInstance = new QrScanner(ref.current, onValue , { returnDetailedScanResult: true, highlightScanRegion: true, });
+            const qrReaderInstance = new QrScanner(ref.current, (data)=>{
+                setQrLoaded(true)
+                onValue(data)
+            }, { returnDetailedScanResult: true, highlightScanRegion: true, });
             startQRScanning(qrReaderInstance)
             setQrReader(qrReaderInstance)
         }
@@ -99,6 +110,16 @@ export default function QrScannerButton({ children, onValue = () => { } }) {
                 <video ref={ref} id="qr-reader">
                 </video>
             </div>
+
+            {
+                qrLoaded && (
+                    <div  className="fixed z-20 bg-black/70 inset-0 flex justify-center items-center">
+                        <di ref={qrRefLoaded} className="rounded-md flex flex-col gap-4 items-center bg-foreground border border-border p-4">
+                            <QRLoader invert />
+                        </di>
+                    </div>
+                )
+            }
 
             {qrEnabled && <IconBox onClick={stopQRScanning} variant={"square"} className={"fixed z-10 top-4 left-4"} Icon={MdOutlineArrowBack} />}
         </>

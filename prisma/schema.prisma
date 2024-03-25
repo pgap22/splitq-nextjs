@@ -22,7 +22,7 @@ model Users{
   lastname String?
   email String
   password String
-  balance Float?
+  balance Float? @default(0.00)
   role String @default("user")
 
   logs Logs[]
