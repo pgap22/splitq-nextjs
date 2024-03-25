@@ -1,3 +1,4 @@
+"use client" //for animation
 import { cn } from "@/lib/utils"
 import {BarLoader} from "react-spinners"
 export default function Loader({invert=false}){

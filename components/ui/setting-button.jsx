@@ -39,7 +39,7 @@ export default function SettingButton({ user, children, logout }) {
 
             {bgTransition((style,item) => (item ? (
                 <animated.div style={style} className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-10">
-                    {transitionsMenu((style, item) => item ? <SideMenu user={user} close={toggleView} style={style} >{children}</SideMenu> : "")}
+                    {transitionsMenu((style, item) => item ? <SideMenu user={user} logout={logout} close={toggleView} style={style} >{children}</SideMenu> : "")}
                 </animated.div>
             ) : ""))}
         </>
@@ -47,7 +47,7 @@ export default function SettingButton({ user, children, logout }) {
 }
 
 
-function SideMenu({ style, user, close, children }) {
+function SideMenu({ style, user, close, children, logout }) {
     const ref = useRef();
     useOnClickOutside(ref, close);
     return (

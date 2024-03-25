@@ -1,3 +1,4 @@
+import { signOut } from "@/auth";
 import { Logo } from "@/components/Logo";
 import ModQRButton from "@/components/mod/ModQRButton";
 import SettingButton from "@/components/ui/setting-button";
@@ -6,13 +7,19 @@ import { authUser } from "@/lib/authUser";
 
 export default async function ModPage() {
     const user = await authUser();
+    
+    async function xd(){
+        "use server"
+        await signOut();
+    }
+
     return (
         <>
             <div className="flex flex-row justify-between p-4">
                 <Logo />
                 <div className="flex gap-2 items-center">
                     <ThemeToggle />
-                    <SettingButton user={user}>
+                    <SettingButton logout={xd} user={user}>
                         pon aca lo q sea xd
                     </SettingButton>
                 </div>
