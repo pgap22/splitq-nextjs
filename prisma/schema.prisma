@@ -25,7 +25,8 @@ model Users{
   balance Float? @default(0.00)
   role String @default("user")
 
-  logs Logs[]
+  userRecharges Recharges[] @relation("user")
+  ModRecharges Recharges[] @relation("mod")
 }
 
 model Categories{
@@ -33,16 +34,30 @@ model Categories{
   name String
 }
 
-model Logs{
-  id  String @default(uuid()) @id
-  type LogsType
-  productID String?
+model Recharges{
+  id String @default(uuid()) @id
+  balance Float
+  
   userID String
-  price String?
+  modID String
 
-  user Users @relation(fields: [userID], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user Users @relation("user",fields: [userID], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  mod Users @relation("mod", fields: [modID], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
 }
+
+
+// model Logs{
+//   id  String @default(uuid()) @id
+//   type LogsType
+//   productID String?
+//   price String?
+
+//   userID String
+
+//   user Users @relation(fields: [userID], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+// }
 
 enum LogsType{
   recharge

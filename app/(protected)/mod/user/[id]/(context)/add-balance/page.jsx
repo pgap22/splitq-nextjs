@@ -1,6 +1,5 @@
 "use client"
 import IconBox from "@/components/ui/IconBox";
-import Input from "@/components/ui/Input";
 import { Button } from "@/components/ui/button";
 import { useUserDetail } from "@/hooks/useUserDetails"
 import { sumDecimal } from "@/lib/decimal";
@@ -15,10 +14,15 @@ import {
     DrawerFooter,
     DrawerHeader,
     DrawerTitle,
-    DrawerTrigger,
 } from "@/components/ui/drawer"
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import FormInput from "@/components/form/FormInput";
+import addBalance from "@/actions/addBalance";
+import { useRouter } from "next/navigation";
+import Loader from "@/components/Loader";
+import { revalidatePath } from "next/cache";
+
+
 export default function AddBalance() {
     const { userDetails } = useUserDetail();
     const { handleSubmit, register, getValues, setValue, formState: { errors } } = useForm({
@@ -26,17 +30,29 @@ export default function AddBalance() {
             balance: null
         }
     });
-    const [drawer, setDrawer] = useState(false);
 
+    const [pending, startTransition] = useTransition();
+    const [drawer, setDrawer] = useState(false);
+    const router = useRouter();
     const setPrice = (value) => {
         setValue("balance", sumDecimal(getValues("balance"), value))
     }
 
-    const submitBalance = () => {
+    const validateBalance = () => {
         setDrawer(true)
     }
 
-
+    const submitBalance = ()=>{
+        startTransition(async()=>{
+            const user = await addBalance(userDetails.id, getValues("balance"))
+            if(!user?.error){
+                alert("Recarga Satisfactoria")
+                router.push("/mod/user/"+userDetails.id)
+            }
+        })
+    }
+    
+    
     return (
         <>
             <main className="p-4">
@@ -47,7 +63,7 @@ export default function AddBalance() {
                     <h1 className="font-bold text-xl">Recarga de "{userDetails.name} {userDetails.lastname}"</h1>
                 </div>
 
-                <form noValidate onSubmit={handleSubmit(submitBalance)} className="flex flex-col">
+                <form noValidate onSubmit={handleSubmit(validateBalance)} className="flex flex-col">
                     <p>Cuanto saldro añadira ?</p>
                     <div className="grid grid-cols-4 gap-2 mb-2">
                         <PriceButton setPrice={setPrice} value={1}>$1.00</PriceButton>
@@ -62,6 +78,7 @@ export default function AddBalance() {
                             className="bg-foreground mb-2"
                             placeholder="$0"
                             error={errors.balance?.message}
+                            step={".01"}
 
                         />
                     </div>
@@ -74,7 +91,10 @@ export default function AddBalance() {
                                 <DrawerDescription>Saldo despues de la recarga: ${sumDecimal(+userDetails.balance, getValues("balance"))}</DrawerDescription>
                             </DrawerHeader>
                             <DrawerFooter>
-                                <Button>Confirmar Recarga</Button>
+                                <Button disabled={pending} onClick={submitBalance}>{
+                                    pending ? <Loader />
+                                    : "Confirmar Recarga"
+                                }</Button>
                                 <DrawerClose className="w-full">
                                     <Button variant="outline" className="w-full">Cancel</Button>
                                 </DrawerClose>

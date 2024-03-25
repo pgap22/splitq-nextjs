@@ -7,12 +7,13 @@ function FormInput({
     type,
     error,
     register,
-    className
+    className,
+    step
 }) {
     return (
         <div className="flex flex-col w-full">
             <div className="flex flex-col-reverse">
-                <Input required className={cn("valid:border-blue-500 transition-all", error && "!border-red-500 !placeholder-red-500",className)} placeholder={placeholder} type={type} {...register} />
+                <Input required step={step} className={cn("valid:border-blue-500 transition-all", error && "!border-red-500 !placeholder-red-500",className)} placeholder={placeholder} type={type} {...register} />
                 <label className={cn(error && "!text-red-500", "label-valid")}>{label}</label>
             </div>
             <p className={cn("text-red-500  text-xs", error && "border-red-500")}>{error}</p>
