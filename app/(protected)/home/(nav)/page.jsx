@@ -1,4 +1,4 @@
-import { logout } from "@/actions/logout";
+import { signOut } from "@/auth";
 import { Logo } from "@/components/Logo";
 import SettingButtonUser from "@/components/home/SettingButtonUser";
 import ThemeToggle from "@/components/ui/theme-toggle";
@@ -8,6 +8,12 @@ import { authUser } from "@/lib/authUser";
 
 export default async function Home() {
     const user = await authUser();
+    //Por veces no agarraba el logout asiq esto lo solucionaxd
+    async function logout() {
+        "use server"
+        await signOut();
+    }
+
     return (
         <>
             <div className="flex justify-between items-center">
@@ -18,9 +24,7 @@ export default async function Home() {
                 </div>
             </div>
             <section>
-                <form action={logout}>
-                    <button>Prueba</button>
-                </form>
+      
             </section>
         </>
     )

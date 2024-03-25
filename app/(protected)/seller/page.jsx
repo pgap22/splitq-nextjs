@@ -1,9 +1,7 @@
+import { signOut } from "@/auth";
 import { Logo } from "@/components/Logo";
-import SettingButtonUser from "@/components/home/SettingButtonUser";
-import QrScannerButton from "@/components/qrScannerButton";
 import SellerQRScanner from "@/components/seller/SellerQrScanner";
 import IconBox from "@/components/ui/IconBox";
-import { Button } from "@/components/ui/button";
 import SettingButton from "@/components/ui/setting-button";
 import ThemeToggle from "@/components/ui/theme-toggle";
 import { authUser } from "@/lib/authUser";
@@ -13,13 +11,19 @@ import { MdOutlineFastfood, MdOutlineFoodBank, MdOutlineLocalPizza } from "react
 
 export default async function SellerHome() {
     const user = await authUser()
+    //Por veces no agarraba el logout asiq esto lo solucionaxd
+    async function logout() {
+        "use server"
+        await signOut();
+    }
+
     return (
         <>
             <div className="flex flex-row justify-between p-4">
                 <Logo />
                 <div className="flex gap-2 items-center">
                     <ThemeToggle />
-                    <SettingButton user={user}>
+                    <SettingButton logout={logout} user={user}>
                         <div>
                             <h3 className="text-text-secundary p-4 pb-2 font-bold text-lg">Historial</h3>
                             <div className="border-t border-border border-b p-4">

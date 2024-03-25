@@ -8,7 +8,8 @@ import { authUser } from "@/lib/authUser";
 export default async function ModPage() {
     const user = await authUser();
     
-    async function xd(){
+    //Por veces no agarraba el logout asiq esto lo solucionaxd
+    async function logout(){
         "use server"
         await signOut();
     }
@@ -19,7 +20,7 @@ export default async function ModPage() {
                 <Logo />
                 <div className="flex gap-2 items-center">
                     <ThemeToggle />
-                    <SettingButton logout={xd} user={user}>
+                    <SettingButton logout={logout} user={user}>
                         pon aca lo q sea xd
                     </SettingButton>
                 </div>
