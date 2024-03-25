@@ -67,7 +67,6 @@ export default function QrScannerButton({ children, onValue = () => { } }) {
     }
 
     const onQrFunction = (data)=>{
-        alert("xd")
         setQrLoaded(true)
         onValue(data)
     }
