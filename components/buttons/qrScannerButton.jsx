@@ -1,15 +1,15 @@
 "use client"
 
 import React, { useEffect, useRef, useState } from "react"
-import { Button } from "./ui/button"
-import { animated, useSpring, useTransition } from "@react-spring/web";
+import { Button } from "../ui/button"
+import { animated, useTransition } from "@react-spring/web";
 import QrScanner from "qr-scanner";
-import Loader from "./Loader";
-import IconBox from "./ui/IconBox";
+import Loader from "../Loader";
+import IconBox from "../ui/IconBox";
 import { MdOutlineArrowBack } from "react-icons/md";
 import { cn } from "@/lib/utils";
-import { Dialog, DialogHeader, DialogContent, DialogDescription, DialogTitle } from "./ui/dialog";
-import QRLoader from "./QRLoader";
+import { Dialog, DialogHeader, DialogContent, DialogDescription, DialogTitle } from "../ui/dialog";
+import QRLoader from "../QRLoader";
 import { useOnClickOutside } from "usehooks-ts";
 
 export default function QrScannerButton({ children, onValue = () => { } }) {

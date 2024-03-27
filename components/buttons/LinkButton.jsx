@@ -1,5 +1,5 @@
 import Link from "next/link";
-import IconBox from "./IconBox";
+import IconBox from "../ui/IconBox";
 import { cn } from "@/lib/utils";
 
 export default function LinkButton({href = "/", Icon,first = false, children}) {

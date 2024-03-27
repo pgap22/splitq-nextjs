@@ -1,11 +1,11 @@
-import HeaderComponent from "@/components/index/HeaderComponent"
+import HeaderComponent from "@/containers/HeaderComponent"
 import Border from "@/components/ui/Border"
 import Image from "next/image";
 import { MdOutlineAccountBalanceWallet, MdOutlineCheckCircle, MdOutlineLocalMall, MdPersonAddAlt1 } from "react-icons/md"
 import { Button } from "@/components/ui/button"
 import IconBox from "@/components/ui/IconBox"
 import Link from "next/link";
-import ContainerCenter from "@/components/ui/ContainerCenter";
+import ContainerCenter from "@/containers/ContainerCenter";
 
 
 function UserIndex() {

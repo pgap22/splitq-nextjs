@@ -1,15 +1,8 @@
-import SettingButtonUser from "@/components/home/SettingButtonUser";
 import IconBox from "@/components/ui/IconBox";
-import SettingButton from "@/components/ui/setting-button";
+import SettingButton from "@/components/buttons/setting-button";
 import Link from "next/link";
 import { MdArrowBack } from "react-icons/md";
 import { authUser } from "@/lib/authUser";
-import { use } from "react";
-import FormInput from "@/components/form/FormInput";
-import FormTextArea from "@/components/form/FormTextArea";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
-import Input from "@/components/ui/Input";
-import { Button } from "@/components/ui/button";
 import FormAddProduct from "@/components/form/FormAddProduct";
 
 export default async function AddProduct() {

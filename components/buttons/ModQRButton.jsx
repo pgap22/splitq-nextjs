@@ -1,5 +1,5 @@
 "use client"
-import QrScannerButton from "../qrScannerButton";
+import QrScannerButton from "./qrScannerButton";
 import { useRouter } from "next/navigation";
 
 export default function ModQRButton() {

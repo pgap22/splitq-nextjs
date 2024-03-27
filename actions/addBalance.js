@@ -1,6 +1,6 @@
 "use server"
+import prisma from "@/db/prisma";
 import { authUser } from "@/lib/authUser";
-import prisma from "@/lib/db";
 import { sumDecimal } from "@/lib/decimal";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";

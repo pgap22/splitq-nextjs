@@ -1,13 +1,13 @@
 "use client"
 import { useState } from 'react';
 import { MdMenu, MdOutlineClose } from "react-icons/md"
-import { Logo } from '../Logo';
+import { Logo } from '../components/Logo';
 import { cn } from '@/lib/utils';
 import { animated, useTransition } from '@react-spring/web'
-import { Button } from '../ui/button';
+import { Button } from '../components/ui/button';
 import Link from 'next/link';
-import ContainerCenter from '../ui/ContainerCenter';
-import ThemeToggle from '../ui/theme-toggle';
+import ContainerCenter from './ContainerCenter';
+import ThemeToggle from '../components/buttons/theme-toggle';
 
 function HeaderComponent() {
     const [viewComponent, setView] = useState(false)

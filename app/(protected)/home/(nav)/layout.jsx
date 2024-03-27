@@ -1,4 +1,4 @@
-import SearchHome from "@/components/home/SearchHome";
+import SearchHome from "@/containers/SearchHome";
 import GradientIcon from "@/components/ui/GradientIcon";
 import Link from "next/link";
 import { MdOutlineConfirmationNumber, MdOutlineCreditCard, MdOutlineHome, MdOutlineQrCode, MdOutlineSearch, MdOutlineShoppingCart } from "react-icons/md";

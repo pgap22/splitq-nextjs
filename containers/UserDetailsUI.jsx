@@ -1,6 +1,6 @@
 "use client"
 import IconBox from "@/components/ui/IconBox";
-import LinkButton from "@/components/ui/LinkButton";
+import LinkButton from "@/components/buttons/LinkButton";
 import { MdOutlineArrowBack, MdOutlineAttachMoney, MdOutlineHistory } from "react-icons/md";
 import Link from "next/link";
 import { useUserDetail } from "@/hooks/useUserDetails";

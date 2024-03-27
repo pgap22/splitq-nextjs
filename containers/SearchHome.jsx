@@ -1,7 +1,7 @@
 "use client"
 import { MdOutlineArrowBack, MdOutlineDelete, MdOutlineHistory, MdOutlineSearch } from "react-icons/md";
-import IconBox from "../ui/IconBox";
-import Input from "../ui/Input";
+import IconBox from "../components/ui/IconBox";
+import Input from "../components/ui/Input";
 import { useTransition, animated } from "@react-spring/web";
 import { useToggle } from "usehooks-ts";
 

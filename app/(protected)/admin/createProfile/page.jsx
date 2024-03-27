@@ -19,10 +19,12 @@ import {
 import { cn } from "@/lib/utils";
 import Loader from "@/components/Loader";
 import AlertWarning from "@/components/ui/AlertWarning";
+import { useRouter } from "next/navigation";
 
 export default function CreateProfile() {
     const [warning, setWarning] = useState(false)
     const [loading, startTransition] = useTransition();
+    const router = useRouter();
     const { register, handleSubmit, formState, getValues, control } = useForm({
         defaultValues: {
             name: "",
@@ -36,9 +38,11 @@ export default function CreateProfile() {
         setWarning(false)
         startTransition(async () => {
             const result = await createUser(data);
-            if (result) {
+            if (result.error) {
                 setWarning(result.error)
+                return
             }
+            router.push("/admin");
         })
 
     }
@@ -55,7 +59,7 @@ export default function CreateProfile() {
             {warning && <AlertWarning
                 title={"Advertencia"}
                 description={warning}
-            />} 
+            />}
             <form noValidate onSubmit={handleSubmit(signup)} className="gap-4 flex flex-col">
                 <FormInput
                     placeholder={"Nombre del perfil"}
@@ -65,13 +69,19 @@ export default function CreateProfile() {
                     register={register("name", { required: { value: true, message: "Nombre esta vacio" } })}
                 />
                 <div>
-                    <label>Rol del perfil</label>
+                    <label className={cn(formState.errors.role?.message && "!text-red-500", "label-valid")}>Rol del Perfil</label>
                     <Controller
                         name="role"
+                        rules={{
+                            required: {
+                                value: true,
+                                message: "Este campo es obligatorio"
+                            }
+                        }}
                         control={control}
                         render={({ field }) => <Select onValueChange={field.onChange}>
-                            <SelectTrigger className={cn("!bg-background !text-text-secundary !border", formState.errors.role?.message ? "!border-red-500" : getValues("role") ? "!border-blue-500" : "!border-border")}>
-                                <SelectValue placeholder="Seleccione el rol" />
+                            <SelectTrigger className={cn(!getValues("role") && "!text-text-secundary", "!bg-background !border", formState.errors.role?.message ? "!border-red-500" : getValues("role") ? "!border-blue-500" : "!border-border")}>
+                                <SelectValue className="placeholder:text-text-secundary" placeholder="Seleccione el rol" />
                             </SelectTrigger>
                             <SelectContent className="!bg-foreground">
                                 <SelectGroup>

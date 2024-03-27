@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { animated, useTransition } from '@react-spring/web'
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/Logo';
-import SideContainer from '@/components/ui/SideContainer';
+import ContainerCenter from '@/containers/ContainerCenter';
 
 function HeaderAdmin() {
     const [viewComponent, setView] = useState(false)
@@ -26,7 +26,7 @@ function HeaderAdmin() {
     return (
         <>
             <div className={cn(' sticky top-0 bg-background  p-4  md:mb-4')}>
-                <SideContainer className={"max-w-5xl"}>
+                <ContainerCenter className={"max-w-5xl"}>
                     <div className='justify-between w-full items-center flex'>
                         <MdSettings className='md:hidden' onClick={toggleView} size={24} />
                         <div className='hidden md:flex gap-4'>
@@ -42,7 +42,7 @@ function HeaderAdmin() {
                             </div>
                         </div>
                     </div>
-                </SideContainer>
+                </ContainerCenter>
             </div>
             {transitions((style, item) => item ? <FloatingMenu close={toggleView} style={style} /> : "")}
         </>

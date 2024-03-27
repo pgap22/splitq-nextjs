@@ -1,5 +1,5 @@
 
-import UserDetailsUI from "@/components/mod/UserDetailsUI";
+import UserDetailsUI from "@/containers/UserDetailsUI";
 import { getUserById } from "@/lib/user"
 import { redirect } from "next/navigation";
 

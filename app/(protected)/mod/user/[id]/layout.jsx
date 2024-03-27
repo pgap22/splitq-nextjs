@@ -1,4 +1,4 @@
-import { UserDetailProvider } from "../../../../../contexts/UserDetailContext";
+import { UserDetailProvider } from "../../../../../store/UserDetailContext";
 
 export default function UserDetailLayout({ children }) {
     return (

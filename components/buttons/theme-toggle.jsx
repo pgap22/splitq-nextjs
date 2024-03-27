@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useTheme } from "next-themes"
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
-import IconBox from "./IconBox";
+import IconBox from "../ui/IconBox";
 export default function ThemeToggle({ size = 22}) {
     const { setTheme } = useTheme()
     return (

@@ -1,6 +1,5 @@
+import prisma from "@/db/prisma";
 import { authUser } from "@/lib/authUser";
-import prisma from "@/lib/db";
-// import prismaDev from "@/lib/dbDev";
 
 export default async function getRecharges() {
 

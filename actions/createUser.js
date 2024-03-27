@@ -1,8 +1,7 @@
 "use server"
-import prisma from "@/lib/db";
+import prisma from "@/db/prisma";
 import { getUserByEmail } from "@/lib/user";
 import bcryptjs from "bcryptjs"
-// import prismaDev from "@/lib/dbDev";
 export async function createUser(data) {
     if (!data.name || !data.email || !data.password) return { error: "Campos vacios" }
     
@@ -19,5 +18,7 @@ export async function createUser(data) {
             password: passwordHash,
         }
     })
+
+    return true;
 
 }

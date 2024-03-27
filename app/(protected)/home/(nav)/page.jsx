@@ -1,7 +1,7 @@
 import { signOut } from "@/auth";
 import { Logo } from "@/components/Logo";
-import SettingButtonUser from "@/components/home/SettingButtonUser";
-import ThemeToggle from "@/components/ui/theme-toggle";
+import SettingButtonUser from "@/components/buttons/SettingButtonUser";
+import ThemeToggle from "@/components/buttons/theme-toggle";
 import { authUser } from "@/lib/authUser";
 
 

@@ -1,9 +1,9 @@
 import getRecharges from "@/actions/getRecharges";
 import { signOut } from "@/auth";
 import { Logo } from "@/components/Logo";
-import ModQRButton from "@/components/mod/ModQRButton";
-import SettingButton from "@/components/ui/setting-button";
-import ThemeToggle from "@/components/ui/theme-toggle";
+import ModQRButton from "@/components/buttons/ModQRButton";
+import SettingButton from "@/components/buttons/setting-button";
+import ThemeToggle from "@/components/buttons/theme-toggle";
 import { authUser } from "@/lib/authUser";
 
 export default async function ModPage() {

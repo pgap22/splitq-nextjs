@@ -1,9 +1,9 @@
 import { signOut } from "@/auth";
 import { Logo } from "@/components/Logo";
-import SellerQRScanner from "@/components/seller/SellerQrScanner";
+import SellerQRScanner from "@/components/buttons/SellerQrScanner";
 import IconBox from "@/components/ui/IconBox";
-import SettingButton from "@/components/ui/setting-button";
-import ThemeToggle from "@/components/ui/theme-toggle";
+import SettingButton from "@/components/buttons/setting-button";
+import ThemeToggle from "@/components/buttons/theme-toggle";
 import { authUser } from "@/lib/authUser";
 import Link from "next/link";
 import { MdOutlineFastfood, MdOutlineFoodBank, MdOutlineLocalPizza } from "react-icons/md";
