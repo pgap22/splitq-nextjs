@@ -20,7 +20,7 @@ export default function SearchHome() {
         <>
             <MdOutlineSearch onClick={toggleSearch} size={26} />
             {transitionSearch((style, item) => item ? (<animated.div style={style} className="fixed inset-0 p-4 bg-background z-10">
-                <div className="grid grid-cols-[max-content_1fr] gap-4">
+                <div className="flex gap-4">
                     <div onClick={toggleSearch}>
                         <IconBox variant={"square"} Icon={MdOutlineArrowBack} />
                     </div>
