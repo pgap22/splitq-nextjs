@@ -8,6 +8,7 @@ import { Button } from '../components/ui/button';
 import Link from 'next/link';
 import ContainerCenter from './ContainerCenter';
 import ThemeToggle from '../components/buttons/theme-toggle';
+import IconBox from '@/components/ui/IconBox';
 
 function HeaderComponent() {
     const [viewComponent, setView] = useState(false)
@@ -32,7 +33,7 @@ function HeaderComponent() {
                         <Logo />
                         <div className='flex gap-2 items-center'>
                             <ThemeToggle />
-                            <MdMenu className='md:hidden' onClick={toggleView} size={24} />
+                            <IconBox aria-label="menu" aria-labelledby="menu-button" variant={"square"} Icon={MdMenu} className='md:hidden' onClick={toggleView} size={24} />
                             <div className='hidden md:flex gap-2'>
                                 <Button asChild className="font-bold px-4 text-sm">
                                     <Link href={"/auth/login"}>
@@ -55,11 +56,13 @@ function HeaderComponent() {
 
 function FloatingMenu({ style, close }) {
     return (
-        <animated.div style={style} className='fixed p-4 inset-0 bg-black bg-opacity-20 backdrop-blur-sm '>
+        <animated.div role="dialog" aria-modal="true" style={style} className='fixed p-4 inset-0 bg-black bg-opacity-20 backdrop-blur-sm '>
             <div className="w-full rounded p-4 bg-foreground border-border border">
                 <div className='flex justify-between items-center'>
                     <Logo width={100} />
-                    <MdOutlineClose onClick={close} size={24} />
+                    <button aria-label='close-dialog' onClick={close}>
+                        <MdOutlineClose size={24} />
+                    </button>
                 </div>
                 <div className='flex flex-col gap-2 mt-6'>
                     <Button asChild className="font-bold text-sm">
