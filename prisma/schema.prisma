@@ -41,6 +41,8 @@ model Recharges{
   userID String
   modID String
 
+  createdAt DateTime @default(now())
+
   user Users @relation("user",fields: [userID], references: [id], onDelete: Cascade, onUpdate: Cascade)
   mod Users @relation("mod", fields: [modID], references: [id], onDelete: Cascade, onUpdate: Cascade)
 

@@ -20,6 +20,7 @@ export default function QrScannerButton({ children, onValue = () => { } }) {
     const [qrEnabled, setQREnabled] = useState(false);
     const [qrLoaded, setQrLoaded] = useState(false);
     const [errorCAM, setErrorCAM] = useState();
+    const [isApple, setAgent] = useState();
    
     const qrRefLoaded = useRef();
     const ref = useRef();
@@ -44,10 +45,13 @@ export default function QrScannerButton({ children, onValue = () => { } }) {
         startQRCAM(async () => {
             await qrInstance.start();
             setQREnabled(true)
+            document.body.style.overflow = "hidden"
         })
     }
 
     const stopQRScanning = () => {
+        document.body.style.overflow = ""
+
         qrReader.stop();
         setQREnabled(false)
         toggleModal()
@@ -68,6 +72,7 @@ export default function QrScannerButton({ children, onValue = () => { } }) {
 
     const onQrFunction = (data)=>{
         setQrLoaded(true)
+        document.body.style.overflow = ""
         onValue(data)
     }
 
@@ -83,6 +88,7 @@ export default function QrScannerButton({ children, onValue = () => { } }) {
             startQRScanning(qrReader)
         }
 
+        setAgent(/(iPhone|iPad|iPod)/i.test(navigator.userAgent))
 
     }, [modal])
 
@@ -106,8 +112,8 @@ export default function QrScannerButton({ children, onValue = () => { } }) {
             ) : "")
             }
 
-            <div className={cn(modal ? "z-10" : "-z-10", "flex justify-center fixed  top-0 left-0 right-0")}>
-                <video ref={ref} id="qr-reader">
+            <div className={cn(modal ? "z-10" : "-z-10", "flex items-center fixed inset-0")}>
+                <video className={cn(isApple && "w-full h-[80%] object-cover")} ref={ref} id="qr-reader">
                 </video>
             </div>
 
