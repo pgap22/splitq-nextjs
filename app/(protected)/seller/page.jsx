@@ -60,12 +60,14 @@ export default async function SellerHome() {
                         </div>
                     </Link>
 
-                    <div className="border-b border-border p-4">
-                        <div className="flex flex-row items-center gap-4">
-                            <IconBox Icon={MdOutlineFastfood} />
-                            <h1>Crear un combo</h1>
+                    <Link href={"/seller/createCombo"}>
+                        <div className="border-b border-border p-4">
+                            <div className="flex flex-row items-center gap-4">
+                                <IconBox Icon={MdOutlineFastfood} />
+                                <h1>Crear un combo</h1>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
 
                     <div className="border-b border-border p-4">
                         <div className="flex flex-row items-center gap-4">
