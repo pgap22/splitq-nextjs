@@ -12,10 +12,13 @@ export default async function login(data) {
             redirect: false
         });
     } catch (error) {
-        console.log(error)
         if(error instanceof AuthError){
             if(error.type == "CredentialsSignin"){
                 return { error: "Usuario o contraseñas son invalidas" }
+            }
+
+            if(error.message.startsWith("Bad Verification")){
+                return {error: "Debes verificar tu cuenta"}
             }
         }
 

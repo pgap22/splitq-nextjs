@@ -24,6 +24,8 @@ model Users{
   password String
   balance Float? @default(0.00)
   role String @default("user")
+  code String?
+  verification Boolean @default(false)
 
   userRecharges Recharges[] @relation("user")
   ModRecharges Recharges[] @relation("mod")
