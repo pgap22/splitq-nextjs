@@ -4,9 +4,10 @@ import Link from "next/link";
 import { MdArrowBack } from "react-icons/md";
 import { authUser } from "@/lib/authUser";
 import FormAddProduct from "@/components/form/FormAddProduct";
+import { getCategories } from "@/actions/categories";
 
 export default async function AddProduct() {
-    const user = await authUser()
+    const categories = await getCategories()
     return (
         <>
             <div className="flex justify-between p-4">
@@ -15,16 +16,8 @@ export default async function AddProduct() {
                         Icon={MdArrowBack}
                     />
                 </Link>
-                <SettingButton user={user}>
-                    <div>
-                        <h3 className="text-text-secundary p-4 pb-2 font-bold text-lg">Historial</h3>
-                        <div className="border-t border-border border-b p-4">
-                            <p className="font-bold">Historial de acciones</p>
-                        </div>
-                    </div>
-                </SettingButton>
             </div>
-            <FormAddProduct></FormAddProduct>
+            <FormAddProduct  categories={categories}/>
         </>
     )
 }

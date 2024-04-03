@@ -32,6 +32,20 @@ model Users{
 model Categories{
   id String @default(uuid()) @id
   name String
+
+  productos Products[]
+}
+
+model Products{
+  id String @default(uuid()) @id
+  name String
+  price Float
+  description String
+  image String?
+  
+  categorieID String
+
+  categorie Categories @relation(fields: [categorieID] ,references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Recharges{
