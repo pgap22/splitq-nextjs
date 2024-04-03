@@ -2,12 +2,14 @@ import { logout } from "@/actions/logout";
 import { authUser } from "@/lib/authUser"
 import { getUserById } from "@/lib/user";
 import { Button } from "@/components/ui/button";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
 
 export default async function AuthLayout({ children }) {
     //Check if the user exist in the DB
-    const user = await authUser();
+    const session = await auth();
 
-    const existingUser = await getUserById(user.id)
+    const existingUser = await getUserById(session.user?.id)
 
     //If not in DB display an error and a button for logout
     if (!existingUser) return (
@@ -25,6 +27,6 @@ export default async function AuthLayout({ children }) {
 
 
     return (
-        <>{children}</>
+        <SessionProvider session={session}>{children}</SessionProvider>
     )
 }

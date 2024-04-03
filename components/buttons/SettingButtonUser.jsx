@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { useTransition, animated } from "@react-spring/web";
 import { useRef, useState } from "react";
 import { useOnClickOutside } from "usehooks-ts";
+import Link from "next/link";
 
 export default function SettingButtonUser({ user, logout }) {
     const [menuSetting, setMenuSetting] = useState(false);
@@ -14,7 +15,7 @@ export default function SettingButtonUser({ user, logout }) {
         from: { opacity: 0 },
         enter: { opacity: 1 },
         leave: { opacity: 0 },
-        config: {duration: 50}
+        config: { duration: 50 }
 
     });
 
@@ -22,7 +23,7 @@ export default function SettingButtonUser({ user, logout }) {
         from: { translateX: "100%" },
         enter: { translateX: "0%" },
         leave: { translateX: "100%" },
-        config: {duration: 120}
+        config: { duration: 120 }
 
     });
 
@@ -37,7 +38,7 @@ export default function SettingButtonUser({ user, logout }) {
                 <IconBox variant={"square"} Icon={MdOutlineSettings} />
             </div>
 
-            {bgTransition((style,item) => (item ? (
+            {bgTransition((style, item) => (item ? (
                 <animated.div style={style} className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-10">
                     {transitionsMenu((style, item) => item ? <SideMenu user={user} logout={logout} close={toggleView} style={style} /> : "")}
                 </animated.div>
@@ -56,9 +57,11 @@ function SideMenu({ style, user, close, logout }) {
                 <h2 className="font-bold p-4 text-xl">{user.name} {user.lastname}</h2>
                 <div>
                     <h3 className="text-text-secundary p-4 pb-2 font-bold text-lg">Cuenta</h3>
-                    <div className="border-t border-border border-b p-4">
-                        <p className="font-bold">Configuracion de cuenta</p>
-                    </div>
+                    <Link href={"/home/settings"}>
+                        <div className="border-t border-border border-b p-4">
+                            <p className="font-bold">Configuracion de cuenta</p>
+                        </div>
+                    </Link>
                 </div>
 
                 <div>
