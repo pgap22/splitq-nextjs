@@ -47,6 +47,26 @@ model Products{
   categorieID String
 
   categorie Categories @relation(fields: [categorieID] ,references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  combo ComboProducts[]
+}
+
+model Combo{
+  id String @default(uuid()) @id
+  name String
+  description String
+  price Float
+
+  products ComboProducts[]
+}
+
+model ComboProducts{
+  id String @default(uuid()) @id
+  id_product String
+  id_combo String
+
+  combo Combo @relation(fields: [id_combo], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  product Products @relation(fields: [id_product], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Recharges{
