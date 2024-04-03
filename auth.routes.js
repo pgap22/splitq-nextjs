@@ -1,6 +1,7 @@
 
 export const PUBLIC_ROUTES = [
-    "/",
+    
+    "/verify",
     "/auth/signup",
     "/auth/login",
 ]

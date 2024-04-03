@@ -8,13 +8,17 @@ export default {
     providers: [Credentials({
 
         async authorize(data) {
-            const { email, password } = data;
+            const { email, password, verificationLogin } = data;
 
             const user = await getUserByEmail(email);
 
+            
             if (!user) return null
+            
+            if(verificationLogin) return user;
 
-            if(!user.verification) throw new AuthError("Bad Verification")
+
+            if(user.token) throw new AuthError("Bad Verification")
 
             const isSamePassword = await bcryptjs.compare(password, user.password)
 

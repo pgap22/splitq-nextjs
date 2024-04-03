@@ -7,14 +7,13 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { MdOutlineWarningAmber } from "react-icons/md";
-import FormLayout from "../layout";
+
 
 export default function SignUp() {
     const [warning, setWarning] = useState(false)
     const [loading, startTransition] = useTransition();
     const [succes, setSucces] = useState(false);
-    const { register, handleSubmit, formState, } = useForm({
+    const { register, handleSubmit, formState,getValues } = useForm({
         defaultValues: {
             name: "",
             lastname: "",
@@ -40,30 +39,14 @@ export default function SignUp() {
 
     }
 
-    // if (succes) return (
-    //     <>
-    //         <h1 className="text-xl font-bold text-center">Verifica tu cuenta</h1>
-    //         <p className="text-md text-text-secundary text-center mb-5">En tu correo se ha enviado un codigo de verificacion!</p>
-    //         <div className="space-y-4">
-    //             <AlertWarning
-    //                 title={"Advertencia"}
-    //                 description={"Necesitaras conexion a internet o datos moviles"}
-    //             />
-    //             <FormInput
-    //                 label={"Codigo de verificacion"}
-    //                 placeholder={"Codigo de verificacion"}
-    //             />
-    //         </div>
-    //     </>
-    // )
+
+
+
+    
     if (succes) return (
         <>
             <h1 className="text-xl font-bold text-center">Verifica tu cuenta</h1>
-            <p className="text-md text-text-secundary text-center mb-5">Esta funcion se agregara pronto, asi que desde ahora puedes iniciar sesion</p>
-            <Button asChild>
-                <Link href={"/auth/login"}>Iniciar Sesion</Link>
-            </Button>
-
+            <p className="text-md text-text-secundary text-center mb-5">Hemos enviado a <span className="font-bold">{getValues("email")}</span> un link de verificacion, para que actives tu cuenta e ingreses a SplitQ <span className="opacity-5">👻</span></p>
         </>
     )
 

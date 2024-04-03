@@ -15,18 +15,17 @@ export async function createUser(data) {
 
     const isNotUser = !!data.role
     
-    const code  =  generarCodigoVerificacion(6)
+    const code  =  generarCodigoVerificacion()
 
     sendVerificationEmail(data.email, code);
 
-    // const user = await prisma.users.create({
-    //     data: {
-    //         ...data,
-    //         password: passwordHash,
-    //         verification: true,
-    //         code
-    //     }
-    // })
+    const user = await prisma.users.create({
+        data: {
+            ...data,
+            password: passwordHash,
+            token: isNotUser ? '' : code
+        }
+    })
 
     return true;
 
