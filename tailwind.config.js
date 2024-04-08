@@ -37,6 +37,8 @@ module.exports = {
         "yellow-border-notification": "var(--yellow-border-notification)",
         "yellow-text-notification": "var(--yellow-text-notification)",
         "light-blue": "var(--light-blue)",
+        "danger-text": "var(--danger-text)",
+        "danger-action": "var(--danger-action)"
 
       },
       keyframes: {

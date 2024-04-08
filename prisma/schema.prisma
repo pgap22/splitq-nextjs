@@ -10,11 +10,8 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgres://splitqdev:JZ67wuxzJi3h2N9dXrFC4paLeqS7rkiH@dpg-cnk7brgl6cac73a2vdf0-a.ohio-postgres.render.com/splitqdev"
 }
-
-
-
 
 model Users{
   id String @default(uuid()) @id
@@ -25,9 +22,13 @@ model Users{
   balance Float? @default(0.00)
   role String @default("user")
   token String?
+  emailToken String?
+  updatableEmail String?
 
   userRecharges Recharges[] @relation("user")
   ModRecharges Recharges[] @relation("mod")
+
+  createdProducts Products[]
 }
 
 model Categories{
@@ -43,9 +44,12 @@ model Products{
   price Float
   description String
   image String?
+
   
+  seller_id String
   categorieID String
 
+  seller Users @relation(fields: [seller_id], references: [id])
   categorie Categories @relation(fields: [categorieID] ,references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   combo ComboProducts[]
@@ -82,19 +86,6 @@ model Recharges{
   mod Users @relation("mod", fields: [modID], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
 }
-
-
-// model Logs{
-//   id  String @default(uuid()) @id
-//   type LogsType
-//   productID String?
-//   price String?
-
-//   userID String
-
-//   user Users @relation(fields: [userID], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-// }
 
 enum LogsType{
   recharge

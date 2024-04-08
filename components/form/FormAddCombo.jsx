@@ -1,46 +1,51 @@
 "use client"
 
-import { Controller, useForm } from "react-hook-form"
-import { Select, SelectTrigger, SelectItem, SelectContent, SelectGroup, SelectLabel, SelectValue } from "../ui/select"
+import {  useForm } from "react-hook-form"
+import { Select, SelectTrigger, SelectContent, SelectGroup,  SelectValue, SelectItem } from "../ui/select"
 import FormInput from "./FormInput"
 import FormTextArea from "./FormTextArea"
 import { Button } from "../ui/button"
+import Loader from "../Loader"
+import IconBox from "../ui/IconBox"
+import { MdAdd, MdLocalPizza, MdRemove } from "react-icons/md"
 import { sumDecimal } from "@/lib/decimal"
 import { useState, useTransition } from "react"
-import { createProduct } from "@/actions/createProduct"
-import AlertWarning from "../ui/AlertWarning"
-import Loader from "../Loader"
-import { useRouter } from "next/navigation";
-import IconBox from "../ui/IconBox"
-import { MdAdd, MdLineStyle, MdLocalPizza, MdRemove } from "react-icons/md"
 
-export default function FormAddCombo({ categories }) {
-    const router = useRouter();
-    const [warning, setWarning] = useState(false)
-    const { register, handleSubmit, formState, getValues, control, setValue, formState: { errors } } = useForm();
+
+export default function FormAddCombo({ productos }) {
     const [loading, startTransition] = useTransition();
+    const [comboOpen, setComboOpen] = useState();
+    const [value, setValueCombo] = useState();
+
+    const [addedProducts, setAddedProducts] = useState([]);
+    const { register, handleSubmit, formState, getValues, control, setValue, formState: { errors } } = useForm({
+        defaultValues: {
+            name: "",
+            description: "",
+            price: "",
+            products: []
+        }
+    });
+
+  
+
     const setPrice = (value) => {
         setValue("price", sumDecimal(getValues("price"), value))
     }
-    const creating = (data) => {
-        setWarning(false)
-        startTransition(async () => {
-            const result = await createProduct(data);
-            if (result) {
-                setWarning(result.error)
-            }
-            router.push("/seller");
-        })
+
+    const submitData = (data) => {
+        console.log(data)
     }
+
     return (
         <>
-            <form noValidate onSubmit={handleSubmit()}>
+            <form noValidate onSubmit={handleSubmit(submitData)}>
                 <div className="p-4 flex flex-col gap-5">
                     <h1 className="text-2xl font-bold">Añadir Combos</h1>
-                    {warning && <AlertWarning
+                    {/* {warning && <AlertWarning
                         title={"Advertencia"}
                         description={warning}
-                    />}
+                    />} */}
                     <FormInput
                         placeholder={"Nombre del Combo"}
                         label={"Nombre del Combo"}
@@ -53,30 +58,21 @@ export default function FormAddCombo({ categories }) {
                         label={"Descripcion del Combo"}
                         register={register("description", { required: { value: true, message: "La descripcion esta vacia" } })}
                     />
-                    <Controller
-                        name=""
-                        rules={{
-                            required: {
-                                value: true,
-                                message: "Este campo es obligatorio"
-                            }
-                        }}
-                        control={control}
-                        render={({ field }) => <Select onValueChange={field.onChange}>
-                            <SelectTrigger >
-                                <SelectValue className="placeholder:text-text-secundary" placeholder="Seleccione los Productos" />
-                            </SelectTrigger>
-                            <SelectContent className="!bg-foreground">
-                                <SelectGroup>
-                                    <SelectLabel>Productos</SelectLabel>
-                                    {
-                                        //categories.map(category => <SelectItem className="!bg-background" value={category.id}>{category.name}</SelectItem>)
-                                    }
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>}
-
-                    />
+                    <Select value="" onValueChange={(data)=>{
+                        alert(JSON.stringify(data))
+                    }}>
+                        <SelectTrigger className="!text-white">
+                            <SelectValue placeholder="Agrega Productos a Tu Combo" />
+                        </SelectTrigger>
+                        <SelectContent className="!bg-foreground">
+                            <SelectGroup>
+                                {
+                                    productos.map(producto => <SelectItem className="!bg-background" value={producto} key={producto.id}>{producto.name}</SelectItem>)
+                                }
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                  
                     <div className="flex flex-col">
                         <ProductPreview
                             name={"Prueba"}
@@ -131,6 +127,7 @@ const ProductPreview = ({ name, price, image, quantity }) => {
                     //aca va la imagen del producto pero pa mientras el icono XD
                 }
                 <IconBox
+                    isButton={false}
                     Icon={MdLocalPizza}
                 />
                 <div className="flex items-center  justify-between w-full">

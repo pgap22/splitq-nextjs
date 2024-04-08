@@ -6,6 +6,8 @@
 @layer base {
     :root {
         --text-secundary: #A4A8A3;
+        --danger-text: #B71C1C;
+        --danger-action: #7F1D1D;
 
         --aqua-gradient: 90deg, #02AAB0 0%, #00CCAC 97.5%, #00CDAC 100%;
         --blue-gradient: 90deg, #00C6FF 0%, #0072FF 100%;
