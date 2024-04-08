@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgres://splitqdev:JZ67wuxzJi3h2N9dXrFC4paLeqS7rkiH@dpg-cnk7brgl6cac73a2vdf0-a.ohio-postgres.render.com/splitqdev"
+  url      = env("DATABASE_URL")
 }
 
 model Users{

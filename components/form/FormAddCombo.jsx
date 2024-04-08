@@ -1,15 +1,15 @@
 "use client"
 
-import {  useForm } from "react-hook-form"
-import { Select, SelectTrigger, SelectContent, SelectGroup,  SelectValue, SelectItem } from "../ui/select"
+import { useForm } from "react-hook-form"
+import { Select, SelectTrigger, SelectContent, SelectGroup, SelectValue, SelectItem } from "../ui/select"
 import FormInput from "./FormInput"
 import FormTextArea from "./FormTextArea"
 import { Button } from "../ui/button"
 import Loader from "../Loader"
 import IconBox from "../ui/IconBox"
 import { MdAdd, MdLocalPizza, MdRemove } from "react-icons/md"
-import { sumDecimal } from "@/lib/decimal"
-import { useState, useTransition } from "react"
+import { multiplyDecimal, sumDecimal } from "@/lib/decimal"
+import { useEffect, useState, useTransition } from "react"
 
 
 export default function FormAddCombo({ productos }) {
@@ -27,7 +27,30 @@ export default function FormAddCombo({ productos }) {
         }
     });
 
-  
+
+
+    const modifyQuantityProduct = (action, data) => {
+        const products = addedProducts.map(
+            product => {
+                if (data.id === product.id) {
+                    const quantity = action == "add" ? product.quantity + 1 : product.quantity - 1
+
+                    if(quantity == 0) return null   
+
+                    return {
+                        ...product,
+                        quantity
+                    }
+                }
+                return product
+            }
+        )
+        setAddedProducts(products.filter(product => product))
+    }
+
+    const addProductToCombo = () => {
+
+    }
 
     const setPrice = (value) => {
         setValue("price", sumDecimal(getValues("price"), value))
@@ -36,6 +59,11 @@ export default function FormAddCombo({ productos }) {
     const submitData = (data) => {
         console.log(data)
     }
+
+    useEffect(()=>{
+        setValue("price", sumDecimal(1,1,1))
+    },[addedProducts])
+
 
     return (
         <>
@@ -58,8 +86,30 @@ export default function FormAddCombo({ productos }) {
                         label={"Descripcion del Combo"}
                         register={register("description", { required: { value: true, message: "La descripcion esta vacia" } })}
                     />
-                    <Select value="" onValueChange={(data)=>{
-                        alert(JSON.stringify(data))
+                    <Select value="" onValueChange={(id_product) => {
+                        const foundProduct = productos.find(product => product.id == id_product);
+
+
+                        const sameProduct = addedProducts.find(product => product.id == id_product)
+                        
+                        if (sameProduct) {
+                            const modifiedQuantity = addedProducts.map(product => {
+                                if (product.id == id_product) {
+                                    return {
+                                        ...product,
+                                        quantity: product.quantity + 1
+                                    }
+                                }
+                                return product
+                            })
+                            setAddedProducts(modifiedQuantity)
+                            return
+                        }
+
+                        setAddedProducts([...addedProducts, {
+                            ...foundProduct,
+                            quantity: 1
+                        }])
                     }}>
                         <SelectTrigger className="!text-white">
                             <SelectValue placeholder="Agrega Productos a Tu Combo" />
@@ -67,21 +117,29 @@ export default function FormAddCombo({ productos }) {
                         <SelectContent className="!bg-foreground">
                             <SelectGroup>
                                 {
-                                    productos.map(producto => <SelectItem className="!bg-background" value={producto} key={producto.id}>{producto.name}</SelectItem>)
+                                    productos.map(producto => <SelectItem key={producto.id} className="!bg-background" value={producto.id} >{producto.name}</SelectItem>)
                                 }
                             </SelectGroup>
                         </SelectContent>
                     </Select>
-                  
+
                     <div className="flex flex-col">
-                        <ProductPreview
+                        {/* <ProductPreview
                             name={"Prueba"}
                             price={"$0.00"}
                         />
                         <ProductPreview
                             name={"Prueba"}
                             price={"$0.00"}
-                        />
+                        /> */}
+                        {
+                            addedProducts.map(addedProduct => (
+                                <ProductPreview
+                                    key={addedProduct.id}
+                                    product={addedProduct}
+                                    modifyQuantityProduct={modifyQuantityProduct}
+                                />))
+                        }
                     </div>
                     <div className="gap-2 flex flex-col">
                         <p>Precio del combo</p>
@@ -119,7 +177,7 @@ const PriceButton = ({ children, value, setPrice }) => {
     )
 }
 
-const ProductPreview = ({ name, price, image, quantity }) => {
+const ProductPreview = ({ product, modifyQuantityProduct }) => {
     return (
         <div>
             <div className="flex items-center p-4">
@@ -133,16 +191,18 @@ const ProductPreview = ({ name, price, image, quantity }) => {
                 <div className="flex items-center  justify-between w-full">
 
                     <div className="flex p-2 flex-col">
-                        <p className="font-bold text-sm">{name}</p>
-                        <p className="!font-bold !text-lg text-gradient bg-gradient-principal">{price}</p>
+                        <p className="font-bold text-sm">{product.name}</p>
+                        <p className="!font-bold !text-lg text-gradient bg-gradient-principal">${multiplyDecimal(product.price,product.quantity)}</p>
                     </div>
 
                     <div className="flex justify-center items-center bg-foreground">
                         <MdRemove
+                            onClick={() => modifyQuantityProduct("minus", product)}
                             size={30}
                         />
-                        <h1 className=" text-xl p-2">1</h1>
+                        <h1 className=" text-xl p-2">{product.quantity}</h1>
                         <MdAdd
+                            onClick={() => modifyQuantityProduct("add", product)}
                             size={30}
                         />
                     </div>
