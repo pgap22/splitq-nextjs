@@ -36,6 +36,8 @@ export default async function Home() {
                             />
                         </ActionLayout>
                     </Link>
+                    
+                    <Link href={"/admin/manageProfile"}>
                     <ActionLayout
                         description={"Administrar Perfiles"}
                     >
@@ -43,6 +45,7 @@ export default async function Home() {
                             Icon={MdOutlineStorefront}
                         />
                     </ActionLayout>
+                    </Link>
                     
                 </div>
             </div>
