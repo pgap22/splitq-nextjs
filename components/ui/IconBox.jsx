@@ -3,7 +3,7 @@ import { cva } from "class-variance-authority"
 import React from "react"
 
 
-export default React.forwardRef(function IconBox({className, Icon, variant, size = 22, onClick, ...props},ref) {
+export default React.forwardRef(function IconBox({className, Icon,isButton = true, variant, size = 22, onClick, ...props},ref) {
   const iconvariants = cva("w-10 aspect-square border flex items-center justify-center",{
     variants: {
       variant:{
@@ -16,10 +16,13 @@ export default React.forwardRef(function IconBox({className, Icon, variant, size
       variant: "gradientCircle"
     }
   })
+
+  const Comp = isButton ? "button" : "div"
+
   return (
-      <button  {...props} ref={ref} onClick={onClick} className={cn(className,iconvariants({variant}))}>
+      <Comp  {...props} ref={ref} onClick={onClick} className={cn(className,iconvariants({variant}))}>
         <Icon size={size} />
-      </button>
+      </Comp>
   )
 })
   

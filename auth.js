@@ -22,6 +22,7 @@ export const {
                 token.lastname = user.lastname
                 token.id = user.id
                 token.role = user.role
+                token.balance = user.balance
             }
             return token
         },
@@ -30,6 +31,7 @@ export const {
                 session.user.lastname = token.lastname
                 session.user.id = token.id
                 session.user.role = token.role
+                session.user.balance = token.balance
             }
             return session
         },

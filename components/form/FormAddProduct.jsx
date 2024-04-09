@@ -17,9 +17,11 @@ export default function FormAddProduct({ categories }) {
     const [warning, setWarning] = useState(false)
     const { register, handleSubmit, formState, getValues, control, setValue, formState: { errors } } = useForm();
     const [loading, startTransition] = useTransition();
+    
     const setPrice = (value) => {
         setValue("price", sumDecimal(getValues("price"), value))
     }
+    
     const creating = (data) => {
         setWarning(false)
         startTransition(async () => {
@@ -68,7 +70,7 @@ export default function FormAddProduct({ categories }) {
                                 <SelectGroup>
                                     <SelectLabel>Categoria</SelectLabel>
                                     {
-                                        categories.map(category => <SelectItem className="!bg-background" value={category.id}>{category.name}</SelectItem>)
+                                        categories.map(category => <SelectItem key={category.id} className="!bg-background" value={category.id}>{category.name}</SelectItem>)
                                     }
                                 </SelectGroup>
                             </SelectContent>
@@ -93,7 +95,7 @@ export default function FormAddProduct({ categories }) {
                             <PriceButton setPrice={setPrice} value={0.05}>$0.05</PriceButton>
                         </div>
                         <FormInput
-                            register={register("price", { required: { value: true, message: "Este campo es requerido" } })}
+                            register={register("price", {required: { value: true, message: "Este campo es requerido" } })}
                             type="number"
                             className="bg-foreground mb-2"
                             placeholder="$0"

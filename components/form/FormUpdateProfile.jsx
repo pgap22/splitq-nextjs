@@ -42,11 +42,18 @@ export default function FormUpdateProfile() {
                 setError(updateUser.error)
             }
 
-            if (updateUser.id) {
+            if (updateUser.user.id) {
                 update({
-                    user: updateUser
+                    user: updateUser.user
                 })
-                setSucess("Se han hecho los cambios correctamente !")
+                const sucess = (
+                    <div>
+                        <p>Se han hecho los cambios correctamente</p>
+                        {updateUser.email && <p className="font-bold text-white">Para que tu cuenta cambie el correo debes verificar la nueva direccion de correo</p>}
+                    </div>
+                )
+
+                setSucess(sucess)
                 reset();
             }
         })
@@ -89,11 +96,12 @@ export default function FormUpdateProfile() {
                             message: "Este no es un correo valido"
                         }
                     })}
+
                     label={"Email"}
                     error={formState.errors.email?.message}
                     placeholder={user.email} />
 
-                <Button className="w-full">{
+                <Button disabled={loading} className="w-full">{
                     loading ? <Loader /> : "Guardar Cambios"
                 }</Button>
             </form>

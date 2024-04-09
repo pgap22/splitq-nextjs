@@ -13,7 +13,6 @@ export default async function Home() {
         "use server"
         await signOut();
     }
-
     return (
         <>
             <div className="flex justify-between items-center">
@@ -23,9 +22,18 @@ export default async function Home() {
                     <SettingButtonUser logout={logout} user={user} />
                 </div>
             </div>
-            <section>
-                
+            <section className="mt-6">
+                <div className="bg-foreground border-border border rounded p-4">
+                    <h1 className="font-bold text-2xl" >Tu saldo: <span className="font-bold text-gradient-principal text-gradient bg-gradient-principal">${+user.balance}</span></h1>
+                    <p className="text-text-secundary text-md">Tu saldo actual para comprar productos dentro de <span className="font-bold text-gradient-principal text-gradient bg-gradient-principal">SplitQ</span></p>
+                </div>
             </section>
+            <div className="mt-4">
+                <h1 className="text-2xl font-bold">Que deseas comprar Hoy ?</h1>
+                <div>
+                    
+                </div>
+            </div>
         </>
     )
 }
