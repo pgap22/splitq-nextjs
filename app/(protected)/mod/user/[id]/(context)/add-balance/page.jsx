@@ -44,7 +44,7 @@ export default function AddBalance() {
 
     const submitBalance = ()=>{
         startTransition(async()=>{
-            const user = await addBalance(userDetails.id, getValues("balance"))
+            const user = await addBalance(userDetails.id, +getValues("balance"))
             if(!user?.error){
                 alert("Recarga Satisfactoria")
                 router.push("/mod/user/"+userDetails.id)
