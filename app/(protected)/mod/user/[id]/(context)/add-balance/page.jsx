@@ -73,7 +73,7 @@ export default function AddBalance() {
                     </div>
                     <div>
                         <FormInput
-                            register={register("balance", { required: { value: true, message: "Este campo es requerido" } })}
+                            register={register("balance", {valueAsNumber: true ,required: { value: true, message: "Este campo es requerido" } })}
                             type="number"
                             className="bg-foreground mb-2"
                             placeholder="$0"
