@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link";
-import { MdArrowBack, MdArrowForward } from "react-icons/md";
+import { MdArrowBack, MdArrowForward, MdDelete } from "react-icons/md";
 import IconBox from "@/components/ui/IconBox";
 import FormInput from "@/components/form/FormInput";
 import { cn } from "@/lib/utils";
@@ -19,16 +19,19 @@ import Loader from "@/components/Loader";
 import { useState, useTransition } from "react";
 import { updateProfile } from "@/actions/updateProfile";
 import AlertWarning from "@/components/ui/AlertWarning";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog";
 import { useRouter } from "next/navigation";
+import { deleteProfile } from "@/actions/deleteProfile";
 
 
 export default function UpdateAdmin({name, email, role, id}) {
     
     const router = useRouter()
     const [success, setSucess] = useState()
+    const [confirmDelete, setConfirm] = useState()
     const [warning, setWarning] = useState(false)
     const [loading, startTransition] = useTransition();
+    const [loadingDelete, startDelete] = useTransition()
     const { register, handleSubmit, formState, getValues, control} = useForm({
         defaultValues: {
             name,
@@ -48,6 +51,15 @@ export default function UpdateAdmin({name, email, role, id}) {
             setSucess("Se ha actualizado correctamente")
         })
     }
+
+    function deleteUser() {
+        
+        startDelete(async()=>{
+            const result = await deleteProfile(id)
+            router.push("/admin/manageProfile")
+        })
+    }
+
 
     return (
         <div>
@@ -104,10 +116,19 @@ export default function UpdateAdmin({name, email, role, id}) {
                         {formState.errors.role?.message}
                     </p>
                 </div>
-                
-                <Button disabled={loading} type="submit" className="font-bold">
+                <div className="grid grid-cols-[1fr_max-content] w-full gap-3">
+                <Button disabled={loading} type="submit" className="font-bold w-full">
                     {loading ? <Loader /> : "Editar Perfil"}
                 </Button>
+                <IconBox
+                            Icon={MdDelete}
+                            variant={"square"}
+                            type={"button"}
+                            onClick={()=>{
+                                setConfirm(true)
+                            }}
+                        />
+                </div>
 
             </form>
 
@@ -124,6 +145,26 @@ export default function UpdateAdmin({name, email, role, id}) {
                     </DialogHeader>
                 </DialogContent>
             </Dialog>
+
+            <Dialog open={confirmDelete} onOpenChange={setConfirm}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>¿Estas seguro de eliminar el perfil?</DialogTitle>
+                    </DialogHeader>
+                    <DialogFooter>
+                        <Button onClick={()=>{
+                            setConfirm(false)
+                        }}>
+                            <p>Cancelar</p>
+                        </Button>
+                        <Button className={"!bg-red-900 !text-white"} onClick={deleteUser}>
+                            <p>Borrar</p>
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+
 
         </div>
     )
