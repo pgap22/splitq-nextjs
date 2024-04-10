@@ -13,8 +13,6 @@ export default async function AdministrarPerfil(params) {
     const vendedores = perfiles.filter(perfil => perfil.role === 'seller');
     const moderadores = perfiles.filter(perfil => perfil.role === 'mod');
     
-    console.log(moderadores)
-    
 
     return(
         <div>
@@ -32,24 +30,33 @@ export default async function AdministrarPerfil(params) {
 
         <Tabs defaultValue={"vendedores"} className="!w-full">
             <TabsList className="!w-full">
-                <TabsTrigger value="vendedores">
-                    <MdOutlineStorefront/>
-                    Vendedores
+                <div className="w-full flex justify-center">
+                <TabsTrigger value="vendedores" className="!font-bold !capitalize">
+                    <MdOutlineStorefront className=" w-full h-6"/>
+                    <p className="text-lg">Vendedores</p>
+                
                 </TabsTrigger>
-                <TabsTrigger value="moderadores">Moderadores</TabsTrigger>
+                </div>
+
+                <div className="w-full flex justify-center">
+                <TabsTrigger value="moderadores" className="!font-bold !capitalize">
+                    <MdOutlineBuild className="w-full h-6"/>
+                    <p className=" text-lg">Moderadores</p>
+                </TabsTrigger>
+                </div>
             </TabsList>
 
                 <TabsContent value="vendedores">
                     {
                         vendedores.map(perfil => (
                             <Link href={"manageProfile/" + perfil.id}>
-                            <div className=" border-y border-[#414141] flex items-center gap-3">
+                            <div className=" border-b border-[#414141] flex items-center gap-3 py-5">
                                     
                                 <IconBox
                                     Icon={MdOutlineStorefront} variant={'square'} className={" bg-[#262626] border-[#414141] rounded ml-4"}
                                 />
         
-                                <p className=" text-base font-semibold my-5"> {perfil.name} </p>
+                                <p className=" text-base font-semibold "> {perfil.name} </p>
                             </div>
                             </Link>
                         ))
@@ -60,13 +67,13 @@ export default async function AdministrarPerfil(params) {
                 {
                         moderadores.map(perfil2 => (
                             <Link href={"manageProfile/" + perfil2.id}>
-                            <div className=" border-y border-[#414141] flex items-center gap-3">
+                            <div className=" border-b border-[#414141] flex items-center gap-3 py-5">
                                     
                                 <IconBox
                                     Icon={MdOutlineBuild} variant={"square"} className={" bg-[#262626] border-[#414141] rounded ml-4"}
                                 />
         
-                                <p className=" text-base font-semibold my-5"> {perfil2.name} </p>
+                                <p className=" text-base font-semibold"> {perfil2.name} </p>
                             </div>
                             </Link>
                         ))
