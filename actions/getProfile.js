@@ -16,7 +16,6 @@ export async function getProfile() {
             }
         })
 
-        console.log(perfiles)
         return perfiles
 
     } catch (error) {
