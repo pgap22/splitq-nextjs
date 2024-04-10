@@ -1,6 +1,6 @@
 "use server"
 
-import prisma from "@/db/prisma"
+import prisma from "@/db/prisma";
 import { authUser } from "@/lib/authUser";
 
 export async function getProducts() {
@@ -8,6 +8,9 @@ export async function getProducts() {
     return await prisma.products.findMany({
         where: {
             seller_id: id
+        },
+        include: {
+            seller: true
         }
     });
 }

@@ -70,12 +70,14 @@ export default async function SellerHome() {
                         </div>
                     </Link>
 
-                    <div className="border-b border-border p-4">
-                        <div className="flex flex-row items-center gap-4">
-                            <IconBox Icon={MdOutlineFoodBank} />
-                            <h1>Administrar mis productos</h1>
+                    <Link href={"/seller/manageProducts"}>
+                        <div className="border-b border-border p-4">
+                            <div className="flex flex-row items-center gap-4">
+                                <IconBox Icon={MdOutlineFoodBank} />
+                                <h1>Administrar mis productos</h1>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                 </div>
 
                 <div className="px-4 mb-2">

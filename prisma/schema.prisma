@@ -43,8 +43,6 @@ model Products{
   name String
   price Float
   description String
-  image String?
-
   
   seller_id String
   categorieID String
@@ -52,7 +50,15 @@ model Products{
   seller Users @relation(fields: [seller_id], references: [id])
   categorie Categories @relation(fields: [categorieID] ,references: [id], onDelete: Cascade, onUpdate: Cascade)
 
+  images ProductImages[]
   combo ComboProducts[]
+}
+model ProductImages{
+  id String @default(uuid()) @id
+  id_product String
+  url String
+
+  product Products @relation(fields: [id_product], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Combo{
@@ -88,9 +94,3 @@ model Recharges{
 
 }
 
-enum LogsType{
-  recharge
-  shop
-  refound
-  reclaim
-}
