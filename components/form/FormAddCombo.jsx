@@ -10,13 +10,14 @@ import IconBox from "../ui/IconBox"
 import { MdAdd, MdLocalPizza, MdRemove } from "react-icons/md"
 import { multiplyDecimal, sumDecimal } from "@/lib/decimal"
 import { useEffect, useState, useTransition } from "react"
+import { createCombo } from "@/actions/createCombo"
+import AlertWarning from "../ui/AlertWarning"
 
 
 export default function FormAddCombo({ productos }) {
     const [loading, startTransition] = useTransition();
-    const [comboOpen, setComboOpen] = useState();
     const [priceTotal, setPriceTotal] = useState(0);
-    const [value, setValueCombo] = useState();
+    const [error, setError] = useState();
 
     const [addedProducts, setAddedProducts] = useState([]);
     const { register, handleSubmit, formState, getValues, control, setValue, formState: { errors } } = useForm({
@@ -28,12 +29,19 @@ export default function FormAddCombo({ productos }) {
     });
 
 
-    const submitCombo = (data)=>{
-        const products = addedProducts.map(product => ({
-            id: product.id,
-            price
-        }))
-        console.log(data)
+    const submitCombo = (data) => {
+        startTransition(async()=>{
+            
+            const products = addedProducts.map(product => ({
+                id: product.id,
+                quantity: product.quantity
+            }))
+            const resultCombo = await createCombo(data, products);
+            if(resultCombo.error){
+                setError(resultCombo.error)
+                return;
+            }
+        })
     }
 
 
@@ -43,18 +51,18 @@ export default function FormAddCombo({ productos }) {
                 if (data.id === product.id) {
                     let quantity = product.quantity;
 
-                    if(action == "add"){
+                    if (action == "add") {
                         ++quantity
                     }
-                    if(action == "minus"){
+                    if (action == "minus") {
                         --quantity
                     }
 
 
-                    if(action != "value" && quantity <= 0) return null   
-                    if(action == "value" && value < 0) return null
+                    if (action != "value" && quantity <= 0) return null
+                    if (action == "value" && value < 0) return null
 
-                    if(quantity >99) return product;
+                    if (quantity > 99) return product;
                     return {
                         ...product,
                         quantity: action == "value" ? value : quantity
@@ -66,35 +74,53 @@ export default function FormAddCombo({ productos }) {
         setAddedProducts(products.filter(product => product))
     }
 
-    const addProductToCombo = () => {
+    const addProductToCombo = (id_product) => {
+        const foundProduct = productos.find(product => product.id == id_product);
 
+
+        const sameProduct = addedProducts.find(product => product.id == id_product)
+
+        if (sameProduct) {
+            const modifiedQuantity = addedProducts.map(product => {
+                if (product.id == id_product) {
+                    return {
+                        ...product,
+                        quantity: product.quantity + 1
+                    }
+                }
+                return product
+            })
+            setAddedProducts(modifiedQuantity)
+            return
+        }
+
+        setAddedProducts([...addedProducts, {
+            ...foundProduct,
+            quantity: 1
+        }])
     }
 
-  
 
-    const submitData = (data) => {
-        console.log(data)
-    }
 
-    useEffect(()=>{
-        if(!addedProducts.length) return;
-        const currentPriceTotal = sumDecimal( ...addedProducts.map(product => {
-            return multiplyDecimal(product.price,product.quantity)
-         }) )
+    useEffect(() => {
+        if (!addedProducts.length) return;
+        const currentPriceTotal = sumDecimal(...addedProducts.map(product => {
+            return multiplyDecimal(product.price, product.quantity)
+        }))
         setPriceTotal(currentPriceTotal)
         setValue("price", currentPriceTotal)
-    },[addedProducts])
+    }, [addedProducts])
 
 
     return (
         <>
-            <form noValidate onSubmit={handleSubmit(submitData)}>
+            <form noValidate onSubmit={handleSubmit(submitCombo)}>
                 <div className="p-4 flex flex-col gap-5">
                     <h1 className="text-2xl font-bold">Añadir Combos</h1>
-                    {/* {warning && <AlertWarning
+                    {error && <AlertWarning
                         title={"Advertencia"}
-                        description={warning}
-                    />} */}
+                        description={error}
+                    />}
                     <FormInput
                         placeholder={"Nombre del Combo"}
                         label={"Nombre del Combo"}
@@ -107,31 +133,7 @@ export default function FormAddCombo({ productos }) {
                         label={"Descripcion del Combo"}
                         register={register("description", { required: { value: true, message: "La descripcion esta vacia" } })}
                     />
-                    <Select value="" onValueChange={(id_product) => {
-                        const foundProduct = productos.find(product => product.id == id_product);
-
-
-                        const sameProduct = addedProducts.find(product => product.id == id_product)
-                        
-                        if (sameProduct) {
-                            const modifiedQuantity = addedProducts.map(product => {
-                                if (product.id == id_product) {
-                                    return {
-                                        ...product,
-                                        quantity: product.quantity + 1
-                                    }
-                                }
-                                return product
-                            })
-                            setAddedProducts(modifiedQuantity)
-                            return
-                        }
-
-                        setAddedProducts([...addedProducts, {
-                            ...foundProduct,
-                            quantity: 1
-                        }])
-                    }}>
+                    <Select value="" onValueChange={addProductToCombo}>
                         <SelectTrigger className="!text-white">
                             <SelectValue placeholder="Agrega Productos a Tu Combo" />
                         </SelectTrigger>
@@ -145,14 +147,6 @@ export default function FormAddCombo({ productos }) {
                     </Select>
 
                     <div className="flex flex-col">
-                        {/* <ProductPreview
-                            name={"Prueba"}
-                            price={"$0.00"}
-                        />
-                        <ProductPreview
-                            name={"Prueba"}
-                            price={"$0.00"}
-                        /> */}
                         {
                             addedProducts.map(addedProduct => (
                                 <ProductPreview
@@ -187,13 +181,13 @@ export default function FormAddCombo({ productos }) {
 
 const ProductPreview = ({ product, modifyQuantityProduct }) => {
 
-    const handleInput = (e)=>{
+    const handleInput = (e) => {
         const value = +e.target.value;
 
-        if(!/[0-9]/.test(value)) return
+        if (!/[0-9]/.test(value)) return
 
         modifyQuantityProduct("value", product, +value)
-    }    
+    }
 
     return (
         <div>
@@ -209,7 +203,7 @@ const ProductPreview = ({ product, modifyQuantityProduct }) => {
 
                     <div className="flex p-2 flex-col">
                         <p className="font-bold text-sm">{product.name}</p>
-                        <p className="!font-bold !text-lg text-gradient bg-gradient-principal">${multiplyDecimal(product.price,product.quantity)}</p>
+                        <p className="!font-bold !text-lg text-gradient bg-gradient-principal">${multiplyDecimal(product.price, product.quantity)}</p>
                         <p className="text-xs text-text-secundary font-bold">${product.price} x{product.quantity}</p>
                     </div>
 
@@ -218,7 +212,7 @@ const ProductPreview = ({ product, modifyQuantityProduct }) => {
                             onClick={() => modifyQuantityProduct("minus", product)}
                             size={24}
                         />
-                            <input onInput={handleInput} maxLength={2} value={+product.quantity} className="text-xl outline-none max-w-[2ch] text-center" />
+                        <input onInput={handleInput} maxLength={2} value={+product.quantity} className="text-xl outline-none max-w-[2ch] text-center" />
 
                         <MdAdd
                             onClick={() => modifyQuantityProduct("add", product)}

@@ -8,14 +8,15 @@ import { authUser } from "@/lib/authUser";
 import Link from "next/link";
 import { MdOutlineFastfood, MdOutlineFoodBank, MdOutlineLocalPizza } from "react-icons/md";
 
-
 export default async function SellerHome() {
     const user = await authUser()
+    // const combos = await getCombos();
     //Por veces no agarraba el logout asiq esto lo solucionaxd
     async function logout() {
         "use server"
         await signOut();
     }
+
 
     return (
         <>

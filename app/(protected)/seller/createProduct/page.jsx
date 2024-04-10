@@ -8,6 +8,7 @@ import { getCategories } from "@/actions/categories";
 
 export default async function AddProduct() {
     const categories = await getCategories()
+    console.log(categories)
     return (
         <>
             <div className="flex justify-between p-4">
