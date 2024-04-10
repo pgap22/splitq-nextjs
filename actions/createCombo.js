@@ -1,6 +1,7 @@
 "use server"
 
 import prisma from "@/db/prisma"
+import { authUser } from "@/lib/authUser"
 
 export async function createCombo(data, products) {
     try {
@@ -11,6 +12,10 @@ export async function createCombo(data, products) {
         })
 
         if (existComboName) return { error: "Ya hiciste un combo con ese nombre" }
+
+        const { id } = await authUser();
+
+        data.id_seller = id;
 
         const createdCombo = await prisma.combo.create({
             data

@@ -12,13 +12,14 @@ import { multiplyDecimal, sumDecimal } from "@/lib/decimal"
 import { useEffect, useState, useTransition } from "react"
 import { createCombo } from "@/actions/createCombo"
 import AlertWarning from "../ui/AlertWarning"
+import { useRouter } from "next/navigation"
 
 
 export default function FormAddCombo({ productos }) {
     const [loading, startTransition] = useTransition();
     const [priceTotal, setPriceTotal] = useState(0);
     const [error, setError] = useState();
-
+    const router = useRouter();
     const [addedProducts, setAddedProducts] = useState([]);
     const { register, handleSubmit, formState, getValues, control, setValue, formState: { errors } } = useForm({
         defaultValues: {
@@ -37,10 +38,13 @@ export default function FormAddCombo({ productos }) {
                 quantity: product.quantity
             }))
             const resultCombo = await createCombo(data, products);
+            
             if (resultCombo.error) {
                 setError(resultCombo.error)
                 return;
             }
+            
+            router.push("/seller/manageProducts");
         })
     }
 

@@ -70,7 +70,7 @@ export default function FormAddProduct({ categories }) {
                 setWarning(result.error)
             }
             
-            router.push("/seller");
+            router.push("/seller/manageProduct");
         })
     }
 

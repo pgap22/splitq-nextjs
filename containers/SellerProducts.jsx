@@ -9,7 +9,6 @@ import Loader from "@/components/Loader";
 import { cn } from "@/lib/utils";
 import { useEffect, useState, useTransition } from "react";
 import { MdOutlineFastfood, MdOutlineLocalOffer, MdOutlineLocalPizza } from "react-icons/md";
-import { useForm } from "react-hook-form";
 
 export default function SellerProducts({ initalProducts }) {
 
@@ -31,10 +30,7 @@ export default function SellerProducts({ initalProducts }) {
 
     }, [itemtype])
 
-    useEffect(()=>{
-        if(!query) return;
-        setCurrentProducts(currentProducts.filter(item => item.name.toLowerCase().startsWith(query)))
-    },[query])
+ 
 
     const fetchingproductos = () => {
         startFetching(async () => {
@@ -49,7 +45,7 @@ export default function SellerProducts({ initalProducts }) {
         })
     }
 
-    const searchItem = (e)=>{
+    const searchItem = (e) => {
         let data = e.target.value
         setQuery(data.toLowerCase())
     }
@@ -71,7 +67,7 @@ export default function SellerProducts({ initalProducts }) {
                 </Link>
                 <Input onInput={searchItem} type="search" placeholder="Buscar producto" />
             </section>
-            
+
             <h1 className="font-bold text-2xl p-4">Mis Productos</h1>
 
             <div className="grid grid-cols-2 border-b border-border mb-4">
@@ -84,13 +80,13 @@ export default function SellerProducts({ initalProducts }) {
                     ? <div className="w-full flex justify-center">
                         <Loader invert />
                     </div>
-                    : <CurrentItems isInitial={itemFetchingInital} items={currentProducts} />
+                    : <CurrentItems query={query} itemType={itemtype} isInitial={itemFetchingInital} items={currentProducts} />
             }
         </>
     )
 }
 
-const CurrentItems = ({ items, isInitial }) => {
+const CurrentItems = ({ items, isInitial, itemType, query }) => {
     if (isInitial) return
 
     if (!items.length) return (
@@ -99,20 +95,26 @@ const CurrentItems = ({ items, isInitial }) => {
         </div>
     )
 
+    const url = itemType == "productos" ? "/seller/manageProducts/product/" : "/seller/manageProducts/combo/"
+    const products = query ? items.filter(item => item.name.toLowerCase().startsWith(query)) : items
+
+
     return (
-        items.map(producto => (
-            <div key={producto} className="border-b border-border">
-                <div className="flex items-start gap-4 p-4">
-                    <div className="p-4 aspect-square rounded bg-foreground border border-border">
-                        <MdOutlineLocalOffer size={24} />
-                    </div>
-                    <div>
-                        <h2 className="font-bold">{producto.name}</h2>
-                        <p className="text-xs text-text-secundary">{producto.seller.name}</p>
-                        <h3 className="text-gradient text-lg font-black bg-gradient-principal">${producto.price}</h3>
+        products.map(producto => (
+            <Link key={producto.id} href={url + producto.id}>
+                <div className="border-b border-border">
+                    <div className="flex items-start gap-4 p-4">
+                        <div className="p-4 aspect-square rounded bg-foreground border border-border">
+                            <MdOutlineLocalOffer size={24} />
+                        </div>
+                        <div>
+                            <h2 className="font-bold">{producto.name}</h2>
+                            <p className="text-xs text-text-secundary">{producto.seller.name}</p>
+                            <h3 className="text-gradient text-lg font-black bg-gradient-principal">${producto.price}</h3>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </Link>
         ))
     )
 }
@@ -123,18 +125,20 @@ const InitialProducts = ({ items, enabled, query }) => {
         <>
             {
                 products.map(producto => (
-                    <div key={producto} className="border-b border-border">
-                        <div className="flex items-start gap-4 p-4">
-                            <div className="p-4 aspect-square rounded bg-foreground border border-border">
-                                <MdOutlineLocalOffer size={24} />
-                            </div>
-                            <div>
-                                <h2 className="font-bold">{producto.name}</h2>
-                                <p className="text-xs text-text-secundary">{producto.seller.name}</p>
-                                <h3 className="text-gradient text-lg font-black bg-gradient-principal">${producto.price}</h3>
+                    <Link key={producto.InitialProducts} href={"/seller/manageProducts/product/" + producto.id}>
+                        <div className="border-b border-border">
+                            <div className="flex items-start gap-4 p-4">
+                                <div className="p-4 aspect-square rounded bg-foreground border border-border">
+                                    <MdOutlineLocalOffer size={24} />
+                                </div>
+                                <div>
+                                    <h2 className="font-bold">{producto.name}</h2>
+                                    <p className="text-xs text-text-secundary">{producto.seller.name}</p>
+                                    <h3 className="text-gradient text-lg font-black bg-gradient-principal">${producto.price}</h3>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 ))
             }
         </>
@@ -143,7 +147,7 @@ const InitialProducts = ({ items, enabled, query }) => {
 
 const Tabs = ({ Icon, type, active, setItemType }) => {
     return (
-        <div onClick={() => setItemType(type)} className={cn("flex justify-center", active !== type && "text-text-secundary")}>
+        <div onClick={() => setItemType(type)} className={cn("flex select-none justify-center", active !== type && "text-text-secundary")}>
             <div className="w-fit flex flex-col items-center">
                 <Icon size={24} />
                 <p className="font-bold capitalize">{type}</p>
