@@ -15,6 +15,7 @@ import Loader from "../Loader"
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils"
 import { MdOutlineDelete } from "react-icons/md"
+import FormSelect from "./FormSelect"
 
 export default function FormAddProduct({ categories }) {
     const router = useRouter();
@@ -97,7 +98,7 @@ export default function FormAddProduct({ categories }) {
                         label={"Descripcion del producto"}
                         register={register("description", { required: { value: true, message: "La descripcion esta vacia" } })}
                     />
-                    <Controller
+                    {/* <Controller
                         name="categorieID"
                         rules={{
                             required: {
@@ -124,6 +125,20 @@ export default function FormAddProduct({ categories }) {
                             <p className="mt-1 text-xs text-red-500">{formState.errors.categorieID?.message}</p>
                         </div>}
 
+                    /> */}
+                    <FormSelect 
+                        control={control}
+                        name={"categorieID"}
+                        rules={{
+                            required: {
+                                value: true,
+                                message: "Este campo es obligatorio"
+                            }
+                        }}
+                        value={getValues("categorieID")}
+                        items={categories}
+                        placeholder={"Seleccione una categoria"}
+                        error={formState.errors.categorieID?.message}
                     />
                     <div className="flex flex-col">
                         <label htmlFor="images">

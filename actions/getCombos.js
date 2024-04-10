@@ -1,9 +1,9 @@
 "use server"
 
-import prisma from "@/db/prisma"
+import prismaDev from "@/db/prismaDev"
 
 export async function getCombos() {
-    return await prisma.combo.findMany({
+    return await prismaDev.combo.findMany({
         include: {
             products: {
                 include: {

@@ -30,14 +30,14 @@ export default function FormAddCombo({ productos }) {
 
 
     const submitCombo = (data) => {
-        startTransition(async()=>{
-            
+        startTransition(async () => {
+
             const products = addedProducts.map(product => ({
                 id: product.id,
                 quantity: product.quantity
             }))
             const resultCombo = await createCombo(data, products);
-            if(resultCombo.error){
+            if (resultCombo.error) {
                 setError(resultCombo.error)
                 return;
             }
@@ -133,8 +133,9 @@ export default function FormAddCombo({ productos }) {
                         label={"Descripcion del Combo"}
                         register={register("description", { required: { value: true, message: "La descripcion esta vacia" } })}
                     />
+
                     <Select value="" onValueChange={addProductToCombo}>
-                        <SelectTrigger className="!text-white">
+                        <SelectTrigger className="!text-white hidden md:flex">
                             <SelectValue placeholder="Agrega Productos a Tu Combo" />
                         </SelectTrigger>
                         <SelectContent className="!bg-foreground">
@@ -145,6 +146,12 @@ export default function FormAddCombo({ productos }) {
                             </SelectGroup>
                         </SelectContent>
                     </Select>
+                    <select  value={""} onChange={(e)=> addProductToCombo(e.target.value)} className="flex md:hidden !ring-offset-0 !ring-0 p-4 border-border bg-foreground  w-full items-center justify-between rounded-md border   text-sm ring-offset-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1  dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:focus:ring-slate-300">
+                        <option value="" selected disabled>Agregar productos a tu combo</option>
+                        {
+                            productos.map(producto => <option key={producto.id} className="!bg-background" value={producto.id} >{producto.name}</option>)
+                        }
+                    </select>
 
                     <div className="flex flex-col">
                         {
