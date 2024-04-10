@@ -29,6 +29,7 @@ model Users{
   ModRecharges Recharges[] @relation("mod")
 
   createdProducts Products[]
+  createdCombo Combo[]
 }
 
 model Categories{
@@ -43,8 +44,6 @@ model Products{
   name String
   price Float
   description String
-  image String?
-
   
   seller_id String
   categorieID String
@@ -52,7 +51,16 @@ model Products{
   seller Users @relation(fields: [seller_id], references: [id])
   categorie Categories @relation(fields: [categorieID] ,references: [id], onDelete: Cascade, onUpdate: Cascade)
 
+  images ProductImages[]
   combo ComboProducts[]
+
+}
+model ProductImages{
+  id String @default(uuid()) @id
+  id_product String
+  url String
+
+  product Products @relation(fields: [id_product], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Combo{
@@ -60,6 +68,9 @@ model Combo{
   name String
   description String
   price Float
+  id_seller String
+
+  seller Users @relation(fields: [id_seller], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   products ComboProducts[]
 }
@@ -68,6 +79,7 @@ model ComboProducts{
   id String @default(uuid()) @id
   id_product String
   id_combo String
+  quantity Int
 
   combo Combo @relation(fields: [id_combo], references: [id], onDelete: Cascade, onUpdate: Cascade)
   product Products @relation(fields: [id_product], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -87,9 +99,3 @@ model Recharges{
 
 }
 
-enum LogsType{
-  recharge
-  shop
-  refound
-  reclaim
-}
