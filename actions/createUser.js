@@ -27,6 +27,6 @@ export async function createUser(data) {
         }
     })
 
-    return true;
+    return user;
 
 }

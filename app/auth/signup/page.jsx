@@ -1,5 +1,6 @@
 "use client"
 import { createUser } from "@/actions/createUser";
+import { resendEmailBVerification } from "@/actions/resendCode";
 import Loader from "@/components/Loader";
 import FormInput from "@/components/form/FormInput";
 import AlertWarning from "@/components/ui/AlertWarning";
@@ -12,8 +13,10 @@ import { useForm } from "react-hook-form";
 export default function SignUp() {
     const [warning, setWarning] = useState(false)
     const [loading, startTransition] = useTransition();
+    const [loadingResend, startResending] = useTransition();
     const [succes, setSucces] = useState(false);
-    const { register, handleSubmit, formState,getValues } = useForm({
+    const [id, setID] = useState();
+    const { register, handleSubmit, formState,getValues, watch } = useForm({
         defaultValues: {
             name: "",
             lastname: "",
@@ -21,6 +24,8 @@ export default function SignUp() {
             password: ""
         }
     });
+
+
 
     const signup = (data) => {
         setWarning(false)
@@ -33,20 +38,28 @@ export default function SignUp() {
 
             if (!result?.error) {
                 setSucces(true)
+                setID(result.id)
 
             }
         })
 
     }
 
+    const resendEmail = ()=>{
+        startResending(async()=>{
+            await resendEmailBVerification(id)
+        })
+    }
 
-
-
-    
     if (succes) return (
         <>
             <h1 className="text-xl font-bold text-center">Verifica tu cuenta</h1>
             <p className="text-md text-text-secundary text-center mb-5">Hemos enviado a <span className="font-bold">{getValues("email")}</span> un link de verificacion, para que actives tu cuenta e ingreses a SplitQ <span className="opacity-5">👻</span></p>
+            <Button disabled={loadingResend} onClick={resendEmail} >{
+                loadingResend
+                ? <Loader />
+                : "Reenviar Codigo"
+            }</Button>
         </>
     )
 
@@ -87,6 +100,8 @@ export default function SignUp() {
                     label={"Contraseña"}
                     placeholder={"Contraseña"}
                     type={"password"}
+                    showpass
+                    value={watch("password")}
                     register={register("password", { required: { value: true, message: "Contraseña esta vacia" }, minLength: { value: 8, message: "Minimo 8 caracteres" } })}
                     error={formState.errors.password?.message}
                 />
