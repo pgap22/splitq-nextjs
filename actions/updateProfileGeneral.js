@@ -55,6 +55,6 @@ export async function updateProfileGeneral(data) {
         return {user: updatedUser}
     } catch (error) {
         console.log(error)
-        return { error: "Hubo un error en el servidor" }
+        return { error: JSON.stringify(error)}
     }
 }
