@@ -40,6 +40,7 @@ export default function FormUpdateProfile() {
 
             if (updateUser?.error) {
                 setError(updateUser.error)
+                return
             }
 
             if (updateUser.user.id) {
