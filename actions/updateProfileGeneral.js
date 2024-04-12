@@ -27,15 +27,13 @@ export async function updateProfileGeneral(data) {
 
             sendVerificationChangeEmail(updatableEmail, emailToken);
 
+            data.updatableEmail = updatableEmail;
+            data.emailToken = emailToken
             const updated = await prisma.users.update({
                 where: {
                     id: user.id
                 },
-                data: {
-                    ...data,
-                    updatableEmail,
-                    emailToken
-                }
+                data
             })
             console.log(updatedUser)
             revalidatePath("/")
