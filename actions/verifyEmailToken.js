@@ -13,7 +13,7 @@ export async function verifyEmailToken(emailToken){
 
     if(!userToken) return {error: "El token no es valido"}
     
-    await prisma.users.update({
+    const updatedUser = await prisma.users.update({
         where: {
             id: userToken.id
         },
@@ -24,11 +24,5 @@ export async function verifyEmailToken(emailToken){
         }
     })
 
-    await signIn("credentials", {
-        email: userToken.email,
-        verificationLogin: true,
-        redirect: true
-    });
-
-    return true
+    return updatedUser;
 }
