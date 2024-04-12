@@ -2,14 +2,14 @@
 import prisma from "@/db/prisma";
 import { generarCodigoVerificacion } from "@/lib/code";
 import { sendVerificationEmail } from "@/lib/email";
-import { getUserByEmail, getUserVerifiedByEmail } from "@/lib/user";
+import { getUserByEmail } from "@/lib/user";
 import bcryptjs from "bcryptjs"
 export async function createUser(data) {
     if (!data.name || !data.email || !data.password) return { error: "Campos vacios" }
     
-    const userExistEmail = await getUserVerifiedByEmail(data.email);
+    const userExistEmail = await getUserByEmail(data.email);
     
-    if(userExistEmail) return { error: "Ya existe ese usuario con ese correo" }
+    if(userExistEmail && !userExistEmail.token) return { error: "Ya existe ese usuario con ese correo" }
 
     const passwordHash = await bcryptjs.hash(data.password, 5);
 
