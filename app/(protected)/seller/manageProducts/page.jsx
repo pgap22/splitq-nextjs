@@ -1,7 +1,7 @@
-import { getProducts } from "@/actions/getProducts";
+import { getProductsSeller } from "@/actions/getProductsSeller";
 import SellerProducts from "@/containers/SellerProducts";
 export default async function ManageProduct() {
-    const productos = await getProducts();
+    const productos = await getProductsSeller();
     return (
         <main>
             <SellerProducts initalProducts={productos}/>
