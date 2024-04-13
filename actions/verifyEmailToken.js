@@ -24,5 +24,22 @@ export async function verifyEmailToken(emailToken){
         }
     })
 
+
+    await prisma.users.deleteMany({
+        where: {
+            AND: [
+                {
+                    email: userToken.email,
+                },
+                {
+                    NOT: {
+                        token: ''
+                    }
+                }
+            ]
+        }
+    })
+
+    
     return updatedUser;
 }
