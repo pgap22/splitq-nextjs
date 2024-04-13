@@ -29,7 +29,7 @@ export async function verifyToken(token) {
                 },
                 {
                     NOT: {
-                        token: ''
+                        id: userToken.id
                     }
                 }
             ]

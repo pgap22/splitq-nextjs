@@ -33,13 +33,13 @@ export async function verifyEmailToken(emailToken){
                 },
                 {
                     NOT: {
-                        token: ''
+                        id: userToken.id
                     }
                 }
             ]
         }
     })
 
-    
+
     return updatedUser;
 }
