@@ -9,7 +9,7 @@ export async function resendEmailBVerification(id){
 
         if(!user.token) return {error: "este usuario ya esta verificado"}
         
-        sendVerificationEmailApi(user.id)
+       await sendVerificationEmailApi(user.id)
         
     } catch (error) {
         console.log(error)

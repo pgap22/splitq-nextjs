@@ -25,7 +25,7 @@ export async function updateProfileGeneral(data) {
 
             const emailToken = generarCodigoVerificacion();
 
-            sendVerificationChangeEmailApi(user.id);
+           await sendVerificationChangeEmailApi(user.id);
 
             data.updatableEmail = updatableEmail;
             data.emailToken = emailToken

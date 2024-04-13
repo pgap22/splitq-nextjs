@@ -1,7 +1,6 @@
 "use server"
 import prisma from "@/db/prisma";
 import { generarCodigoVerificacion } from "@/lib/code";
-import { sendVerificationEmail } from "@/lib/email";
 import { sendVerificationEmailApi } from "@/lib/emailAPI";
 import { getUserByEmail } from "@/lib/user";
 import bcryptjs from "bcryptjs"
@@ -27,7 +26,7 @@ export async function createUser(data) {
         }
     })
     
-    sendVerificationEmailApi(user.id);
+    await sendVerificationEmailApi(user.id);
 
 
     return user;
