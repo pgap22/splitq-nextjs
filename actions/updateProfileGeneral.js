@@ -2,7 +2,7 @@
 import prisma from "@/db/prisma";
 import { authUser } from "@/lib/authUser";
 import { generarCodigoVerificacion } from "@/lib/code";
-import { sendVerificationChangeEmail } from "@/lib/email";
+import { sendVerificationChangeEmailApi } from "@/lib/emailAPI";
 import { revalidatePath } from "next/cache";
 
 export async function updateProfileGeneral(data) {
@@ -25,7 +25,7 @@ export async function updateProfileGeneral(data) {
 
             const emailToken = generarCodigoVerificacion();
 
-            sendVerificationChangeEmail(updatableEmail, emailToken);
+            sendVerificationChangeEmailApi(user.id);
 
             data.updatableEmail = updatableEmail;
             data.emailToken = emailToken
@@ -35,7 +35,7 @@ export async function updateProfileGeneral(data) {
                 },
                 data
             })
-            console.log(updatedUser)
+            console.log(updated)
             revalidatePath("/")
             return {user: updated, email: true};
         }

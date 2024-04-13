@@ -44,7 +44,7 @@ export default function FormUpdateProfile() {
             }
 
             if (updateUser.user.id) {
-                update({
+                await update({
                     user: updateUser.user
                 })
                 const sucess = (

@@ -2,6 +2,7 @@
 import prisma from "@/db/prisma";
 import { generarCodigoVerificacion } from "@/lib/code";
 import { sendVerificationEmail } from "@/lib/email";
+import { sendVerificationEmailApi } from "@/lib/emailAPI";
 import { getUserByEmail } from "@/lib/user";
 import bcryptjs from "bcryptjs"
 export async function createUser(data) {
@@ -17,8 +18,7 @@ export async function createUser(data) {
     
     const code  =  generarCodigoVerificacion()
 
-    sendVerificationEmail(data.email, code);
-
+    
     const user = await prisma.users.create({
         data: {
             ...data,
@@ -26,6 +26,9 @@ export async function createUser(data) {
             token: isNotUser ? '' : code
         }
     })
+    
+    sendVerificationEmailApi(user.id);
+
 
     return user;
 

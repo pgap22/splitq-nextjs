@@ -1,6 +1,6 @@
 "use server"
 
-import { sendVerificationEmail } from "@/lib/email"
+import { sendVerificationEmailApi } from "@/lib/emailAPI"
 import { getUserById } from "@/lib/user"
 
 export async function resendEmailBVerification(id){ 
@@ -9,7 +9,8 @@ export async function resendEmailBVerification(id){
 
         if(!user.token) return {error: "este usuario ya esta verificado"}
         
-        sendVerificationEmail(user.email, user.token)
+        sendVerificationEmailApi(user.id)
+        
     } catch (error) {
         console.log(error)
         return {error: "No se ha podido enviar el correo"}

@@ -4,24 +4,28 @@ import Loader from "@/components/Loader";
 import { useSession } from "next-auth/react"
 import AlertWarning from "@/components/ui/AlertWarning";
 import { useEffect, useState, useTransition } from "react"
+import { useRouter } from "next/navigation";
 
 export default function VerifyPage({ params }) {
     const [error, setError] = useState();
     const [loading, startVerifying] = useTransition();
-    const { update } = useSession();
+    const router = useRouter();
+    const { update} = useSession();
 
     useEffect(() => {
         startVerifying(async () => {
             const token = await verifyEmailToken(params.token)
+
             if (token.error) {
                 setError(token.error)
                 return
             }
 
-            update({
+            await update({
                 user: token
             })
-            
+
+            router.push("/")
         })
     }, [])
     return (
@@ -33,7 +37,7 @@ export default function VerifyPage({ params }) {
                         ? <div className="flex justify-center">
                             <Loader invert />
                         </div>
-                        : error && <AlertWarning title={"Error"} description={error}/>
+                        : error && <AlertWarning title={"Error"} description={error} />
                 }
             </div>
         </div>
