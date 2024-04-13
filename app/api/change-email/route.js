@@ -23,7 +23,7 @@ export async function POST(req,res){
         
         if(!user.id && !user.emailToken) return NextResponse.json({error: "No se ha encontrado esta cuenta no verificada"},{status: 400} )
     
-        transport.sendMail({
+       await transport.sendMail({
             from: `SplitQ 👋 <${process.env.OUTLOOK_EMAIL}>`,
             to: user.updatableEmail, // list of receivers
             subject: "Cambio de Email 📧", // Subject line
