@@ -11,7 +11,7 @@ export default async function AddProduct() {
             <div className="flex justify-between p-4">
                 <Link href={"/seller"}>
                     <IconBox
-                        Icon={MdArrowBack}
+                        Icon={MdArrowBack} variant={'square'}
                     />
                 </Link>
             </div>

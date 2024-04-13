@@ -34,7 +34,7 @@ export default function CreateCategorie() {
             <div className="flex items-center mb-8 gap-4">
                 <Link href={"../admin"}>
                     <IconBox
-                        Icon={MdArrowBack}
+                        Icon={MdArrowBack} variant={'square'}
                     />
                 </Link>
                 <h1 className="text-2xl">Crear Categoria</h1>
