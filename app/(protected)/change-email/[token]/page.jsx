@@ -10,7 +10,7 @@ export default function VerifyPage({ params }) {
     const [error, setError] = useState();
     const [loading, startVerifying] = useTransition();
     const router = useRouter();
-    const { update} = useSession();
+    const { update } = useSession();
 
     useEffect(() => {
         startVerifying(async () => {
@@ -18,6 +18,7 @@ export default function VerifyPage({ params }) {
 
             if (token.error) {
                 setError(token.error)
+                router.push("/")
                 return
             }
 

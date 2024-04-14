@@ -1,5 +1,4 @@
 "use server"
-import { signIn } from "@/auth";
 import prisma from "@/db/prisma";
 
 export async function verifyEmailToken(emailToken){
