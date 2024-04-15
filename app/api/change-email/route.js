@@ -18,9 +18,7 @@ export async function POST(req,res){
                 id: data.id
             }
         })
-    
-        console.log(user)
-        
+            
         if(!user.id && !user.emailToken) return NextResponse.json({error: "No se ha encontrado esta cuenta no verificada"},{status: 400} )
     
        await transport.sendMail({
