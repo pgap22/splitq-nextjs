@@ -2,11 +2,11 @@ import IconBox from "@/components/ui/IconBox";
 import Link from "next/link";
 import { MdArrowBack } from "react-icons/md";
 import FormAddCombo from "@/components/form/FormAddCombo";
-import { getProducts } from "@/actions/getProducts";
+import { getProductsSeller } from "@/actions/getProductsSeller";
 
 export default async function AddCombo() {
 
-    const productos = await getProducts();
+    const productos = await getProductsSeller();
     
     console.log(productos)
 
