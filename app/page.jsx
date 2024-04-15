@@ -23,7 +23,7 @@ function UserIndex() {
         </div>
 
         <h2 className="capitalize font-black text-center md:text-6xl text-2xl">Pasos para usar <span className="text-gradient bg-gradient-principal">SplitQ</span></h2>
-        <section className="flex flex-col px-4 gap-8 mt-6 ">
+        <section className="flex flex-col px-4 gap-8 mt-6 mb-6">
           <Border icon title={"Crear una cuenta"}>
             <IconBox Icon={MdPersonAddAlt1} />
             <p>Primero necesitaras una cuenta para usar SplitQ</p>
