@@ -37,7 +37,6 @@ export default function FormAddProduct({ categories }) {
     }
 
     const handleChange = (e) => {
-        console.log(uuid());
 
         const newImages = [...images, ...e.target.files].map(img => {
             img.id = uuid();
