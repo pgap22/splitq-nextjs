@@ -3,7 +3,7 @@ import Link from "next/link"
 import IconBox from "@/components/ui/IconBox";
 import Input from "@/components/ui/Input";
 import { getCombos } from "@/actions/getCombos";
-import { getProducts } from "@/actions/getProducts";
+import { getProductsSeller } from "@/actions/getProductsSeller";
 import { MdOutlineArrowBack } from "react-icons/md";
 import Loader from "@/components/Loader";
 import { cn } from "@/lib/utils";
@@ -34,7 +34,7 @@ export default function SellerProducts({ initalProducts }) {
 
     const fetchingproductos = () => {
         startFetching(async () => {
-            const productos = await getProducts();
+            const productos = await getProductsSeller();
             setCurrentProducts(productos);
         })
     }
