@@ -33,6 +33,7 @@ export async function createProduct(data, formData) {
                 data: {
                     id_product: productCreated.id,
                     url: data.url,
+                    public_id: data.public_id
                 }
             })
             console.log(productImage);

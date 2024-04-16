@@ -3,9 +3,8 @@ import Link from "next/link"
 import IconBox from "@/components/ui/IconBox";
 import Input from "@/components/ui/Input";
 import { MdOutlineArrowBack } from "react-icons/md";
-import Loader from "@/components/Loader";
 import { cn } from "@/lib/utils";
-import { useEffect, useState, useTransition } from "react";
+import { useState } from "react";
 import { MdOutlineFastfood, MdOutlineLocalOffer, MdOutlineLocalPizza } from "react-icons/md";
 
 export default function SellerProducts({ items }) {

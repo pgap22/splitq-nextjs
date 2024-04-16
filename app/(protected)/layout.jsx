@@ -11,6 +11,8 @@ export default async function AuthLayout({ children }) {
 
     const existingUser = await getUserById(session.user?.id)
 
+    if(existingUser?.error) return <p>{existingUser.error}</p>
+
     //If not in DB display an error and a button for logout
     if (!existingUser) return (
         <>

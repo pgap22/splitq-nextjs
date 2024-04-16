@@ -12,8 +12,14 @@ export const {
         async jwt({ token, user,trigger,session}) {
             
             if(trigger == "update"){
+                const data = {
+                    name: token.name,
+                    lastname: token.lastname,
+                    email: token.email
+                }
+       
                 return{
-                    ...token,
+                    ...data,
                     ...session.user
                 }
             }

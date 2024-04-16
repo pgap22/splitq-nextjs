@@ -5,7 +5,6 @@ export default async function UpdateProfile({params}) {
     
     const {id} = params
     const perfil = await getUserById(id)
-    console.log(perfil)
 
     const name = perfil.name
     const email = perfil.email

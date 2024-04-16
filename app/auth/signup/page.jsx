@@ -15,6 +15,7 @@ export default function SignUp() {
     const [loading, startTransition] = useTransition();
     const [loadingResend, startResending] = useTransition();
     const [succes, setSucces] = useState(false);
+    
     const [id, setID] = useState();
     const { register, handleSubmit, formState,getValues, watch } = useForm({
         defaultValues: {
@@ -47,13 +48,20 @@ export default function SignUp() {
 
     const resendEmail = ()=>{
         startResending(async()=>{
-            await resendEmailBVerification(id)
+            const result = await resendEmailBVerification(id)
+            if(result?.error){
+                setWarning(result.error)
+            }
         })
     }
 
     if (succes) return (
         <>
             <h1 className="text-xl font-bold text-center">Verifica tu cuenta</h1>
+              {warning && <AlertWarning
+                    title={"Advertencia"}
+                    description={warning}
+                />}
             <p className="text-md text-text-secundary text-center mb-5">Hemos enviado a <span className="font-bold">{getValues("email")}</span> un link de verificacion, para que actives tu cuenta e ingreses a SplitQ <span className="opacity-5">👻</span></p>
             <Button disabled={loadingResend} onClick={resendEmail} >{
                 loadingResend

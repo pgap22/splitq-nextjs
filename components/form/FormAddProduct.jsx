@@ -2,22 +2,21 @@
 
 import { v4 as uuid } from "uuid"
 
-import { Controller, useForm } from "react-hook-form"
-import { Select, SelectTrigger, SelectItem, SelectContent, SelectGroup, SelectLabel, SelectValue } from "../ui/select"
+import { useForm } from "react-hook-form"
 import FormInput from "./FormInput"
 import FormTextArea from "./FormTextArea"
 import { Button } from "../ui/button"
 import { sumDecimal } from "@/lib/decimal"
-import { useEffect, useState, useTransition } from "react"
+import { useState, useTransition } from "react"
 import { createProduct } from "@/actions/createProduct"
 import AlertWarning from "../ui/AlertWarning"
 import Loader from "../Loader"
 import { useRouter } from "next/navigation";
-import { cn } from "@/lib/utils"
 import { MdOutlineDelete } from "react-icons/md"
 import FormSelect from "./FormSelect"
 
 export default function FormAddProduct({ categories }) {
+    //TODO: Make upload one image
     const router = useRouter();
     const [warning, setWarning] = useState(false)
     const [imagesWarning, setImageWarning] = useState();
@@ -37,7 +36,6 @@ export default function FormAddProduct({ categories }) {
     }
 
     const handleChange = (e) => {
-        console.log(uuid());
 
         const newImages = [...images, ...e.target.files].map(img => {
             img.id = uuid();
@@ -66,11 +64,13 @@ export default function FormAddProduct({ categories }) {
             })
 
             const result = await createProduct(data, imageFormData);
-            if (result) {
+
+            if (result?.error) {
                 setWarning(result.error)
+                return;
             }
             
-            router.push("/seller/manageProduct");
+            router.push("/seller/manageProducts");
         })
     }
 
@@ -90,7 +90,7 @@ export default function FormAddProduct({ categories }) {
                         label={"Nombre del producto"}
                         type={"text"}
                         error={formState.errors.name?.message}
-                        register={register("name", { required: { value: true, message: "Nombre esta vacio" } })}
+                        register={register("name", { required: { value: true,message: "Nombre esta vacio"} })}
                     />
                     <FormTextArea
                         error={formState.errors.description?.message}
@@ -98,34 +98,7 @@ export default function FormAddProduct({ categories }) {
                         label={"Descripcion del producto"}
                         register={register("description", { required: { value: true, message: "La descripcion esta vacia" } })}
                     />
-                    {/* <Controller
-                        name="categorieID"
-                        rules={{
-                            required: {
-                                value: true,
-                                message: "Este campo es obligatorio"
-                            }
-                        }}
-                        control={control}
-                        render={({ field }) => <div>
-                            <Select onValueChange={field.onChange}>
-                                <SelectTrigger className={cn(formState.errors.categorieID?.message && "!border-red-500 !text-red-500", getValues("categorieID") && "text-text")}>
-                                    <SelectValue placeholder="Seleccione el rol" />
-                                </SelectTrigger>
-                                <SelectContent className="!bg-foreground">
-                                    <SelectGroup>
-                                        <SelectLabel>Categoria</SelectLabel>
-                                        {
-                                            categories.map(category => <SelectItem key={category.id} className="!bg-background" value={category.id}>{category.name}</SelectItem>)
-                                        }
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
-
-                            <p className="mt-1 text-xs text-red-500">{formState.errors.categorieID?.message}</p>
-                        </div>}
-
-                    /> */}
+                    
                     <FormSelect 
                         control={control}
                         name={"categorieID"}
