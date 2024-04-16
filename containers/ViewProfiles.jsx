@@ -10,7 +10,7 @@ export default function ContainerManageProfile({perfiles}) {
 
     const [profileSearched, setProfileSearched] = useState("");
     const [searchResults, setSearchResults] = useState([]);
-    
+    const [handleView, setView] = useState(true)
 
     const handleInputChange = (event) => {
         const searchTerm = event.target.value;
@@ -21,15 +21,14 @@ export default function ContainerManageProfile({perfiles}) {
             perfil.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setSearchResults(filteredProfiles);
+        setView(!searchTerm);
     };
-
-    
-
-
 
     const vendedores = perfiles.filter(perfil => perfil.role === 'seller');
     const moderadores = perfiles.filter(perfil => perfil.role === 'mod');
+
     
+
 
     return(
 
@@ -49,6 +48,8 @@ export default function ContainerManageProfile({perfiles}) {
                 <h1 className="text-3xl font-bold mb-3">Mis perfiles</h1>
             </div>
             
+            { handleView && (
+
             <Tabs defaultValue={"vendedores"} className="!w-full">
                 <TabsList className="!w-full">
                     <div className="w-full flex justify-center">
@@ -70,7 +71,7 @@ export default function ContainerManageProfile({perfiles}) {
                     <TabsContent value="vendedores">
                         {
                             vendedores.map(perfil => (
-                                <Link href={"manageProfile/" + perfil.id}>
+                                <Link key={perfil.id} href={"manageProfile/" + perfil.id}>
                                 <div className=" border-b-2 border-secundary dark:border-[#414141] flex items-center gap-3 py-5">
                                         
                                     <IconBox
@@ -87,7 +88,7 @@ export default function ContainerManageProfile({perfiles}) {
                     <TabsContent value="moderadores">
                     {
                             moderadores.map(perfil2 => (
-                                <Link href={"manageProfile/" + perfil2.id}>
+                                <Link key={perfil2.id} href={"manageProfile/" + perfil2.id}>
                                 <div className=" border-b border-secundary dark:border-[#414141] flex items-center gap-3 py-5">
                                         
                                     <IconBox
@@ -103,12 +104,26 @@ export default function ContainerManageProfile({perfiles}) {
 
                     
             </Tabs>
+            )}
+
             <div>
-                {
-                    searchResults.map(usuario => (
-                        <p key={usuario.id} className="flex flex-col text-9xl text-white">{usuario.name}</p>
-                    ))
-                }  
+                    {profileSearched && searchResults.length > 0 &&(
+                        searchResults.map(usuario => (
+                            <Link href={"manageProfile/" + usuario.id}>
+                            <div className=" border-b border-secundary dark:border-[#414141] flex items-center gap-3 py-5">
+                                    
+                                <IconBox
+                                    Icon={usuario.role == 'mod' ? MdOutlineBuild : MdOutlineStorefront} variant={"square"} className={" bg-[#262626] border-[#414141] rounded ml-4"}
+                                />
+        
+                                <p className=" text-base font-semibold"> {usuario.name} </p>
+                            </div>
+                            </Link>                        ))
+                        )}  
+
+                {profileSearched && searchResults.length === 0 && (
+                    <p>No se encontraron resultados para la búsqueda.</p>
+                )}
             </div>
             
         </div>
