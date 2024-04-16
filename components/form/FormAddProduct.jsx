@@ -16,6 +16,7 @@ import { MdOutlineDelete } from "react-icons/md"
 import FormSelect from "./FormSelect"
 
 export default function FormAddProduct({ categories }) {
+    //TODO: Make upload one image
     const router = useRouter();
     const [warning, setWarning] = useState(false)
     const [imagesWarning, setImageWarning] = useState();
@@ -63,7 +64,7 @@ export default function FormAddProduct({ categories }) {
             })
 
             const result = await createProduct(data, imageFormData);
-            
+
             if (result?.error) {
                 setWarning(result.error)
                 return;

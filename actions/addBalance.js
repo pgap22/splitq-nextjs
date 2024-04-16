@@ -3,11 +3,9 @@ import prisma from "@/db/prisma";
 import { authUser } from "@/lib/authUser";
 import { sumDecimal } from "@/lib/decimal";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 
 export default async function addBalance(userID, newBalance) {
-    let succesful = false
     try {
         const currentMod = await authUser();
 

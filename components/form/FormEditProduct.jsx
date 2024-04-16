@@ -5,10 +5,12 @@ import FormInput from "./FormInput"
 import FormTextArea from "./FormTextArea"
 import FormSelect from "./FormSelect"
 import { MdOutlineDelete } from "react-icons/md"
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader } from "../ui/dialog"
 import { Button } from "../ui/button"
 import { DialogDescription } from "@radix-ui/react-dialog"
+import deleteProductImage from "@/actions/deleteProductImage"
+import Loader from "../Loader"
 
 export default function FormEditProduct({ product, categories }) {
     const { register, handleSubmit, formState, control, getValues } = useForm({
@@ -19,7 +21,6 @@ export default function FormEditProduct({ product, categories }) {
             categorieID: product.categorieID
         }
     })
-
 
     console.log(product)
     return (
@@ -71,6 +72,19 @@ export default function FormEditProduct({ product, categories }) {
 
 const ImgPreview = ({ img }) => {
     const [open, setOpen] = useState(false)
+    
+    const [loadingDelete, startDeleting] = useTransition();
+
+    const handleDelete = (public_id)=>{
+        startDeleting(async()=>{
+            const result = await deleteProductImage(public_id);
+            if(result?.error){
+                return;
+            }
+            setOpen(false)
+        })
+    }
+    
     return (
         <>
             <div className="mt-4 grid grid-cols-[1fr_max-content] items-center">
@@ -94,7 +108,11 @@ const ImgPreview = ({ img }) => {
                         Esta accion no se puede deshacer, la imagen se perdera !
                     </DialogDescription>
                     <DialogFooter className={"flex gap-2"}>
-                        <Button className="!bg-danger-action !text-white">Eliminar</Button>
+                        <Button onClick={()=> handleDelete(img.public_id)} disabled={loadingDelete} className="!bg-danger-action !text-white">{
+                            loadingDelete
+                            ? <Loader />
+                            : "Eliminar"
+                        }</Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>

@@ -1,6 +1,5 @@
 "use server"
 import prisma from "@/db/prisma";
-// import prismaDev from "@/db/prismaDev";
 import { authUser } from "@/lib/authUser";
 
 export default async function getRecharges({take}) {
