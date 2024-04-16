@@ -52,11 +52,11 @@ export default async function Home() {
 }
 const ProductCard = ({ product }) => {
     return (
-        <div className="min-w-48 p-4">
+        <div className="min-w-48 mt-4">
             <div className="flex items-center border-border border rounded bg-foreground ">
 
                 {product.images.length ? <img className="w-20 h-20 object-cover rounded border border-border" src={product.images[0].url} />
-                    : <div className="h-20 flex items-center justify-center">
+                    : <div className="w-20 h-20 flex items-center justify-center">
                         <MdOutlineLocalOffer size={30} />
                     </div>}
                 <div className="mt-4 p-2">

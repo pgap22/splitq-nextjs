@@ -63,11 +63,13 @@ export default function FormAddProduct({ categories }) {
             })
 
             const result = await createProduct(data, imageFormData);
-            if (result) {
+            
+            if (result?.error) {
                 setWarning(result.error)
+                return;
             }
             
-            router.push("/seller/manageProduct");
+            router.push("/seller/manageProducts");
         })
     }
 
@@ -87,9 +89,9 @@ export default function FormAddProduct({ categories }) {
                         label={"Nombre del producto"}
                         type={"text"}
                         error={formState.errors.name?.message}
-                        register={register("name", { required: { value: true,} })}
+                        register={register("name", { required: { value: true,message: "Nombre esta vacio"} })}
                     />
-                    <FormTex message: "Nombre esta vacio" tArea
+                    <FormTextArea
                         error={formState.errors.description?.message}
                         placeholder={"Escribe acá"}
                         label={"Descripcion del producto"}
