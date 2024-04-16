@@ -1,6 +1,7 @@
 "use server"
 
 import prisma from "@/db/prisma"
+import { revalidatePath } from "next/cache"
 
 
 export async function getProfile() {
@@ -15,6 +16,8 @@ export async function getProfile() {
                 ]
             }
         })
+
+        revalidatePath("/")
 
         return perfiles
 

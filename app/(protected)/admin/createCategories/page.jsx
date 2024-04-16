@@ -9,8 +9,11 @@ import { createCategorie } from "@/actions/createCategorie";
 import { useState, useTransition } from "react";
 import Loader from "@/components/Loader";
 import AlertWarning from "@/components/ui/AlertWarning";
+import { useRouter } from "next/navigation";
+
 
 export default function CreateCategorie() {
+    const router = useRouter()
     const [warning, setWarning] = useState(false)
     const [loading, startTransition] = useTransition();
     const { register, handleSubmit, formState, getValues, control } = useForm({
@@ -25,6 +28,10 @@ export default function CreateCategorie() {
             const result = await createCategorie(data);
             if (result) {
                 setWarning(result.error)
+            }
+
+            if (!warning) {
+                router.push("../admin")
             }
         })
 

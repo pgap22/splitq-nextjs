@@ -6,5 +6,6 @@ export default async function ManageProfile() {
 
     return(
         <ContainerManageProfile perfiles={profile}/>
+        
     )
 }
