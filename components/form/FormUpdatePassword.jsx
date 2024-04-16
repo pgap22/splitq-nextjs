@@ -57,7 +57,7 @@ export default function FormUpdatePassword() {
                     placeholder={"Nueva Contraseña"}
                     label={"Nueva Contraseña"}
                 />
-                <Button disabled={pending}>{
+                <Button disabled={pending || (!watch("oldpass") || !watch("newpass"))}>{
                     pending
                     ? <Loader />
                     : "Cambiar Contraseña"

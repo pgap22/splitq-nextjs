@@ -8,7 +8,7 @@ import IconBox from "@/components/ui/IconBox";
 export default async function NavLayout({ children }) {
 
     return (
-        <div className="sm:grid sm:grid-cols-[max-content_1fr] sm:h-[100dvh]">
+        <div className="sm:grid sm:grid-cols-[max-content_minmax(0,1fr)] sm:h-[100dvh]">
             <main className="p-4 mb-24 sm:order-2">
                 {children}
             </main>

@@ -9,7 +9,7 @@ import Loader from "../Loader";
 import AlertWarning from "../ui/AlertWarning";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
 export default function FormUpdateProfile() {
-    const { register, handleSubmit, formState, reset } = useForm({
+    const { register, handleSubmit, formState, reset, watch } = useForm({
         defaultValues: {
             name: "",
             lastname: "",
@@ -40,10 +40,11 @@ export default function FormUpdateProfile() {
 
             if (updateUser?.error) {
                 setError(updateUser.error)
+                return
             }
 
             if (updateUser.user.id) {
-                update({
+                await update({
                     user: updateUser.user
                 })
                 const sucess = (
@@ -101,7 +102,7 @@ export default function FormUpdateProfile() {
                     error={formState.errors.email?.message}
                     placeholder={user.email} />
 
-                <Button disabled={loading} className="w-full">{
+                <Button disabled={loading || ((!watch("email") && !watch("lastname") && !watch("name")))} className="w-full">{
                     loading ? <Loader /> : "Guardar Cambios"
                 }</Button>
             </form>
