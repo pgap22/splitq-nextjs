@@ -9,8 +9,11 @@ import { createCategorie } from "@/actions/createCategorie";
 import { useState, useTransition } from "react";
 import Loader from "@/components/Loader";
 import AlertWarning from "@/components/ui/AlertWarning";
+import { useRouter } from "next/navigation";
+
 
 export default function CreateCategorie() {
+    const router = useRouter()
     const [warning, setWarning] = useState(false)
     const [loading, startTransition] = useTransition();
     const { register, handleSubmit, formState, getValues, control } = useForm({
@@ -26,6 +29,10 @@ export default function CreateCategorie() {
             if (result) {
                 setWarning(result.error)
             }
+
+            if (!warning) {
+                router.push("../admin")
+            }
         })
 
     }
@@ -34,7 +41,7 @@ export default function CreateCategorie() {
             <div className="flex items-center mb-8 gap-4">
                 <Link href={"../admin"}>
                     <IconBox
-                        Icon={MdArrowBack}
+                        Icon={MdArrowBack} variant={'square'}
                     />
                 </Link>
                 <h1 className="text-2xl">Crear Categoria</h1>

@@ -66,7 +66,7 @@ export default function UpdateAdmin({name, email, role, id}) {
             <div className="flex flex-col mb-8 gap-4">
                 <Link href={"/admin/manageProfile"}>
                         <IconBox
-                            Icon={MdArrowBack}
+                            Icon={MdArrowBack} variant={'square'}
                         />
                 </Link>
                 <h1 className="text-2xl">Editar perfil</h1>
