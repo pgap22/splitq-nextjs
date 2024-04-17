@@ -24,7 +24,7 @@ export default function LoginPage() {
         startTransition(async () => {
             data.email = data.email.toLowerCase().trim();
             const loginResult = await login(data)
-            if(loginResult.error){
+            if (loginResult.error) {
                 setWarning(loginResult.error);
                 return;
             }
@@ -55,7 +55,9 @@ export default function LoginPage() {
                     register={register("password", { required: { value: true, message: "Contraseña esta vacia" }, minLength: { value: 8, message: "Minimo 8 caracteres" } })}
                 />
             </div>
-            <p className='text-text-secundary text-sm underline'>Olvidaste tu contraseña?</p>
+            <Link href={"/auth/forget-password"}>
+                <p className='text-text-secundary text-sm underline'>Olvidaste tu contraseña?</p>
+            </Link>
             <div className="flex flex-col">
                 <Button disabled={loading} className="font-bold">
                     {loading ? <Loader /> : "Iniciar Sesion"}

@@ -6,11 +6,15 @@ import { MdOutlineArrowBack } from "react-icons/md";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { MdOutlineFastfood, MdOutlineLocalOffer, MdOutlineLocalPizza } from "react-icons/md";
+import { useSearchParams } from 'next/navigation'
 
-export default function SellerProducts({ items }) {
+export default function SellerProducts({ items, params }) {
+    const searchParams = useSearchParams()
+    const searchQuery = searchParams.get('q')
 
-    const [itemtype, setItemType] = useState("products");
+    const [itemtype, setItemType] = useState(searchQuery ? searchQuery : "products");
     const [query, setQuery] = useState()
+
 
 
     const searchItem = (e) => {
@@ -22,7 +26,7 @@ export default function SellerProducts({ items }) {
         setItemType(type)
     }
 
-    
+
     return (
         <>
             <section className="p-4 grid grid-cols-[max-content_1fr] gap-2">
@@ -38,17 +42,17 @@ export default function SellerProducts({ items }) {
             <h1 className="font-bold text-2xl p-4">Mis Productos</h1>
 
             <div className="grid grid-cols-2 border-b border-border mb-4">
-                <Tabs  setItemType={changeType} active={itemtype} Icon={MdOutlineLocalPizza} type={"products"} />
-                <Tabs  setItemType={changeType} active={itemtype} Icon={MdOutlineFastfood} type={"combos"} />
+                <Tabs setItemType={changeType} active={itemtype} Icon={MdOutlineLocalPizza} type={"products"} />
+                <Tabs setItemType={changeType} active={itemtype} Icon={MdOutlineFastfood} type={"combos"} />
             </div>
             <InitialProducts type={itemtype} items={items[itemtype]} query={query} />
-            
+
         </>
     )
 }
 
 const InitialProducts = ({ items, query, type }) => {
-    if(!items.length) return;
+    if (!items.length) return;
     const products = query ? items.filter(item => item.name.toLowerCase().startsWith(query)) : items
     return (
         <>
@@ -60,8 +64,8 @@ const InitialProducts = ({ items, query, type }) => {
                                 <div className="p-4 aspect-square rounded bg-foreground border border-border">
                                     {
                                         type == "products"
-                                        ? <MdOutlineLocalOffer size={24} />
-                                        : <MdOutlineFastfood size={24} />
+                                            ? <MdOutlineLocalOffer size={24} />
+                                            : <MdOutlineFastfood size={24} />
                                     }
                                 </div>
                                 <div>

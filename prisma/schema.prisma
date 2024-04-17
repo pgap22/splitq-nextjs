@@ -23,6 +23,7 @@ model Users{
   role String @default("user")
   token String?
   emailToken String?
+  passToken String?
   updatableEmail String?
 
   userRecharges Recharges[] @relation("user")

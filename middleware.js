@@ -8,7 +8,9 @@ const {auth} = NextAuth(authConfig)
 export default auth((req)=>{
    const logged = !!req.auth
    const url = req.nextUrl.pathname
-   const isPublic = PUBLIC_ROUTES.some(route => url.startsWith(route) || url == "/")
+   const isPublic = PUBLIC_ROUTES.some(route => {
+      return url.startsWith(route) || url == "/"
+   })
    const isAPI = url.startsWith("/api")
    
    

@@ -28,10 +28,11 @@ export async function createCombo(data, products) {
         }))
 
 
-        await prisma.comboProducts.createMany({
+        const combosProducts = await prisma.comboProducts.createMany({
             data: comboProducts
         })
 
+        console.log(comboProducts)
         return true
     } catch (error) {
         console.log(error)

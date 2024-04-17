@@ -1,17 +1,15 @@
 "use server"
-
 import prisma from "@/db/prisma"
 import {revalidatePath} from "next/cache"
-export default async function editProduct(data,id) {
+
+export default async function deleteCombo(id) {
     try {
-        const product = await prisma.products.update({
+        await prisma.combo.delete({
             where: {
                 id
-            },
-            data
+            }
         })
-        console.log(product)
-        revalidatePath("/")
+        revalidatePath("/")        
         return true
     } catch (error) {
         console.log(error)
