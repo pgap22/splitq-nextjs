@@ -23,6 +23,9 @@ export default {
             const isSamePassword = await bcryptjs.compare(password, user.password)
 
             if (!isSamePassword) return null
+
+            console.log("LOGGED IN")
+            console.log(user)
             return user
         }
 

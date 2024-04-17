@@ -1,9 +1,7 @@
 "use server"
 
 import { signIn } from "@/auth"
-
 import { AuthError } from "next-auth";
-import { redirect } from "next/navigation";
 
 export default async function login(data) {
     try {
@@ -13,6 +11,7 @@ export default async function login(data) {
         });
         return true;
     } catch (error) {
+        console.error(error)
         if(error instanceof AuthError){
             if(error.type == "CredentialsSignin"){
                 return { error: "Usuario o contraseñas son invalidas" }
