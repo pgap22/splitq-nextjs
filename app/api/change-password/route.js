@@ -21,7 +21,7 @@ export async function POST(req,res){
             from: `SplitQ 👋 <${process.env.OUTLOOK_EMAIL}>`,
             to: user.updatableEmail, // list of receivers
             subject: "Cambio de contrseña 🛅", // Subject line
-            html: passwordChangeHtml(`${process.env.DOMAIN}/change-password/${user.passToken}`)
+            html: passwordChangeHtml(`${process.env.DOMAIN}/auth/change-password/${user.passToken}`)
         })
     
         return NextResponse.json({message: "OK"})
