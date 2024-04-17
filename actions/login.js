@@ -11,6 +11,7 @@ export default async function login(data) {
             ...data,
             redirect: false
         });
+        return true;
     } catch (error) {
         if(error instanceof AuthError){
             if(error.type == "CredentialsSignin"){
@@ -24,6 +25,4 @@ export default async function login(data) {
 
         return {error: "Hubo error en el servidor"}
     }
-
-    return redirect(LOGIN_REDIRECT)
 }
