@@ -31,6 +31,8 @@ model Users{
 
   createdProducts Products[]
   createdCombo Combo[]
+
+  cart CartUserProducts[]
 }
 
 model Categories{
@@ -54,6 +56,7 @@ model Products{
 
   images ProductImages[]
   combo ComboProducts[]
+  usersCarts CartUserProducts[]
 
 }
 model ProductImages{
@@ -101,3 +104,11 @@ model Recharges{
 
 }
 
+model CartUserProducts{
+  id String @default(uuid()) @id
+  id_user String
+  id_product String
+
+  user Users @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  product Products @relation(fields: [id_product], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
