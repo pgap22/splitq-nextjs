@@ -1,7 +1,7 @@
 "use server"
 
 import { signIn } from "@/auth"
-import { LOGIN_REDIRECT } from "@/auth.routes";
+
 import { AuthError } from "next-auth";
 import { redirect } from "next/navigation";
 
