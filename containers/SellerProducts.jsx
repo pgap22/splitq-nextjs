@@ -41,24 +41,28 @@ export default function SellerProducts({ items }) {
                 <Tabs  setItemType={changeType} active={itemtype} Icon={MdOutlineLocalPizza} type={"products"} />
                 <Tabs  setItemType={changeType} active={itemtype} Icon={MdOutlineFastfood} type={"combos"} />
             </div>
-            <InitialProducts items={items[itemtype]} query={query} />
+            <InitialProducts type={itemtype} items={items[itemtype]} query={query} />
             
         </>
     )
 }
 
-const InitialProducts = ({ items, query }) => {
+const InitialProducts = ({ items, query, type }) => {
     if(!items.length) return;
     const products = query ? items.filter(item => item.name.toLowerCase().startsWith(query)) : items
     return (
         <>
             {
                 products.map(producto => (
-                    <Link key={producto.id} href={"/seller/manageProducts/product/" + producto.id}>
+                    <Link key={producto.id} href={`/seller/manageProducts/${type == "products" ? "product" : "combo"}/` + producto.id}>
                         <div className="border-b border-border">
                             <div className="flex items-start gap-4 p-4">
                                 <div className="p-4 aspect-square rounded bg-foreground border border-border">
-                                    <MdOutlineLocalOffer size={24} />
+                                    {
+                                        type == "products"
+                                        ? <MdOutlineLocalOffer size={24} />
+                                        : <MdOutlineFastfood size={24} />
+                                    }
                                 </div>
                                 <div>
                                     <h2 className="font-bold">{producto.name}</h2>

@@ -3,7 +3,7 @@ import prisma from "@/db/prisma";
 import { authUser } from "@/lib/authUser";
 import { getProductByName } from "@/lib/products";
 import { revalidatePath } from "next/cache"
-import { uploadApiImageProduct } from "@/lib/uploadApiImageProduct";
+// import { uploadApiImageProduct } from "@/lib/uploadApiImageProduct";
 export async function createProduct(data, formData) {
     try {
         const { id } = await authUser();
@@ -11,14 +11,14 @@ export async function createProduct(data, formData) {
         if (productNameExist) return { error: "Ya existe un producto con ese nombre" }
 
         //Images first
-        let promises = []
+        // let promises = []
 
-        formData.forEach(async img => {
-            if (!img.type.startsWith("image")) return;
-            promises.push(uploadApiImageProduct(img))
-        })
+        // formData.forEach(async img => {
+        //     if (!img.type.startsWith("image")) return;
+        //     promises.push(uploadApiImageProduct(img))
+        // })
 
-        const images = await Promise.all(promises);
+        // const images = await Promise.all(promises);
         
                
 
@@ -28,16 +28,16 @@ export async function createProduct(data, formData) {
             data
         })
 
-        images.forEach(async(data)=>{
-            const productImage = await prisma.productImages.create({
-                data: {
-                    id_product: productCreated.id,
-                    url: data.url,
-                    public_id: data.public_id
-                }
-            })
-            console.log(productImage);
-        })
+        // images.forEach(async(data)=>{
+        //     const productImage = await prisma.productImages.create({
+        //         data: {
+        //             id_product: productCreated.id,
+        //             url: data.url,
+        //             public_id: data.public_id
+        //         }
+        //     })
+        //     console.log(productImage);
+        // })
 
 
         revalidatePath("/");

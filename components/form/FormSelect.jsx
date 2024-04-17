@@ -1,5 +1,4 @@
 "use client"
-import { useMediaQuery } from "usehooks-ts"
 import { Select, SelectTrigger, SelectItem, SelectContent, SelectGroup, SelectValue } from "../ui/select"
 import { Controller } from "react-hook-form"
 import { cn } from "@/lib/utils";
@@ -10,6 +9,7 @@ export default function FormSelect({
     placeholder,
     items,
     value,
+    label,
     error,
 }) {
 
@@ -21,7 +21,7 @@ export default function FormSelect({
             control={control}
             render={({ field }) =>
                 <div>
-
+                     <label className={cn(error && "!text-red-500", "label-valid")}>{label}</label>
                     <Select defaultValue={value} onValueChange={field.onChange}>
                         <SelectTrigger className={cn(error && "!border-red-500 !text-red-500", value && "text-text", "hidden md:flex")}>
                             <SelectValue placeholder={placeholder} />

@@ -11,12 +11,14 @@ function FormInput({
     disabled,
     step,
     value,
+    min,
+    max,
     showpass = true,   
 }) {
     return (
         <div className="flex flex-col w-full">
             <div className="flex flex-col-reverse">
-                <Input disabled={disabled} required step={step} className={cn("valid:border-blue-500 transition-all", error && "!border-red-500 !placeholder-red-500",className)} placeholder={placeholder} type={type} {...register} />
+                <Input min={min} max={max} disabled={disabled} required step={step} className={cn("valid:border-blue-500 transition-all", error && "!border-red-500 !placeholder-red-500",className)} placeholder={placeholder} type={type} {...register} />
                 <label className={cn("font-bold",error && "!text-red-500", "label-valid")}>{label}</label>
             </div>
             {(type == "password" && value && showpass) && (

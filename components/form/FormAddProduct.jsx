@@ -16,11 +16,10 @@ import { MdOutlineDelete } from "react-icons/md"
 import FormSelect from "./FormSelect"
 
 export default function FormAddProduct({ categories }) {
-    //TODO: Make upload one image
     const router = useRouter();
     const [warning, setWarning] = useState(false)
-    const [imagesWarning, setImageWarning] = useState();
-    const [images, setImages] = useState([]);
+    // const [imagesWarning, setImageWarning] = useState();
+    // const [images, setImages] = useState([]);
     const { register, handleSubmit, formState, getValues, watch, control, setError, setValue, formState: { errors } } = useForm({
         defaultValues: {
             name: "",
@@ -35,35 +34,35 @@ export default function FormAddProduct({ categories }) {
         setValue("price", sumDecimal(getValues("price"), value))
     }
 
-    const handleChange = (e) => {
+    // const handleChange = (e) => {
 
-        const newImages = [...images, ...e.target.files].map(img => {
-            img.id = uuid();
-            return img
-        })
+    //     const newImages = [...images, ...e.target.files].map(img => {
+    //         img.id = uuid();
+    //         return img
+    //     })
         
-        if (newImages.length > 3) {
-            setImageWarning("*Maximo 3 imagenes")
-            return;
-        }
-        setImages(newImages)
-    }
+    //     if (newImages.length > 3) {
+    //         setImageWarning("*Maximo 3 imagenes")
+    //         return;
+    //     }
+    //     setImages(newImages)
+    // }
 
-    const deleteImage = (file)=>{
-        const deleteImage = images.filter(img => img.id !== file.id)
-        setImages(deleteImage)
-    }
+    // const deleteImage = (file)=>{
+    //     const deleteImage = images.filter(img => img.id !== file.id)
+    //     setImages(deleteImage)
+    // }
 
     const creating = (data) => {
         setWarning(false)
         startTransition(async () => {
-            const imageFormData = new FormData();
+            // const imageFormData = new FormData();
             
-            images.forEach((img,i) => {
-                imageFormData.append("file-"+i, img)
-            })
+            // images.forEach((img,i) => {
+            //     imageFormData.append("file-"+i, img)
+            // })
 
-            const result = await createProduct(data, imageFormData);
+            const result = await createProduct(data);
 
             if (result?.error) {
                 setWarning(result.error)
@@ -113,7 +112,7 @@ export default function FormAddProduct({ categories }) {
                         placeholder={"Seleccione una categoria"}
                         error={formState.errors.categorieID?.message}
                     />
-                    <div className="flex flex-col">
+                    {/* <div className="flex flex-col">
                         <label htmlFor="images">
                             <p>Imagenes del producto</p>
                             <p className="text-xs font-bold mb-2 text-yellow-500">{imagesWarning}</p>
@@ -131,7 +130,7 @@ export default function FormAddProduct({ categories }) {
                                 <MdOutlineDelete onClick={()=> deleteImage(img)} size={24} />
                             </div>
                         ))}
-                    </div>
+                    </div> */}
                     <div className="gap-2 flex flex-col">
                         <p>Precio del producto</p>
                         <div className="grid grid-cols-4 gap-2 mb-2">
