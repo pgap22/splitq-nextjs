@@ -62,13 +62,15 @@ export default async function Home() {
                             />
                         </ActionLayout>
                     </Link>
-                    <ActionLayout
-                        description={"Administrar categorias"}
-                    >
-                        <IconBox
-                            Icon={MdOutlineStorefront}
-                        />
-                    </ActionLayout>
+                <Link href={"/admin/manageCategories"}>
+                        <ActionLayout
+                            description={"Administrar categorias"}
+                            >
+                            <IconBox
+                                Icon={MdOutlineStorefront}
+                                />
+                        </ActionLayout>
+                </Link>
                 </div>
             </div>
         </div>
