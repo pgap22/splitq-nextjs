@@ -13,7 +13,7 @@ const ProductView = ({ product }) => {
 
             <div className="left-1/2 flex gap-2 -translate-x-1/2 absolute ">
                 {product.images.map((prodcutImage, i) => (
-                    <div onClick={() => {q
+                    <div onClick={() => {
                         setSelectedImages(i)
                     }} className={cn("w-6 border border-gradient aspect-square rounded-full bg-foreground", i == selectedImages && "!bg-gradient-principal")}>
 
