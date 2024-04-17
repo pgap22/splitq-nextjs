@@ -8,10 +8,10 @@ import { MdFastfood, MdIcecream, MdLandscape, MdOutlineFastfood, MdOutlineLandsc
 import { getProducts } from "@/actions/getProducts";
 import { getCategories } from "@/actions/categories";
 import { getSellers } from "@/actions/getSellers";
+import Link from "next/link";
 
 export default async function Home() {
     const user = await authUser();
-    const product = await getProducts();
     const categorie = await getCategories();
     const sellers = await getSellers();
     const balance = await getBalance();
@@ -54,22 +54,24 @@ export default async function Home() {
 }
 const SellerCard = ({ seller }) => {
     return (
-        <div className="min-w-48 mt-4">
-            <div className="flex items-center border-border border rounded bg-foreground ">
+        <Link href={"home/seller/"+seller.id}>
+            <div className="min-w-48 mt-4">
+                <div className="flex items-center border-border border rounded bg-foreground ">
 
-                {/* {product.images.length ? <img className="w-20 h-20 object-cover rounded border border-border" src={product.images[0].url} />
+                    {/* {product.images.length ? <img className="w-20 h-20 object-cover rounded border border-border" src={product.images[0].url} />
                     : <div className="w-20 h-20 flex items-center justify-center">
                         <MdOutlineLocalOffer size={30} />
                     </div>} */}
-                <div className="w-20 h-20 flex items-center justify-center">
-                    <MdOutlineStore size={30} />
-                </div>
-                <div className="p-2">
-                    <p className="font-bold">{seller.name}</p>
-                    {/* <h2 className="text-center ">{seller.email}</h2> */}
+                    <div className="w-20 h-20 flex items-center justify-center">
+                        <MdOutlineStore size={30} />
+                    </div>
+                    <div className="p-2">
+                        <p className="font-bold">{seller.name}</p>
+                        {/* <h2 className="text-center ">{seller.email}</h2> */}
+                    </div>
                 </div>
             </div>
-        </div>
+        </Link>
     )
 }
 
