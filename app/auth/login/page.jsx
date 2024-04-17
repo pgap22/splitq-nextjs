@@ -1,4 +1,5 @@
 "use client"
+import { LOGIN_REDIRECT } from "@/auth.routes";
 import login from "@/actions/login";
 import Loader from "@/components/Loader";
 import FormInput from "@/components/form/FormInput";
@@ -7,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-
+import { useRouter } from "next/navigation";
 export default function LoginPage() {
     const { register, formState, handleSubmit } = useForm({
         defaultValues: {
@@ -15,7 +16,7 @@ export default function LoginPage() {
             password: ""
         }
     });
-
+    const router = useRouter();
     const [loading, startTransition] = useTransition();
     const [warning, setWarning] = useState();
     const submitLogin = (data) => {
@@ -25,7 +26,9 @@ export default function LoginPage() {
             const loginResult = await login(data)
             if(loginResult.error){
                 setWarning(loginResult.error);
+                return;
             }
+            router.push(LOGIN_REDIRECT);
         })
     }
 
