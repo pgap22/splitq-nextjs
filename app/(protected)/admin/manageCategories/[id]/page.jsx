@@ -10,7 +10,7 @@ export default async function UpdateCategorie({params}) {
         
     return(
             <div>
-                <FormUpdateCategories name={name} id={id} categorias={AllCategories}/>
+                <FormUpdateCategories name={name} id={id} AllCategories={AllCategories} categorias={categorias}/>
             </div>
         )
 
