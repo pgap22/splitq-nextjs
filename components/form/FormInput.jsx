@@ -13,7 +13,7 @@ function FormInput({
     value,
     min,
     max,
-    showpass = true,   
+    showpass = true,
 }) {
     return (
         <div className="flex flex-col w-full">
