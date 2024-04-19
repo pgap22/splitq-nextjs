@@ -15,8 +15,9 @@ import { deleteCategorie } from "@/actions/deleteCategorie";
 import FormSelect from "./FormSelect"
 
 
-export default function FormUpdateCategories({name, id, categorias}) {
+export default function FormUpdateCategories({name, id, categorias, AllCategories}) {
     
+
     const router = useRouter()
     const [success, setSucess] = useState()
     const [confirmDelete, setConfirm] = useState()
@@ -29,7 +30,7 @@ export default function FormUpdateCategories({name, id, categorias}) {
         }
     })
 
-    const FilteredCategories = categorias.filter(categoria => categoria.id !== id)
+    const FilteredCategories = AllCategories.filter(categoria => categoria.id !== id)
 
 
     const submitData = (data)=>{
