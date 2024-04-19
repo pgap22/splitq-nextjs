@@ -5,11 +5,12 @@ import { Button } from "@/components/ui/button";
 import { MdAdd, MdRemove } from "react-icons/md";
 import Loader from "@/components/Loader";
 import { createUserCart } from "@/actions/createUserCart";
+import { useRouter } from "next/navigation";
 // import createUserCart from "@/actions/createUserCart";
 
 const ProductBuy = ({ product }) => {
     const [loading, startTransition] = useTransition();
-
+    const router = useRouter();
 
     const [quantity, setQuantity] = useState(1)
     const handleInput = (e) => {
@@ -41,6 +42,8 @@ const ProductBuy = ({ product }) => {
             }
             await createUserCart(data)
             console.log(data)
+
+            router.push("/home/cart/");
         })
     }
 
