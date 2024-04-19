@@ -4,6 +4,9 @@ import FormTextArea from "@/components/form/FormTextArea";
 import { minusDecimal, sumDecimal } from "@/lib/decimal";
 import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
+import { useTransition } from "react";
+import { createRefoundBalance } from "@/actions/createRefoundBalance";
+import Loader from "../Loader";
 
 
 export default function FormCreateRefoundBalance({ balance }) {
@@ -14,8 +17,16 @@ export default function FormCreateRefoundBalance({ balance }) {
         }
     });
 
+    const [loading, startSubmiting] = useTransition();
+
     const submitRefound = (data)=>{
-        console.log(data)
+        startSubmiting(async()=>{
+            const result = await createRefoundBalance(data);
+            if(result?.error){
+                return;
+            }
+            console.log("Success!")
+        })
     }
 
     return (
@@ -66,7 +77,13 @@ export default function FormCreateRefoundBalance({ balance }) {
                     />
                     {watch("refoundBalance") >= 1 && <p className="font-bold text-text-secundary">Tu nuevo saldo sera de: ${sumDecimal((watch("refoundBalance") * -1), balance)}</p>}
                 </div>
-                <Button>Enviar Solicitud</Button>
+                <Button disabled={loading}>
+                    {
+                        loading
+                        ? <Loader />
+                        : "Solicitar Rembolso"
+                    }
+                </Button>
             </form>
         </>
     )

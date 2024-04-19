@@ -102,7 +102,7 @@ enum UserRefoundStatus{
 
 model UserRefoundBalance{
   id String @default(uuid()) @id
-  status UserRefoundStatus
+  status UserRefoundStatus @default(pending)
   refoundBalance Float
   reason String
   id_user String
