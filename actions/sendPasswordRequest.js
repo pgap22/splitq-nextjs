@@ -13,7 +13,7 @@ export async function sendPasswordRequest(email){
 
         const code = generarCodigoVerificacion();
 
-        await prismaDev.users.update({
+        const updatedUser = await prismaDev.users.update({
             where: {
                 id: user.id
             },
@@ -21,6 +21,8 @@ export async function sendPasswordRequest(email){
                 passToken: code
             }
         })
+
+        console.log(updatedUser)
 
         await sendVerificationChangePasswordApi(email)
 

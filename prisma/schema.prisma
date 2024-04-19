@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,102 +7,104 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users{
-  id String @default(uuid()) @id
-  name String
-  lastname String?
-  email String
-  password String
-  balance Float? @default(0.00)
-  role String @default("user")
-  token String?
-  emailToken String?
-  passToken String?
-  updatableEmail String?
-
-  userRecharges Recharges[] @relation("user")
-  ModRecharges Recharges[] @relation("mod")
-
+model Users {
+  id              String             @id @default(uuid())
+  name            String
+  lastname        String?
+  email           String
+  password        String
+  role            String             @default("user")
+  balance         Float?             @default(0.00)
+  freezebalance   Float?             @default(0.00)
+  token           String?
+  emailToken      String?
+  updatableEmail  String?
+  passToken       String?
+  cart            CartUserProducts[]
+  createdCombo    Combo[]
   createdProducts Products[]
-  createdCombo Combo[]
-
-  cart CartUserProducts[]
+  ModRecharges    Recharges[]        @relation("mod")
+  userRecharges   Recharges[]        @relation("user")
+  refoundBalance  UserRefoundBalance[]
 }
 
-model Categories{
-  id String @default(uuid()) @id
-  name String
-
+model Categories {
+  id        String     @id @default(uuid())
+  name      String
   productos Products[]
 }
 
-model Products{
-  id String @default(uuid()) @id
-  name String
-  price Float
+model Products {
+  id          String             @id @default(uuid())
+  name        String
+  price       Float
   description String
-  
-  seller_id String
   categorieID String
-
-  seller Users @relation(fields: [seller_id], references: [id])
-  categorie Categories @relation(fields: [categorieID] ,references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  images ProductImages[]
-  combo ComboProducts[]
-  usersCarts CartUserProducts[]
-
+  seller_id   String
+  usersCarts  CartUserProducts[]
+  combo       ComboProducts[]
+  images      ProductImages[]
+  categorie   Categories         @relation(fields: [categorieID], references: [id], onDelete: Cascade)
+  seller      Users              @relation(fields: [seller_id], references: [id])
 }
-model ProductImages{
-  id String @default(uuid()) @id
+
+model ProductImages {
+  id         String   @id @default(uuid())
   id_product String
-  url String
-  public_id String @default("")
-
-  product Products @relation(fields: [id_product], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  url        String
+  public_id  String   @default("")
+  product    Products @relation(fields: [id_product], references: [id], onDelete: Cascade)
 }
 
-model Combo{
-  id String @default(uuid()) @id
-  name String
+model Combo {
+  id          String          @id @default(uuid())
+  name        String
   description String
-  price Float
-  id_seller String
-
-  seller Users @relation(fields: [id_seller], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  products ComboProducts[]
+  price       Float
+  id_seller   String
+  seller      Users           @relation(fields: [id_seller], references: [id], onDelete: Cascade)
+  products    ComboProducts[]
 }
 
-model ComboProducts{
-  id String @default(uuid()) @id
+model ComboProducts {
+  id         String   @id @default(uuid())
   id_product String
-  id_combo String
-  quantity Int
-
-  combo Combo @relation(fields: [id_combo], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  product Products @relation(fields: [id_product], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id_combo   String
+  quantity   Int
+  combo      Combo    @relation(fields: [id_combo], references: [id], onDelete: Cascade)
+  product    Products @relation(fields: [id_product], references: [id], onDelete: Cascade)
 }
 
-model Recharges{
-  id String @default(uuid()) @id
-  balance Float
-  
-  userID String
-  modID String
-
+model Recharges {
+  id        String   @id @default(uuid())
+  userID    String
+  modID     String
+  balance   Float
   createdAt DateTime @default(now())
-
-  user Users @relation("user",fields: [userID], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  mod Users @relation("mod", fields: [modID], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
+  mod       Users    @relation("mod", fields: [modID], references: [id], onDelete: Cascade)
+  user      Users    @relation("user", fields: [userID], references: [id], onDelete: Cascade)
 }
 
-model CartUserProducts{
-  id String @default(uuid()) @id
-  id_user String
+model CartUserProducts {
+  id         String   @id @default(uuid())
+  id_user    String
   id_product String
+  quantity   Int
+  product    Products @relation(fields: [id_product], references: [id], onDelete: Cascade)
+  user       Users    @relation(fields: [id_user], references: [id], onDelete: Cascade)
+}
 
+enum UserRefoundStatus{
+  pending
+  accepted
+  denied
+}
+
+model UserRefoundBalance{
+  id String @default(uuid()) @id
+  status UserRefoundStatus
+  refoundBalance Float
+  reason String
+  id_user String
   user Users @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  product Products @relation(fields: [id_product], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }

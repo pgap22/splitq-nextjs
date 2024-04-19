@@ -73,9 +73,11 @@ function SideMenu({ style, user, close, logout }) {
 
                 <div>
                     <h3 className="text-text-secundary p-4 pb-2 font-bold text-lg">Rembolsos</h3>
-                    <div className="border-t border-border border-b p-4">
-                        <p className="font-bold">Crear Rembolsos</p>
-                    </div>
+                    <Link href={"/home/create-refound"}>
+                        <div className="border-t border-border border-b p-4">
+                            <p className="font-bold">Crear Rembolsos</p>
+                        </div>
+                    </Link>
                     <div className="border-border border-b p-4">
                         <p className="font-bold">Mis Rembolsos</p>
                     </div>
