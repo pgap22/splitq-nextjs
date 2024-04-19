@@ -105,7 +105,6 @@ model UserRefoundBalance{
   status UserRefoundStatus
   refoundBalance Float
   reason String
-
   id_user String
   user Users @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
