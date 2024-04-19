@@ -2,7 +2,7 @@
 
 import prisma from "@/db/prisma"
 
-export async function getCategorieById(){
+export async function getCategorieById({id}){
 try {
     const categorie = await prisma.categories.findFirst({
         where:{

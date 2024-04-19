@@ -3,14 +3,12 @@ import { getCategorieById } from "@/actions/getCategoryById"
 import FormUpdateCategories from "@/components/form/FormUpdateCategorie"
 
 export default async function UpdateCategorie({params}) {
-    const {id} = params
-    const categorias = await getCategorieById(id)
-    const name = categorias.name
+    const categorias = await getCategorieById(params.id)
     const AllCategories = await getCategories()
         
     return(
             <div>
-                <FormUpdateCategories name={name} id={id} AllCategories={AllCategories} categorias={categorias}/>
+                <FormUpdateCategories name={categorias.name} id={params.id} AllCategories={AllCategories} categorias={categorias}/>
             </div>
         )
 
