@@ -1,5 +1,6 @@
 "use server"
 import bcryptjs from "bcryptjs"
+import prisma from "@/db/prisma";
 export async function setNewPassword(newPassword, id){
     try {
         const password = await bcryptjs.hash(newPassword, 5)
