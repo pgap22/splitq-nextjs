@@ -18,7 +18,7 @@ export async function POST(req,res){
         if(!user.id && !user.passToken) return NextResponse.json({error: "Esta cuenta no ha solicitado cambio de contraseña"},{status: 400} )
     
        await transport.sendMail({
-            from: `SplitQ 👋 <${process.env.GMAIL_EMAIL}>`,
+            from: `SplitQ 👋 <${process.env.GOOGLE_EMAIL}>`,
             to: user.updatableEmail, // list of receivers
             subject: "Cambio de contrseña 🛅", // Subject line
             html: passwordChangeHtml(`${process.env.DOMAIN}/auth/change-password/${user.passToken}`)
