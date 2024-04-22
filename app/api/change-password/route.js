@@ -19,7 +19,7 @@ export async function POST(req,res){
     
        await transport.sendMail({
             from: `SplitQ 👋 <${process.env.GOOGLE_EMAIL}>`,
-            to: user.updatableEmail, // list of receivers
+            to: user.email, // list of receivers
             subject: "Cambio de contrseña 🛅", // Subject line
             html: passwordChangeHtml(`${process.env.DOMAIN}/auth/change-password/${user.passToken}`)
         })
