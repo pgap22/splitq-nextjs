@@ -11,7 +11,12 @@ export async function getUserCart() {
             id_user: id
         },
         include: {
-            product: true
+            product:{
+            	include:{
+            		images: true,
+                    seller: true
+            	}
+            }
         }
     });
 }

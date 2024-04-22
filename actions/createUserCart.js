@@ -1,6 +1,7 @@
 "use server"
 import prisma from "@/db/prisma";
 import { authUser } from "@/lib/authUser";
+import { revalidatePath } from "next/cache"
 
 export async function createUserCart(data) {
 
@@ -38,8 +39,8 @@ export async function createUserCart(data) {
             data
         })
 
+        revalidatePath("/");
         console.log(cartCreated)
-
         return true
     } catch (error) {
         console.log(error)
