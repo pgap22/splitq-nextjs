@@ -1,7 +1,7 @@
 "use client"
 import IconBox from "@/components/ui/IconBox";
 import LinkButton from "@/components/buttons/LinkButton";
-import { MdOutlineArrowBack, MdOutlineAttachMoney, MdOutlineHistory } from "react-icons/md";
+import { MdOutlineArrowBack, MdOutlineAttachMoney, MdOutlineHistory,MdOutlineCurrencyExchange  } from "react-icons/md";
 import Link from "next/link";
 import { useUserDetail } from "@/hooks/useUserDetails";
 import { useEffect } from "react";
@@ -28,6 +28,7 @@ export default function UserDetailsUI({userDetails}) {
             </section>
             <LinkButton href={userDetails.id+"/add-balance"} first Icon={MdOutlineAttachMoney}>Agregar Saldo</LinkButton>
             <LinkButton Icon={MdOutlineHistory}>Ver Historial</LinkButton>
+            <LinkButton href={userDetails.id+"/refounds"} Icon={MdOutlineCurrencyExchange}>Rembolsos Pendientes</LinkButton>
         </>
     )
 }
