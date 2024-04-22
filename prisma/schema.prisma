@@ -25,7 +25,9 @@ model Users {
   createdProducts Products[]
   ModRecharges    Recharges[]        @relation("mod")
   userRecharges   Recharges[]        @relation("user")
-  refoundBalance  UserRefoundBalance[]
+
+  refoundBalance UserRefoundBalance[] @relation("user")
+  refoundsAsMod  UserRefoundBalance[] @relation("mod")
 }
 
 model Categories {
@@ -94,17 +96,23 @@ model CartUserProducts {
   user       Users    @relation(fields: [id_user], references: [id], onDelete: Cascade)
 }
 
-enum UserRefoundStatus{
+enum UserRefoundStatus {
   pending
   accepted
   denied
+  canceled
 }
 
-model UserRefoundBalance{
-  id String @default(uuid()) @id
-  status UserRefoundStatus @default(pending)
+model UserRefoundBalance {
+  id             String            @id @default(uuid())
+  status         UserRefoundStatus @default(pending)
   refoundBalance Float
-  reason String
-  id_user String
-  user Users @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  reason         String
+  id_user        String
+
+  //Who give refound/money
+  id_mod String?
+
+  mod  Users? @relation("mod", fields: [id_mod], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user Users  @relation("user", fields: [id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }

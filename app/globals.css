@@ -18,6 +18,18 @@
 
         --light-blue: #0093ED;
 
+        --gray-background: #61616140;
+        --gray-border: #616161;
+        --gray-text: #BDBDBD;
+
+        --green-background: #4CAF5040;
+        --green-border: #4CAF50;
+        --green-text: #68FA7F;
+
+        --red-background: #F4433640;
+        --red-border: #F44336;
+        --red-text: #EF5305;
+
 
         --gradient-principal: 90deg, #A297E5 0%, #A29FE5 25.42%, #A4BDE5 95.93%;
         --background: #F9F9F9;

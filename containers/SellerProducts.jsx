@@ -3,10 +3,10 @@ import Link from "next/link"
 import IconBox from "@/components/ui/IconBox";
 import Input from "@/components/ui/Input";
 import { MdOutlineArrowBack } from "react-icons/md";
-import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { MdOutlineFastfood, MdOutlineLocalOffer, MdOutlineLocalPizza } from "react-icons/md";
 import { useSearchParams } from 'next/navigation'
+import { IconTabs } from "@/components/icon-tabs";
 
 export default function SellerProducts({ items, params }) {
     const searchParams = useSearchParams()
@@ -42,8 +42,8 @@ export default function SellerProducts({ items, params }) {
             <h1 className="font-bold text-2xl p-4">Mis Productos</h1>
 
             <div className="grid grid-cols-2 border-b border-border mb-4">
-                <Tabs setItemType={changeType} active={itemtype} Icon={MdOutlineLocalPizza} type={"products"} />
-                <Tabs setItemType={changeType} active={itemtype} Icon={MdOutlineFastfood} type={"combos"} />
+                <IconTabs setItemType={changeType} active={itemtype} Icon={MdOutlineLocalPizza} type={"products"} />
+                <IconTabs setItemType={changeType} active={itemtype} Icon={MdOutlineFastfood} type={"combos"} />
             </div>
             <InitialProducts type={itemtype} items={items[itemtype]} query={query} />
 
@@ -82,14 +82,3 @@ const InitialProducts = ({ items, query, type }) => {
     )
 }
 
-const Tabs = ({ Icon, type, active, setItemType }) => {
-    return (
-        <div onClick={() => setItemType(type)} className={cn("flex select-none justify-center", active !== type && "text-text-secundary")}>
-            <div className="w-fit flex flex-col items-center">
-                <Icon size={24} />
-                <p className="font-bold capitalize">{type}</p>
-                <div className={cn(active !== type && "opacity-0", "-mb-0.5 h-1 w-[120%] rounded-full bg-text")}></div>
-            </div>
-        </div>
-    )
-}

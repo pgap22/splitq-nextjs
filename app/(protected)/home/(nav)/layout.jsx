@@ -1,8 +1,7 @@
 import SearchHome from "@/containers/SearchHome";
 import GradientIcon from "@/components/ui/GradientIcon";
 import Link from "next/link";
-import { MdImage, MdOutlineConfirmationNumber, MdOutlineCreditCard, MdOutlineHome, MdOutlineQrCode, MdOutlineSearch, MdOutlineShoppingCart } from "react-icons/md";
-import IconBox from "@/components/ui/IconBox";
+import { MdOutlineConfirmationNumber, MdOutlineHome, MdOutlineQrCode,  MdOutlineShoppingCart } from "react-icons/md";
 
 
 export default async function NavLayout({ children }) {

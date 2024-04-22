@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import { useTransition } from "react";
 import { createRefoundBalance } from "@/actions/createRefoundBalance";
 import Loader from "../Loader";
+import { useRouter } from "next/navigation";
 
 
 export default function FormCreateRefoundBalance({ balance }) {
@@ -18,6 +19,7 @@ export default function FormCreateRefoundBalance({ balance }) {
     });
 
     const [loading, startSubmiting] = useTransition();
+    const router = useRouter();
 
     const submitRefound = (data)=>{
         startSubmiting(async()=>{
@@ -25,7 +27,7 @@ export default function FormCreateRefoundBalance({ balance }) {
             if(result?.error){
                 return;
             }
-            console.log("Success!")
+            router.push("/home/my-refounds")
         })
     }
 

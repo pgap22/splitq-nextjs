@@ -39,7 +39,16 @@ module.exports = {
         "yellow-text-notification": "var(--yellow-text-notification)",
         "light-blue": "var(--light-blue)",
         "danger-text": "var(--danger-text)",
-        "danger-action": "var(--danger-action)"
+        "danger-action": "var(--danger-action)",
+        "gray-background": "var(--gray-background)",
+        "gray-border": "var(--gray-border)",
+        "gray-text": "var(--gray-text)",
+        "green-background": "var(--green-background)",
+        "green-border": "var(--green-border)",
+        "green-text": "var(--green-text)",
+        "red-background": "var(--red-background)",
+        "red-border": "var(--red-border)",
+        "red-text": "var(--red-text)",
 
       },
       keyframes: {
