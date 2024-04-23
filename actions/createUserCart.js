@@ -31,6 +31,8 @@ export async function createUserCart(data) {
                     quantity: isCartCreated.quantity+data.quantity
                 }
             })
+
+            revalidatePath('/');
             return true
         }
 
