@@ -5,6 +5,8 @@ import { MdAdd, MdOutlineArrowBack, MdOutlineLocalOffer, MdRemove } from "react-
 import CartProductCard from "./components/CartProductCard";
 import CartProductButton from "./components/CartProductButton";
 import { multiplyDecimal, sumDecimal } from "@/lib/decimal";
+import NoProducts from "./components/NoProducts";
+
 
 export default async function CartPage() {
     const products = await getUserCart()
@@ -30,7 +32,7 @@ export default async function CartPage() {
             </div>
             <div className="flex flex-col gap-4">
                 {
-                    products.map(product => <CartProductCard item={product} key={product.id} />)
+                    products.length ? products.map(product => <CartProductCard item={product} key={product.id} />) : <NoProducts />
                 }
             </div>
             <CartProductButton
