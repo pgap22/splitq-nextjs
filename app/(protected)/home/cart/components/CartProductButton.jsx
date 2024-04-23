@@ -3,14 +3,14 @@ import { Button } from "@/components/ui/button"
 import { useTransition } from "react";
 
 
-const CartProductButton = () => {
+const CartProductButton = ({total}) => {
     const [loading, startTransition] = useTransition();
 
     return (
-        <div className="w-full">
+        <div className="absolute bottom-0 left-0 right-0 p-4">
             <div className="justify-between flex">
                 <p className="font-bold text-2xl">Total: </p>
-                <p className="font-bold text-2xl text-gradient bg-gradient-principal">$0.00</p>
+                <p className="font-bold text-2xl">${total}</p>
             </div>
             <Button disabled={loading} className="w-full min-h-12">
                 {loading ? <Loader /> : "Comprar"}

@@ -1,4 +1,6 @@
 "use client"
+import modifyQuantityProduct from "@/actions/modifyQuantityProduct";
+import Loader from "@/components/Loader";
 import { Button } from "@/components/ui/button";
 import { useState, useTransition } from "react";
 import { MdAdd, MdOutlineArrowBack, MdOutlineLocalOffer, MdRemove } from "react-icons/md";
@@ -6,30 +8,14 @@ import { MdAdd, MdOutlineArrowBack, MdOutlineLocalOffer, MdRemove } from "react-
 
 const CartProductCard = ({ item }) => {
     const product = item.product
-    const quantity = item.quantity
-    
+    const quantities = item.quantity
+
     const [loading, startTransition] = useTransition();
-    const [quantities, setQuantity] = useState(quantity);
 
-    const handleInput = (e) => {
-        const value = +e.target.value;
-
-        if (!/[0-9]/.test(value)) return
-
-        setQuantity(+value)
-    }
-
-    const modifyQuantity = (action) => {
-        if (action == "add") {
-            const newQuantity = quantities + 1
-            if (newQuantity > 99) return
-            setQuantity(newQuantity)
-        }
-        if (action == "minus") {
-            const newQuantity = quantities - 1
-            if (newQuantity < 1) return
-            setQuantity(newQuantity)
-        }
+    function handleClick(param) {
+        startTransition(async () => {
+            modifyQuantityProduct(param, item.id, quantities)
+        })
     }
 
     return (
@@ -46,22 +32,21 @@ const CartProductCard = ({ item }) => {
                         <h1 className="font-bold text-lg text-gradient bg-gradient-principal">${product.price}</h1>
                     </div>
                     <div className="flex justify-between">
-                        <div className="select-none w-fit p-2 gap-2 rounded-md border border-border grid grid-cols-3 justify-center items-center bg-foreground">
-                            <MdRemove
-                                onClick={() => modifyQuantity("minus")}
-                                size={24}
-                            />
-                            <input
-                                onInput={handleInput}
-                                maxLength={2}
-                                value={quantities}
-                                className="text-xl outline-none max-w-[2ch] text-center" />
+                        {
+                            loading ? <Loader invert/> :
+                                <div className="select-none w-fit p-2 gap-2 rounded-md border border-border grid grid-cols-3 justify-center items-center bg-foreground">
+                                    <MdRemove
+                                        onClick={() => handleClick("minus")}
+                                        size={24}
+                                    />
+                                    <p className="text-xl outline-none max-w-[2ch] text-center">{quantities}</p>
 
-                            <MdAdd
-                                onClick={() => modifyQuantity("add")}
-                                size={24}
-                            />
-                        </div>
+                                    <MdAdd
+                                        onClick={() => handleClick("add")}
+                                        size={24}
+                                    />
+                                </div>
+                        }
                     </div>
                 </div>
             </div>
