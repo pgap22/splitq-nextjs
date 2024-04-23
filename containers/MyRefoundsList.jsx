@@ -10,7 +10,10 @@ import {
   MdOutlineCheckCircle,
 } from "react-icons/md";
 
-export default function MyRefoundsList({ refounds }) {
+export default function MyRefoundsList({
+  refounds,
+  redirect = "/home/my-refounds/",
+}) {
   const [itemtype, setItemType] = useState("pending");
 
   return (
@@ -42,7 +45,7 @@ export default function MyRefoundsList({ refounds }) {
       {refounds
         .filter((refounds) => refounds.status == itemtype)
         .map((refound) => (
-          <Link href={"/home/my-refounds/"+refound.id}>
+          <Link href={redirect + refound.id}>
             <div className="border-border border-b">
               <div className="p-4 space-y-2">
                 <h2 className="font-bold text-md">Solicitud de Saldo</h2>
