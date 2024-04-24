@@ -44,7 +44,7 @@ export default function FormAddCombo({ productos }) {
                 return;
             }
             
-            router.push("/seller/manageProducts");
+            router.push("/seller/manageProducts?q=combos");
         })
     }
 

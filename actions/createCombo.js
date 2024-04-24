@@ -5,13 +5,16 @@ import { authUser } from "@/lib/authUser"
 
 export async function createCombo(data, products) {
     try {
+
+        if(products.length < 2) return {error: "Agrega al menos dos productos al combo !"}
+
         const existComboName = await prisma.combo.findFirst({
             where: {
                 name: data.name
             }
         })
 
-        if (existComboName) return { error: "Ya hiciste un combo con ese nombre" }
+        if (existComboName) return { error: "Ya existe un combo con ese nombre" }
 
         const { id } = await authUser();
 
