@@ -1,7 +1,4 @@
 import { getProductsBySellerId } from "@/actions/getProductsBySeller"
-import { Logo } from "@/components/Logo";
-import SettingButtonUser from "@/components/buttons/SettingButtonUser";
-import ThemeToggle from "@/components/buttons/theme-toggle";
 import IconBox from "@/components/ui/IconBox";
 import Link from "next/link";
 import { MdOutlineArrowBack, MdOutlineLocalOffer, MdOutlineStore } from "react-icons/md";
@@ -10,6 +7,7 @@ import { MdOutlineArrowBack, MdOutlineLocalOffer, MdOutlineStore } from "react-i
 
 export default async function SellerPesh({ params }) {
     const product = await getProductsBySellerId(params.id);
+    console.log(product)
     return (
         <>
             <div className="flex justify-between items-center">
@@ -20,9 +18,9 @@ export default async function SellerPesh({ params }) {
                 </div>
             </div>
             <div className=" mt-4 grid grid-cols-2 gap-4">
-                {
+                {/* {
                     product.map(item => <ProductCard product={item} />)
-                }
+                } */}
             </div>
         </>
     )
