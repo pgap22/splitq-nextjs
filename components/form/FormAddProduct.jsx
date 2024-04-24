@@ -140,7 +140,7 @@ export default function FormAddProduct({ categories }) {
                             <PriceButton setPrice={setPrice} value={0.05}>$0.05</PriceButton>
                         </div>
                         <FormInput
-                            register={register("price", { required: { value: true, message: "Este campo es requerido" } })}
+                            register={register("price", {valueAsNumber: true, required: { value: true, message: "Este campo es requerido" } })}
                             type="number"
                             className="bg-foreground mb-2"
                             placeholder="$0"
