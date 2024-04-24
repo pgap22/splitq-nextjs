@@ -7,8 +7,7 @@ export async function getRefoundBalanceByUserId(id_user){
         const refounds = await prismaDev.userRefoundBalance.findMany({
             where: {
                 AND: [
-                    {id_user},
-                    {status: 'pending'}
+                    {id_user}
                 ]
             }
         })

@@ -30,7 +30,8 @@ export default async function RefoundIdPage({ params }) {
           </p>
         </div>
       </div>
-      <CancelRefound id={refound.id} />
+      {refound.status == "pending" && 
+      <CancelRefound id={refound.id} />}
     </>
   );
 }

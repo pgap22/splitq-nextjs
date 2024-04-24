@@ -11,7 +11,8 @@ export async function cancelRefoundById(id) {
         const refound = await prisma.userRefoundBalance.update({
             where: {
                 id,
-                id_user
+                id_user,
+                status: "pending"
             },
             data: {
                 status: 'canceled'

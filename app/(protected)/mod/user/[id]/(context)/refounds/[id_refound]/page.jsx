@@ -7,13 +7,13 @@ import RefoundsActions from "./RefoundsActions";
 
 export default async function RefoundPage({ params }) {
   const refound = await getRefoundBalaceByIdAsMod(params.id_refound);
-
-  if (!refound) return redirect("/mod/user/" + params.id+"/refounds");
+  const redirectURL = "/mod/user/" + params.id + "/refounds";
+  if (!refound) return redirect();
 
   return (
     <>
       <div className="p-4">
-        <Link href={"/mod/user/" + params.id+"/refounds"}>
+        <Link href={redirectURL}>
           <IconBox variant="square" Icon={MdOutlineArrowBack} />
         </Link>
         <h1 className="mt-4 font-bold text-2xl">Solicitud de balance</h1>
@@ -30,7 +30,9 @@ export default async function RefoundPage({ params }) {
           </p>
         </div>
       </div>
-      <RefoundsActions />
+      {refound.status == "pending" && (
+        <RefoundsActions id={refound.id} redirect={redirectURL} />
+      )}
     </>
   );
 }
