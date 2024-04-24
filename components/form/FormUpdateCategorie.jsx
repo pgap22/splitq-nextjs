@@ -13,6 +13,8 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { useRouter } from "next/navigation";
 import { deleteCategorie } from "@/actions/deleteCategorie";
 import FormSelect from "./FormSelect"
+import { Checkbox } from "../ui/checkbox";
+
 
 
 export default function FormUpdateCategories({name, id, categorias, AllCategories}) {
@@ -22,16 +24,22 @@ export default function FormUpdateCategories({name, id, categorias, AllCategorie
     const [success, setSucess] = useState()
     const [confirmDelete, setConfirm] = useState()
     const [warning, setWarning] = useState(false)
+    const [clicked, setClicked] = useState(false)
     const [loading, startTransition] = useTransition();
     const [loadingDelete, startDelete] = useTransition()
-    const { register, handleSubmit, formState, getValues, control} = useForm({
+    const [selectedCategory, setSelectedCategory] = useState(null);
+
+
+    const { register, handleSubmit, formState, getValues,watch, control, setValue } = useForm({
         defaultValues: {
-            name
+            name,
+            categorieID: ""
         }
     })
 
-    const FilteredCategories = AllCategories.filter(categoria => categoria.id !== id)
+    
 
+    const FilteredCategories = AllCategories.filter(categoria => categoria.id !== id)
 
     const submitData = (data)=>{
         startTransition(async () => {
@@ -53,6 +61,15 @@ export default function FormUpdateCategories({name, id, categorias, AllCategorie
         })
     }
 
+    function disableSelect() {
+        if (clicked) {
+            setClicked(false)
+        } else{
+            setValue("categorieID", "")
+            setClicked(true)    
+        }
+    }
+    
 
     return (
         <div>
@@ -116,6 +133,7 @@ export default function FormUpdateCategories({name, id, categorias, AllCategorie
                     </DialogHeader>
                     <DialogDescription>
 
+                    
                     <FormSelect 
                         control={control}
                         name={"categorieID"}
@@ -125,11 +143,21 @@ export default function FormUpdateCategories({name, id, categorias, AllCategorie
                                 message: "Este campo es obligatorio"
                             }
                         }}
-                        value={getValues("categorieID")}
                         items={FilteredCategories}
                         placeholder={"Seleccione una categoria"}
                         error={formState.errors.categorieID?.message}
+                        disabled={clicked}
                     />
+                    
+                    <div className="flex gap-2 items-center mt-4">
+                        <Checkbox id="terms" onCheckedChange={disableSelect}/>
+                        <label
+                            htmlFor="terms"
+                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                        ¿Desea eliminar todos los productos en esta categoria?
+                        </label>
+                    </div>
 
                     </DialogDescription>
                     <DialogFooter>
