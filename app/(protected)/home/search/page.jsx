@@ -3,6 +3,7 @@
 import IconBox from "@/components/ui/IconBox";
 import Input from "@/components/ui/Input";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -16,6 +17,7 @@ import { v4 as uuid } from "uuid";
 export default function SearchPage() {
   const [value, setValue, remove] = useLocalStorage("search-products", []);
   const [searchedItems, setSearchedItems] = useState([]);
+  const router = useRouter();
   const { register, handleSubmit } = useForm({
     defaultValues: {
       search: "",
@@ -32,7 +34,7 @@ export default function SearchPage() {
       setValue((searched) => [...searched, data]);
     }
 
-    console.log(data);
+    router.push("/home/search/"+search)
   };
 
   useEffect(() => {

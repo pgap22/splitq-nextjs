@@ -13,9 +13,11 @@ export default async function SearchedPageResults({ params }) {
 
   return (
     <>
-      <Link href={"/home"}>
-        <IconBox variant="square" Icon={MdOutlineArrowBack} />
-      </Link>
+      <div className="max-w-fit">
+        <Link href={"/home"}>
+          <IconBox variant="square" Icon={MdOutlineArrowBack} />
+        </Link>
+      </div>
       <h1 className="font-bold text-2xl mt-4">Resultados de "{params.query}"</h1>
       <div className=" mt-4 grid grid-cols-2 gap-4">
         {products.map((item) => (
