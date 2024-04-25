@@ -14,6 +14,9 @@ export async function createUserCart(data, type) {
             id_user: id,
           },
           {
+            ticket_enabled: false
+          },
+          {
             OR: [
               { id_product: data.id_product },
               { id_combo: data.id_product },
