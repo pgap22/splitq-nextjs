@@ -1,10 +1,10 @@
 "use server"
 
-import prismaDev from "@/db/prismaDev"
+import prisma from "@/db/prisma"
 
 export async function getRefoundBalanceByUserId(id_user){
     try {
-        const refounds = await prismaDev.userRefoundBalance.findMany({
+        const refounds = await prisma.userRefoundBalance.findMany({
             where: {
                 AND: [
                     {id_user}

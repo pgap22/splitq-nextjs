@@ -1,6 +1,6 @@
 "use server"
 
-import prismaDev from "@/db/prismaDev";
+import prisma from "@/db/prisma";
 import { generarCodigoVerificacion } from "@/lib/code";
 import { sendVerificationChangePasswordApi } from "@/lib/emailAPI";
 import { getUserByEmail } from "@/lib/user"
@@ -13,7 +13,7 @@ export async function sendPasswordRequest(email){
 
         const code = generarCodigoVerificacion();
 
-        const updatedUser = await prismaDev.users.update({
+        const updatedUser = await prisma.users.update({
             where: {
                 id: user.id
             },

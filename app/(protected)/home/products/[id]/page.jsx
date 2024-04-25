@@ -10,7 +10,6 @@ import IconBox from "@/components/ui/IconBox";
 
 export default async function ProductPage({ params }) {
     const product = await getItemById(params.id);
-    console.log(product);
     return (
         <>
             <div className="flex justify-between items-center absolute z-10 p-4">
@@ -27,11 +26,18 @@ export default async function ProductPage({ params }) {
                 <p className="text-text-secundary mt-4">{product.description}</p>
             </div>
             {
-                product.products && product.products.map((item) => (
-                    <ProductItemCombo key={product.id} product={item.product} quantity={item.quantity}/>
-                ))
+                product.products && (
+                    <div className="p-4">
+                    <p>Que incluye: </p>
+                    {
+                        product.products.map((item) => (
+                            <ProductItemCombo key={product.id} product={item.product} quantity={item.quantity}/>
+                        ))
+                    }
+                    </div>
+                )
             }
-            <div>
+            <div className="mt-28">
                 <ProductBuy product={product} />
             </div>
         </>

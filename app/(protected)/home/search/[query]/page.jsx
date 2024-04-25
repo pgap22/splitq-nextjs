@@ -33,7 +33,7 @@ const ProductCard = ({ product }) => {
     <Link href={"/home/products/" + product.id}>
       <div className="border border-border rounded bg-foreground">
         <div className="flex flex-col">
-          {product.images.length ? (
+          {(product?.images && product.images.length) ? (
             <img
               className="object-cover aspect-square rounded"
               src={product.images[0].url}

@@ -10,13 +10,13 @@ import NoProducts from "./components/NoProducts";
 
 export default async function CartPage() {
     const products = await getUserCart()
-    let cualquiercosa = 0
+    let productPrices = 0
 
     let total = 0
     if (products.length) {
-        cualquiercosa = products.map(item => multiplyDecimal(item.quantity, item.product.price))
+        productPrices = products.map(item => multiplyDecimal(item.quantity, item.product.price))
 
-        total = sumDecimal(...cualquiercosa)
+        total = sumDecimal(...productPrices)
     }
 
 

@@ -59,13 +59,14 @@ model ProductImages {
 }
 
 model Combo {
-  id          String          @id @default(uuid())
-  name        String
-  description String
-  price       Float
-  id_seller   String
-  seller      Users           @relation(fields: [id_seller], references: [id], onDelete: Cascade)
-  products    ComboProducts[]
+  id               String             @id @default(uuid())
+  name             String
+  description      String
+  price            Float
+  id_seller        String
+  seller           Users              @relation(fields: [id_seller], references: [id], onDelete: Cascade)
+  products         ComboProducts[]
+  CartUserProducts CartUserProducts[]
 }
 
 model ComboProducts {
@@ -88,12 +89,26 @@ model Recharges {
 }
 
 model CartUserProducts {
-  id         String   @id @default(uuid())
-  id_user    String
-  id_product String
-  quantity   Int
-  product    Products @relation(fields: [id_product], references: [id], onDelete: Cascade)
-  user       Users    @relation(fields: [id_user], references: [id], onDelete: Cascade)
+  id          String  @id @default(uuid())
+  id_user     String
+  id_product  String?
+  id_combo    String?
+  //It can be disabled on cart //TODO
+  enableToBuy Boolean @default(true)
+
+  ticket_qr      String @default(uuid())
+
+  //If this is true it means that some one bought it 
+  ticket_enabled Boolean @default(false)
+  
+  //If it is true has been claimed
+  ticket_redeem Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  quantity Int
+  product  Products? @relation(fields: [id_product], references: [id], onDelete: Cascade)
+  combo    Combo?    @relation(fields: [id_combo], references: [id], onDelete: Cascade)
+  user     Users     @relation(fields: [id_user], references: [id], onDelete: Cascade)
 }
 
 enum UserRefoundStatus {

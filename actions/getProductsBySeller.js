@@ -1,10 +1,9 @@
 "use server"
 
 import prisma from "@/db/prisma"
-import prismaDev from "@/db/prismaDev"
 
 export async function getProductsBySellerId(id){
-    const seller = await prismaDev.users.findFirst({
+    const seller = await prisma.users.findFirst({
         where: {
             id
         },

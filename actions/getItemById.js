@@ -11,6 +11,9 @@ export async function getItemById(id) {
             include: {
                 seller: true,
                 images: true
+            },
+            orderBy: {
+                name: 'asc'
             }
         });
 

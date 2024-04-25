@@ -1,51 +1,56 @@
-"use server"
+"use server";
 import prisma from "@/db/prisma";
 import { authUser } from "@/lib/authUser";
-import { revalidatePath } from "next/cache"
+import { revalidatePath } from "next/cache";
 
-export async function createUserCart(data) {
+export async function createUserCart(data, type) {
+  try {
+    const { id } = await authUser();
 
-    try {
+    const isCartCreated = await prisma.cartUserProducts.findFirst({
+      where: {
+        AND: [
+          {
+            id_user: id,
+          },
+          {
+            OR: [
+              { id_product: data.id_product },
+              { id_combo: data.id_product },
+            ],
+          },
+        ],
+      },
+    });
 
-        const { id } = await authUser();
+    if (isCartCreated) {
+      await prisma.cartUserProducts.update({
+        where: {
+          id: isCartCreated.id,
+        },
+        data: {
+          quantity: isCartCreated.quantity + data.quantity,
+        },
+      });
 
-        const isCartCreated = await prisma.cartUserProducts.findFirst({
-            where: {
-                AND: [
-                    {
-                        id_user: id
-                    },
-                    {
-                        id_product: data.id_product
-                    }
-                ]
-            }
-        })
-
-        if (isCartCreated) {
-            const updateCart = await prisma.cartUserProducts.update({
-                where: {
-                    id: isCartCreated.id
-                },
-                data: {
-                    quantity: isCartCreated.quantity+data.quantity
-                }
-            })
-
-            revalidatePath('/');
-            return true
-        }
-
-        data.id_user = id;
-        const cartCreated = await prisma.cartUserProducts.create({
-            data
-        })
-
-        revalidatePath("/");
-        console.log(cartCreated)
-        return true
-    } catch (error) {
-        console.log(error)
-        return { error: "Hubo un error en el servidor" }
+      revalidatePath("/");
+      return true;
     }
+
+    data.id_user = id;
+    if(type == "combo"){
+       data.id_combo =  data.id_product
+       delete data.id_product
+    }
+
+    const cartCreated = await prisma.cartUserProducts.create({
+      data
+    });
+
+    revalidatePath("/");
+    return true;
+  } catch (error) {
+    console.log(error);
+    return { error: "Hubo un error en el servidor" };
+  }
 }

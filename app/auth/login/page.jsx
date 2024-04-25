@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 export default function LoginPage() {
     const { register, formState, handleSubmit } = useForm({
         defaultValues: {
@@ -16,7 +16,7 @@ export default function LoginPage() {
             password: ""
         }
     });
-    const router = useRouter();
+    // const router = useRouter();
     const [loading, startTransition] = useTransition();
     const [warning, setWarning] = useState();
     const submitLogin = (data) => {
@@ -28,7 +28,6 @@ export default function LoginPage() {
                 setWarning(loginResult.error);
                 return;
             }
-            router.push(LOGIN_REDIRECT);
         })
     }
 

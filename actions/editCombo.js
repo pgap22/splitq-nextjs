@@ -1,13 +1,12 @@
 "use server"
 
 import prisma from "@/db/prisma"
-import prismaDev from "@/db/prismaDev"
 import {revalidatePath} from "next/cache"
 
 export async function editCombo(data, products,id) {
     try {
 
-        const updatedCombo = await prismaDev.combo.update({
+        const updatedCombo = await prisma.combo.update({
             where:{
                 id
             },
@@ -15,7 +14,7 @@ export async function editCombo(data, products,id) {
         })
         
 
-        await prismaDev.comboProducts.deleteMany({
+        await prisma.comboProducts.deleteMany({
             where: {
                 id_combo: id
             }
