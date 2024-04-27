@@ -10,9 +10,7 @@ export default async function CategoryPage({ params }) {
   
   if (!category) return redirect("/home");
 
-  const products = await getProductsQuery({
-    categorieID: params.id
-  });
+  const products = category.productos
 
   return (
     <>
