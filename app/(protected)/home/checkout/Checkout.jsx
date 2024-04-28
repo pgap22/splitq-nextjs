@@ -16,6 +16,7 @@ import { useState, useTransition } from "react";
 import { buyProducts } from "@/actions/buyProducts";
 import Loader from "@/components/Loader";
 import Link from "next/link";
+import AlertWarning from "@/components/ui/AlertWarning";
 export default function Checkout({ checkoutData }) {
   const [loading, startBuying] = useTransition();
   const [success, setSucess] = useState();
@@ -33,9 +34,12 @@ export default function Checkout({ checkoutData }) {
     return (
       <>
         <h1 className="font-bold text-2xl">La compra ha sido exitosa!</h1>
-        <p>Ahora puedes canjear tus productos comprados con los tickets que has adquirido !</p>
+        <p>
+          Ahora puedes canjear tus productos comprados con los tickets que has
+          adquirido !
+        </p>
         <Button>
-            <Link href={"/home/tickets"}>Ir a mis tickets</Link>
+          <Link href={"/home/tickets"}>Ir a mis tickets</Link>
         </Button>
       </>
     );
@@ -62,10 +66,17 @@ export default function Checkout({ checkoutData }) {
       <div className="border font-bold flex flex-col gap-2 border-border rounded-md mt-2 mb-4 p-4">
         <p>Saldo Disponible: ${checkoutData.user_balance}</p>
         <p>Total: ${checkoutData.subTotal}</p>
-        <div className="border-t border-border">
-          <p className="mt-4">
-            Saldo despues de la compra: ${checkoutData.newBalance}
-          </p>
+        <div className="">
+          {checkoutData.newBalance >= 0 ? (
+            <p className="pt-4 border-t border-border">
+              Saldo despues de la compra: ${checkoutData.newBalance}
+            </p>
+          ) : (
+            <AlertWarning
+              title={"Advertencia"}
+              description={"Saldo insuficiente !"}
+            />
+          )}
         </div>
       </div>
       <Drawer>

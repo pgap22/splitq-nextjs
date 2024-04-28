@@ -1,6 +1,6 @@
 "use server";
 
-import prismaDev from "@/db/prismaDev";
+import prisma from "@/db/prisma";
 import { getCheckout } from "./getCheckout";
 import { revalidatePath } from "next/cache";
 
@@ -12,7 +12,7 @@ export async function buyProducts() {
     if(!enableToBuy) return {error: "No cuentas el saldo suficiente para comprar !"}
     
     //enable tickets
-    await prismaDev.cartUserProducts.updateMany({
+    await prisma.cartUserProducts.updateMany({
         where: {
             AND: [{ id_user: user_id }, { enableToBuy: true }, { ticket_enabled: false }],
           },
@@ -22,7 +22,7 @@ export async function buyProducts() {
         }
     })
     
-    await prismaDev.users.update({
+    await prisma.users.update({
         where: {
             id: user_id
         },

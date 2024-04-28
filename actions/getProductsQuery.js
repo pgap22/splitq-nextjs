@@ -1,10 +1,9 @@
 "use server"
 
 import prisma from "@/db/prisma";
-import prismaDev from "@/db/prismaDev";
 
 export async function getProductsQuery(query) {
-   const products =  await prismaDev.products.findMany({
+   const products =  await prisma.products.findMany({
         where: query,         
         include: {
             seller: true,
@@ -12,7 +11,7 @@ export async function getProductsQuery(query) {
         }
     });
 
-    const combos = await prismaDev.combo.findMany({
+    const combos = await prisma.combo.findMany({
         where: query,
         include: {
             seller: true,

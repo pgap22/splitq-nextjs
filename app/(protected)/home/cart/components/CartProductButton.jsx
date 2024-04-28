@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 const CartProductButton = ({ total }) => {
   const router =useRouter();
   return (
-    <div className="fixed bottom-0 left-0 right-0 p-4">
+    <div className="fixed bg-background bottom-0 left-0 right-0 p-4">
       <div className="justify-between flex">
         <p className="font-bold text-2xl">Total: </p>
         <p className="font-bold text-2xl text-gradient bg-gradient-principal">

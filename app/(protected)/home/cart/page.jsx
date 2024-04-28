@@ -28,9 +28,9 @@ export default async function CartPage() {
                         <IconBox variant={"square"} Icon={MdOutlineArrowBack} />
                     </Link>
                 </div>
-                <h1 className="mb-5 font-bold text-3xl">Carrito de compras</h1>
+                <h1 className="mt-4 font-bold text-3xl">Carrito de compras</h1>
             </div>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 mb-28">
                 {
                     products.length ? products.map(product => <CartProductCard item={product} key={product.id} />) : <NoProducts />
                 }

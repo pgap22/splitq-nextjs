@@ -1,12 +1,12 @@
 "use server"
 
-import prismaDev from "@/db/prismaDev";
+import prisma from "@/db/prisma";
 import { authUser } from "@/lib/authUser"
 
 export async function getMyTickets(){
     try {
         const {id} = authUser();
-        const tickets = (await prismaDev.cartUserProducts.findMany({
+        const tickets = (await prisma.cartUserProducts.findMany({
             where: {
                 AND: [
                     {id_user: id},

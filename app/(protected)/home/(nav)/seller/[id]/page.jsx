@@ -1,7 +1,8 @@
 import { getProductsBySellerId } from "@/actions/getProductsBySeller"
+import ProductCard from "@/components/ProductCard";
 import IconBox from "@/components/ui/IconBox";
 import Link from "next/link";
-import { MdOutlineArrowBack, MdOutlineLocalOffer, MdOutlineStore } from "react-icons/md";
+import { MdOutlineArrowBack} from "react-icons/md";
 
 
 
@@ -25,23 +26,4 @@ export default async function SellerPesh({ params }) {
         </>
     )
 }
-const ProductCard = ({ product }) => {
-    return (
-        <Link href={"/home/products/"+product.id}>
-            <div className="border border-border rounded bg-foreground">
-                <div className="flex flex-col">
 
-                    {(product?.images && product?.images.length) ? <img className="object-cover aspect-square rounded" src={product.images[0].url} />
-                        : <div className="flex aspect-square border-b border-border items-center justify-center">
-                            <MdOutlineLocalOffer size={50} />
-                        </div>}
-                    <div className="max-w-full p-2">
-                        <p className="font-bold">{product.name}</p>
-                        {/* <p className="truncate max-w-[20ch]">{product.description}</p> */}
-                        <p className="font-black text-2xl text-gradient-principal text-gradient bg-gradient-principal">${product.price}</p>
-                    </div>
-                </div>
-            </div>
-        </Link>
-    )
-}

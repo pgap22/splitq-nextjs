@@ -1,6 +1,5 @@
 "use server";
-import prisma from "@/db/prisma"
-import prismaDev from "@/db/prismaDev";
+import prisma from "@/db/prisma";
 import { authUser } from "@/lib/authUser"
 import { multiplyDecimal, sumDecimal } from "@/lib/decimal";
 export async function getCheckout() {
@@ -8,7 +7,7 @@ export async function getCheckout() {
     //Get User Cart Products and total
     const { id } = await authUser();
     const products = (
-      await prismaDev.cartUserProducts.findMany({
+      await prisma.cartUserProducts.findMany({
         where: {
           AND: [{ id_user: id }, { enableToBuy: true }, { ticket_enabled: false }],
         },
