@@ -1,6 +1,6 @@
 "use server"
 
-import prismaDev from "@/db/prismaDev"
+import prisma from "@/db/prisma"
 import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
 import timezone from "dayjs/plugin/timezone"
@@ -11,7 +11,7 @@ dayjs.extend(timezone)
 
 export async function confirmTicket(id){
     try {
-        await prismaDev.cartUserProducts.update({
+        await prisma.cartUserProducts.update({
             where: {
                 id
             },
