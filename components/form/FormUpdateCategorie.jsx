@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { deleteCategorie } from "@/actions/deleteCategorie";
 import FormSelect from "./FormSelect"
 import { Checkbox } from "../ui/checkbox";
+import { data } from "autoprefixer";
 
 
 
@@ -30,13 +31,14 @@ export default function FormUpdateCategories({name, id, categorias, AllCategorie
     const [selectedCategory, setSelectedCategory] = useState(null);
 
 
-    const { register, handleSubmit, formState, getValues,watch, control, setValue } = useForm({
+    const { register, handleSubmit, formState, getValues ,watch, control, setValue } = useForm({
         defaultValues: {
-            name,
+            name: name,
             categorieID: ""
         }
     })
 
+    
     
 
     const FilteredCategories = AllCategories.filter(categoria => categoria.id !== id)
@@ -53,10 +55,12 @@ export default function FormUpdateCategories({name, id, categorias, AllCategorie
         })
     }
 
+    
+
     function deleteUser() {
         
         startDelete(async()=>{
-            const result = await deleteCategorie(id)
+            const result = await deleteCategorie(id, getValues("categorieID"))
             router.push("/admin/manageCategories")
         })
     }
@@ -134,21 +138,22 @@ export default function FormUpdateCategories({name, id, categorias, AllCategorie
                     <DialogDescription>
 
                     
-                    <FormSelect 
-                        control={control}
-                        name={"categorieID"}
-                        rules={{
-                            required: {
-                                value: true,
-                                message: "Este campo es obligatorio"
-                            }
-                        }}
-                        items={FilteredCategories}
-                        placeholder={"Seleccione una categoria"}
-                        error={formState.errors.categorieID?.message}
-                        disabled={clicked}
-                    />
-                    
+                        <FormSelect 
+                            control={control}
+                            name={"categorieID"}
+                            rules={{
+                                required: {
+                                    value: true,
+                                    message: "Este campo es obligatorio"
+                                }
+                            }}
+                            items={FilteredCategories}
+                            placeholder={"Seleccione una categoria"}
+                            error={formState.errors.categorieID?.message}
+                            disabled={clicked}
+                        />
+                     
+
                     <div className="flex gap-2 items-center mt-4">
                         <Checkbox id="terms" onCheckedChange={disableSelect}/>
                         <label

@@ -4,29 +4,28 @@ import prisma from "@/db/prisma"
 import { revalidatePath } from "next/cache"
 
 
-export async function deleteCategorie(id, CategorieID) {
+export async function deleteCategorie(id, categorieID) {
     try {
         
-        
-        await prisma.products.updateMany({
-            where: {
-                categorieID: id
-            }, data: {
-                categorieID: categorieID
+        if (categorieID) {
+            
+            await prisma.products.updateMany({
+                where: {
+                    categorieID: id
+                }, data: {
+                    categorieID: categorieID
+                }
+            })
+        }
+
+        const deleteCategorie = await prisma.categories.delete({
+            where:{
+                id
             }
         })
-
-
-
-
-        // const deleteCategorie = await prisma.categories.delete({
-        //     where:{
-        //         id
-        //     }
-        // })
-
-
+        
         revalidatePath("/")
+
 
         return true
 
