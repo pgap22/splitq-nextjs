@@ -9,7 +9,7 @@ export default async function TicketPage() {
   return (
     <>
       <div className="p-4">
-        <BackButton />
+        <BackButton href={"/home"} />
         <h1 className="font-bold text-2xl mt-4">Mis Tickets</h1>
       </div>
       <TicketsView tickets={tickets} />

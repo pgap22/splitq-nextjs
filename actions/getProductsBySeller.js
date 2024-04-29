@@ -1,6 +1,7 @@
 "use server"
 
 import prisma from "@/db/prisma"
+import { redirect } from "next/navigation"
 
 export async function getProductsBySellerId(id){
     const seller = await prisma.users.findFirst({
@@ -28,6 +29,8 @@ export async function getProductsBySellerId(id){
             }
         }
     })
+ 
+    if(!seller) return redirect("/home")
 
    const data =  {
         products: seller.createdProducts,
