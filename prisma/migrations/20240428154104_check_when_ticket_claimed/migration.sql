@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "CartUserProducts" ADD COLUMN     "claimedAt" TIMESTAMP(3),
+ADD COLUMN     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;

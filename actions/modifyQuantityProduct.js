@@ -1,11 +1,10 @@
 "use server"
 import prisma from "@/db/prisma"
-import prismaDev from "@/db/prismaDev"
 import { revalidatePath } from "next/cache"
 
 export default async function modifyQuantityProduct(param, id, previusQuantity) {
     if (param == "add") {
-        const quantity = await prismaDev.cartUserProducts.update({
+        const quantity = await prisma.cartUserProducts.update({
             where: {
                 id
             },
@@ -17,13 +16,13 @@ export default async function modifyQuantityProduct(param, id, previusQuantity) 
     }
     if (param == "minus") {
         if(previusQuantity - 1 <= 0){
-            const quantity = await prismaDev.cartUserProducts.delete({
+            const quantity = await prisma.cartUserProducts.delete({
                 where: {id}
             })
             revalidatePath('/')
             return
         } 
-        const quantity = await prismaDev.cartUserProducts.update({
+        const quantity = await prisma.cartUserProducts.update({
             where: {
                 id
             },

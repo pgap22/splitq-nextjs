@@ -6,7 +6,8 @@ export const {
     handlers: { GET, POST },
     auth,
     signIn,
-    signOut
+    signOut,
+    unstable_update
 } = NextAuth({
     callbacks: {
         async jwt({ token, user,trigger,session}) {

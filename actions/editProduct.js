@@ -10,7 +10,6 @@ export default async function editProduct(data,id) {
             },
             data
         })
-        console.log(product)
         revalidatePath("/")
         return true
     } catch (error) {

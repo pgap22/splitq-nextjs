@@ -41,7 +41,6 @@ export async function createProduct(data, formData) {
 
 
         revalidatePath("/");
-        console.log(productCreated)
         return true
     } catch (error) {
         console.log(error)

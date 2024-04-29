@@ -42,8 +42,8 @@ export default function SellerProducts({ items, params }) {
             <h1 className="font-bold text-2xl p-4">Mis Productos</h1>
 
             <div className="grid grid-cols-2 border-b border-border mb-4">
-                <IconTabs setItemType={changeType} active={itemtype} Icon={MdOutlineLocalPizza} type={"products"} />
-                <IconTabs setItemType={changeType} active={itemtype} Icon={MdOutlineFastfood} type={"combos"} />
+                <IconTabs label={"Productos"} setItemType={changeType} active={itemtype} Icon={MdOutlineLocalPizza} type={"products"} />
+                <IconTabs label={"Combos"} setItemType={changeType} active={itemtype} Icon={MdOutlineFastfood} type={"combos"} />
             </div>
             <InitialProducts type={itemtype} items={items[itemtype]} query={query} />
 

@@ -2,6 +2,7 @@
 
 import { signIn } from "@/auth"
 import { AuthError } from "next-auth";
+import { redirect } from "next/navigation";
 
 export default async function login(data) {
     try {
@@ -9,7 +10,6 @@ export default async function login(data) {
             ...data,
             redirect: false
         });
-        return true;
     } catch (error) {
         console.error(error)
         if(error instanceof AuthError){
@@ -24,4 +24,6 @@ export default async function login(data) {
 
         return {error: "Hubo error en el servidor"}
     }
+
+    return redirect("/redirect")
 }

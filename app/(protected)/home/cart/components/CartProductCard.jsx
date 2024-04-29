@@ -21,9 +21,9 @@ const CartProductCard = ({ item }) => {
     return (
         <>
             <div className="border-b flex p-2 gap-2 border-border w-full">
-                {product.images.length ? <img className="max-h-16 aspect-square object-cover rounded border border-border" src={product.images[0].url} />
-                    : <div className="w-full h-64 border-b border-border flex items-center justify-center">
-                        <MdOutlineLocalOffer size={50} />
+                {(product?.images && product?.images.length) ? <img className="max-h-16 aspect-square object-cover rounded border border-border" src={product.images[0].url} />
+                    : <div className="h-16 aspect-square flex items-center justify-center">
+                        <MdOutlineLocalOffer size={30} />
                     </div>}
                 <div className="flex flex-row justify-between w-full items-center">
                     <div className="flex flex-col">

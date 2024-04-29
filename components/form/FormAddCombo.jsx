@@ -44,7 +44,7 @@ export default function FormAddCombo({ productos }) {
                 return;
             }
             
-            router.push("/seller/manageProducts");
+            router.push("/seller/manageProducts?q=combos");
         })
     }
 
@@ -171,7 +171,7 @@ export default function FormAddCombo({ productos }) {
                         <p>Precio del combo <span className="bg-foreground border border-border p-2 text-text-secundary">Recomendado ${priceTotal}</span></p>
 
                         <FormInput
-                            register={register("price", { required: { value: true, message: "Este campo es requerido" } })}
+                            register={register("price", { valueAsNumber: true,required: { value: true, message: "Este campo es requerido" } })}
                             type="number"
                             className="bg-foreground mb-2"
                             placeholder="$0"

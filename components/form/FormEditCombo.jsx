@@ -7,14 +7,23 @@ import FormTextArea from "./FormTextArea"
 import { Button } from "../ui/button"
 import Loader from "../Loader"
 import IconBox from "../ui/IconBox"
-import { MdAdd, MdLocalPizza, MdRemove } from "react-icons/md"
+import { MdAdd, MdLocalPizza, MdOutlineArrowBack, MdOutlineDelete, MdRemove } from "react-icons/md"
 import { multiplyDecimal, sumDecimal } from "@/lib/decimal"
 import { useEffect, useState, useTransition } from "react"
-import { createCombo } from "@/actions/createCombo"
 import AlertWarning from "../ui/AlertWarning"
 import { useRouter } from "next/navigation"
 import { editCombo } from "@/actions/editCombo"
-
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+  } from "@/components/ui/dialog"
+import deleteCombo from "@/actions/deleteCombo"
 
 export default function FormEditCombo({ productos, combo }) {
     const [loading, startTransition] = useTransition();
@@ -22,7 +31,7 @@ export default function FormEditCombo({ productos, combo }) {
     const [error, setError] = useState();
     const router = useRouter();
     const [addedProducts, setAddedProducts] = useState([]);
-    const { register, handleSubmit, formState, getValues, control,watch, setValue, formState: { errors } } = useForm({
+    const { register, handleSubmit, formState, getValues, control, watch, setValue, formState: { errors } } = useForm({
         defaultValues: {
             name: "",
             description: "",
@@ -33,7 +42,7 @@ export default function FormEditCombo({ productos, combo }) {
 
     const submitCombo = (data) => {
         startTransition(async () => {
-            
+
             for (const prop in data) {
                 if (!data[prop]) delete data[prop]
             }
@@ -43,22 +52,33 @@ export default function FormEditCombo({ productos, combo }) {
                 id: product.id,
                 quantity: product.quantity
             }))
-            console.log(data,products)
+            console.log(data, products)
             const resultCombo = await editCombo(data, products, combo.id);
-            
+
             if (resultCombo.error) {
                 setError(resultCombo.error)
                 return;
             }
-            
-            router.push("/seller/manageProducts");
+
+            router.push("/seller/manageProducts?q=combos");
+        })
+    }
+
+    const handleDelete = ()=>{
+        startTransition(async()=>{
+            const result = await deleteCombo(combo.id);
+            if(result?.error){
+                setError(result.error);
+                return
+            }
+            router.push("/seller/manageProducts?q=combos")
         })
     }
 
     const isEmpty =
-    !watch("name") &&
-    !watch("description") &&
-    !watch("price")
+        !watch("name") &&
+        !watch("description") &&
+        !watch("price")
 
 
     const modifyQuantityProduct = (action, data, value) => {
@@ -119,10 +139,12 @@ export default function FormEditCombo({ productos, combo }) {
 
 
     useEffect(() => {
+        if (!combo.products.length) return
+
         if (!addedProducts.length) {
             console.log(combo)
-            setAddedProducts(combo.products.map(item => ({...item, ...item.product})));
-            return 
+            setAddedProducts(combo.products.map(item => ({ ...item, ...item.product })));
+            return
         }
         const currentPriceTotal = sumDecimal(...addedProducts.map(product => {
             return multiplyDecimal(product.price, product.quantity)
@@ -166,7 +188,7 @@ export default function FormEditCombo({ productos, combo }) {
                             </SelectGroup>
                         </SelectContent>
                     </Select>
-                    <select  value={""} onChange={(e)=> addProductToCombo(e.target.value)} className="flex md:hidden !ring-offset-0 !ring-0 p-4 border-border bg-foreground  w-full items-center justify-between rounded-md border   text-sm ring-offset-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1  dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:focus:ring-slate-300">
+                    <select value={""} onChange={(e) => addProductToCombo(e.target.value)} className="flex md:hidden !ring-offset-0 !ring-0 p-4 border-border bg-foreground  w-full items-center justify-between rounded-md border   text-sm ring-offset-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1  dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:focus:ring-slate-300">
                         <option value="" disabled>Agregar productos a tu combo</option>
                         {
                             productos.map(producto => <option key={producto.id} className="!bg-background" value={producto.id} >{producto.name}</option>)
@@ -187,17 +209,46 @@ export default function FormEditCombo({ productos, combo }) {
                         <p>Precio del combo <span className="bg-foreground border border-border p-2 text-text-secundary">Recomendado ${priceTotal}</span></p>
 
                         <FormInput
-                            register={register("price", {valueAsNumber: true})}
+                            register={register("price", { valueAsNumber: true })}
                             type="number"
                             className="bg-foreground mb-2"
-                            placeholder={"$"+combo.price}
+                            placeholder={"$" + combo.price}
                             error={errors.price?.message}
                             step={".01"}
                         />
                     </div>
-                    <Button disabled={loading || isEmpty} className="font-bold">
-                        {loading ? <Loader /> : "Editar Combo"}
-                    </Button>
+                    <div className="grid grid-cols-[1fr_max-content] gap-2">
+                        <Button disabled={loading || isEmpty} className="font-bold">
+                            {loading ? <Loader /> : "Editar Combo"}
+                        </Button>
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <IconBox variant="square" Icon={MdOutlineDelete} />
+                            </DialogTrigger>
+                            <DialogContent onInteractOutside={(e) => {
+                                e.preventDefault();
+                            }}>
+                                <DialogHeader>
+                                    <DialogTitle>Estas seguro de eliminar este combo?</DialogTitle>
+                                    <DialogDescription>
+                                        Si eliminas este combo, no podras recuperarlo !
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <DialogFooter className={"flex flex-col gap-2 md:gap-0"}>
+                                    <Button disabled={loading} onClick={handleDelete}>
+                                        {
+                                            loading
+                                            ? <Loader />
+                                            : "Eliminar"
+                                        }
+                                    </Button>
+                                    <DialogClose disabled={loading} asChild>
+                                        <Button variant="outline">Cerrar</Button>
+                                    </DialogClose>
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>
+                    </div>
                 </div>
             </form>
         </>
