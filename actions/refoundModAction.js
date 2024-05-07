@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 
 export async function refoundModAction(action, id) {
   try {
-    const userMod = authUser();
+    const userMod = await authUser();
     if (action == "accepted") {
       const refoundUpdated = await prisma.userRefoundBalance.update({
         where: {
