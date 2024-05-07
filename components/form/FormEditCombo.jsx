@@ -52,7 +52,6 @@ export default function FormEditCombo({ productos, combo }) {
                 id: product.id,
                 quantity: product.quantity
             }))
-            console.log(data, products)
             const resultCombo = await editCombo(data, products, combo.id);
 
             if (resultCombo.error) {

@@ -8,7 +8,6 @@ export default async function AddCombo() {
 
     const productos = await getProductsSeller();
     
-    console.log(productos)
 
     return (
         <>
