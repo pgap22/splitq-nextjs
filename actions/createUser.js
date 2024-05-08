@@ -14,20 +14,30 @@ export async function createUser(data) {
     const passwordHash = await bcryptjs.hash(data.password, 5);
 
     const isNotUser = !!data.role
-    
-    const code  =  generarCodigoVerificacion()
 
+    const test = process.env.DEPLOYMENT
+    
+    let code  =  generarCodigoVerificacion()
+
+    if(test == "local" || isNotUser){
+        code = ''
+    }
     
     const user = await prisma.users.create({
         data: {
             ...data,
             password: passwordHash,
-            token: isNotUser ? '' : code
+            token: code
         }
     })
     
-    await sendVerificationEmailApi(user.id);
+    if(test != "local"){
+        await sendVerificationEmailApi(user.id);
+    }
 
+    if(test == "local"){
+        user.local = true
+    }
 
     return user;
 

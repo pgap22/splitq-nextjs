@@ -12,7 +12,8 @@ export default {
 
             const user = await getUserByEmail(email);
 
-            
+            if(user.error) throw new Error("xd")
+             
             if (!user) return null
             
             if(verificationLogin) return user;
