@@ -10,8 +10,9 @@ export async function getProfile() {
         const perfiles = await prisma.users.findMany({
             where: {
                 OR:[
-                    {role: "seller",},
-                    {role: "mod"}
+                    {role: "seller"},
+                    {role: "mod"},
+                    {role: "user"}
 
                 ]
             }

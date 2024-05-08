@@ -24,7 +24,7 @@ import { useRouter } from "next/navigation";
 import { deleteProfile } from "@/actions/deleteProfile";
 
 
-export default function UpdateAdmin({name, email, role, id}) {
+export default function UpdateAdmin({name, email, role, id, balance, freezebalance}) {
     
     const router = useRouter()
     const [success, setSucess] = useState()
@@ -36,7 +36,9 @@ export default function UpdateAdmin({name, email, role, id}) {
         defaultValues: {
             name,
             email,
-            role
+            role,
+            balance,
+            freezebalance
         }
     })
 
@@ -91,8 +93,24 @@ export default function UpdateAdmin({name, email, role, id}) {
                     register={register("email")}
                 />
 
+                {role == 'user' &&(
+                <div>
+                    <FormInput
+                        label={"Balance del perfil"}
+                        placeholder={"Balance del perfil"}
+                        register={register("balance")}
+                    />
+                    <FormInput
+                        label={"Balance congelado del perfil"}
+                        placeholder={"Balance congelado del perfil cn"}
+                        register={register("freezebalance")}
+                    />
+                </div>
+                    )
+                }
 
-            <div>
+            
+                {role !== 'user' && (<div>
                     <label className={cn(formState.errors.role?.message && "!text-red-500", "label-valid")}>Rol del Perfil</label>
                     <Controller
                         name="role"
@@ -115,7 +133,11 @@ export default function UpdateAdmin({name, email, role, id}) {
                     <p className="text-red-500 text-xs mt-1">
                         {formState.errors.role?.message}
                     </p>
-                </div>
+                </div>)
+                }
+
+
+
                 <div className="grid grid-cols-[1fr_max-content] w-full gap-3">
                 <Button disabled={loading} type="submit" className="font-bold w-full">
                     {loading ? <Loader /> : "Editar Perfil"}

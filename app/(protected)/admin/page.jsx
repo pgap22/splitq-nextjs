@@ -25,7 +25,7 @@ export default async function Home() {
             </div>
 
             <div>
-                <p className="text-xl font-bold text-text-secundary p-4">Vendedores</p>
+                <p className="text-xl font-bold text-text-secundary p-4">Perfiles</p>
                 <div>
                     <Link href={"/admin/createProfile"}>
                         <ActionLayout
@@ -50,7 +50,7 @@ export default async function Home() {
                 </div>
             </div>
 
-            <div className="mt-8">
+            <div className="mt-4">
                 <p className="text-xl font-bold text-text-secundary p-4">Categoria</p>
                 <div>
                 <Link href={"/admin/createCategories"}>
@@ -64,7 +64,7 @@ export default async function Home() {
                     </Link>
                 <Link href={"/admin/manageCategories"}>
                         <ActionLayout
-                            description={"Administrar categorias"}
+                            description={"Administrar Categorias"}
                             >
                             <IconBox
                                 Icon={MdOutlineStorefront}

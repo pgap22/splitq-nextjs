@@ -1,6 +1,6 @@
 "use client"
 import IconBox from "@/components/ui/IconBox";
-import { MdArrowBack, MdArrowForward, MdOutlineBuild, MdOutlineStorefront } from "react-icons/md";
+import { MdArrowBack, MdArrowForward, MdOutlineBuild, MdOutlineGroup, MdOutlineStorefront } from "react-icons/md";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Input from "@/components/ui/Input";
@@ -26,9 +26,9 @@ export default function ContainerManageProfile({perfiles}) {
 
     const vendedores = perfiles.filter(perfil => perfil.role === 'seller');
     const moderadores = perfiles.filter(perfil => perfil.role === 'mod');
+    const usuarios = perfiles.filter(perfil => perfil.role === 'user');
 
     
-
 
     return(
 
@@ -64,6 +64,13 @@ export default function ContainerManageProfile({perfiles}) {
                     <TabsTrigger value="moderadores" className="!font-bold !capitalize">
                         <MdOutlineBuild className="w-full h-6"/>
                         <p className=" text-lg">Moderadores</p>
+                    </TabsTrigger>
+                    </div>
+
+                    <div className="w-full flex justify-center">
+                    <TabsTrigger value="usuarios" className="!font-bold !capitalize">
+                        <MdOutlineGroup className="w-full h-6"/>
+                        <p className=" text-lg">Usuarios</p>
                     </TabsTrigger>
                     </div>
                 </TabsList>
@@ -102,6 +109,23 @@ export default function ContainerManageProfile({perfiles}) {
                         }
                     </TabsContent>
 
+                    <TabsContent value="usuarios">
+                    {
+                            usuarios.map(perfil3 => (
+                                <Link key={perfil3.id} href={"manageProfile/" + perfil3.id}>
+                                <div className=" border-b border-secundary dark:border-[#414141] flex items-center gap-3 py-5">
+                                        
+                                    <IconBox
+                                        Icon={MdOutlineGroup} variant={"square"} className={" bg-[#262626] border-[#414141] rounded ml-4"}
+                                    />
+            
+                                    <p className=" text-base font-semibold"> {perfil3.name} </p>
+                                </div>
+                                </Link>
+                            ))
+                        }
+                    </TabsContent>
+
                     
             </Tabs>
             )}
@@ -113,7 +137,7 @@ export default function ContainerManageProfile({perfiles}) {
                             <div className=" border-b border-secundary dark:border-[#414141] flex items-center gap-3 py-5">
                                     
                                 <IconBox
-                                    Icon={usuario.role == 'mod' ? MdOutlineBuild : MdOutlineStorefront} variant={"square"} className={" bg-[#262626] border-[#414141] rounded ml-4"}
+                                    Icon={usuario.role == 'mod' ? MdOutlineBuild : usuario.role == 'seller' ? MdOutlineStorefront : MdOutlineGroup} variant={"square"} className={" bg-[#262626] border-[#414141] rounded ml-4"}
                                 />
         
                                 <p className=" text-base font-semibold"> {usuario.name} </p>
@@ -122,7 +146,7 @@ export default function ContainerManageProfile({perfiles}) {
                         )}  
 
                 {profileSearched && searchResults.length === 0 && (
-                    <p>No se encontraron resultados para la búsqueda.</p>
+                    <p className="ml-4">No se encontraron resultados para la búsqueda.</p>
                 )}
             </div>
             
