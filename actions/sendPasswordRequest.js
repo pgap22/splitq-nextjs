@@ -22,7 +22,6 @@ export async function sendPasswordRequest(email){
             }
         })
 
-        console.log(updatedUser)
 
         await sendVerificationChangePasswordApi(email)
 

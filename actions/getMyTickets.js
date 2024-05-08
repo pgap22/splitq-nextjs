@@ -5,7 +5,7 @@ import { authUser } from "@/lib/authUser"
 
 export async function getMyTickets(){
     try {
-        const {id} = authUser();
+        const {id} = await authUser();
         const tickets = (await prisma.cartUserProducts.findMany({
             where: {
                 AND: [
