@@ -3,6 +3,11 @@
 import prisma from "@/db/prisma";
 import { authUser } from "@/lib/authUser";
 import { revalidatePath } from "next/cache";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export async function refoundModAction(action, id) {
   try {
@@ -16,6 +21,7 @@ export async function refoundModAction(action, id) {
         data: {
           status: "accepted",
           id_mod: userMod.id,
+          checkedAt: dayjs().tz("America/El_Salvador").toDate(),
         },
       });
 
@@ -40,6 +46,7 @@ export async function refoundModAction(action, id) {
         data: {
           status: "denied",
           id_mod: userMod.id,
+          checkedAt: dayjs().tz("America/El_Salvador").toDate(),
         },
       });
 

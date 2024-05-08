@@ -91,9 +91,11 @@ function SideMenu({ style, user, close, logout }) {
           <h3 className="text-text-secundary p-4 pb-2 font-bold text-lg">
             Historial
           </h3>
-          <div className="border-t border-border border-b p-4">
-            <p className="font-bold">Historial de acciones</p>
-          </div>
+          <Link href={"/home/history"}>
+            <div className="border-t border-border border-b p-4">
+              <p className="font-bold">Historial de acciones</p>
+            </div>
+          </Link>
         </div>
 
         <div>

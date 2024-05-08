@@ -9,17 +9,22 @@ export default function BackButton({ href }) {
 
   if (href) {
     return (
-      <Link href={href}>
-        <IconBox variant={"square"} Icon={MdOutlineArrowBack} />
-      </Link>
+      <div className="w-fit">
+        <Link href={href}>
+          <IconBox variant={"square"} Icon={MdOutlineArrowBack} />
+        </Link>
+      </div>
     );
   }
 
   return (
-    <IconBox
-      onClick={() => router.back()}
-      variant={"square"}
-      Icon={MdOutlineArrowBack}
-    />
+    <div className="w-fit">
+      <IconBox
+        onClick={() => router.back()}
+        variant={"square"}
+        className="w-fit"
+        Icon={MdOutlineArrowBack}
+      />
+    </div>
   );
 }
