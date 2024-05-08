@@ -10,13 +10,13 @@ export default async function UpdateProfile({params}) {
     const email = perfil.email
     const password = perfil.password
     const role = perfil.role
-
-    
+    const freezebalance = perfil.freezebalance
+    const balance = perfil.balance
 
     
     return (
         <div>
-            <UpdateAdmin name={name} email={email} password={password} role={role} id={id}/>
+            <UpdateAdmin name={name} email={email} password={password} role={role} id={id} balance={balance} freezebalance={freezebalance}/>
         </div>
     )
 }
