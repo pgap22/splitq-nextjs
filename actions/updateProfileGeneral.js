@@ -8,6 +8,7 @@ import { revalidatePath } from "next/cache";
 export async function updateProfileGeneral(data) {
     try {
         const user = await authUser();
+        const test = process.env.DEPLOYMENT
 
 
         if (data?.email) {
@@ -19,15 +20,17 @@ export async function updateProfileGeneral(data) {
             })
 
             if (sameEmailUser) return { error: "Usuario con el mismo email" }
+            if (test != "local") {
 
-            const updatableEmail = data.email
-            delete data.email;
+                const updatableEmail = data.email
+                delete data.email;
 
-            const emailToken = generarCodigoVerificacion();
+                const emailToken = generarCodigoVerificacion();
 
 
-            data.updatableEmail = updatableEmail;
-            data.emailToken = emailToken
+                data.updatableEmail = updatableEmail;
+                data.emailToken = emailToken
+            }
 
             const updated = await prisma.users.update({
                 where: {
@@ -39,7 +42,7 @@ export async function updateProfileGeneral(data) {
             await sendVerificationChangeEmailApi(updated.id);
 
             revalidatePath("/")
-            return {user: updated, email: true};
+            return { user: updated, email: test != "local" };
         }
 
 
@@ -52,9 +55,9 @@ export async function updateProfileGeneral(data) {
         })
 
         revalidatePath("/")
-        return {user: updatedUser}
+        return { user: updatedUser }
     } catch (error) {
         console.log(error)
-        return { error: "Hubo un error en el servidor"}
+        return { error: "Hubo un error en el servidor" }
     }
 }
