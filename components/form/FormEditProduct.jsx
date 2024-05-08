@@ -118,7 +118,9 @@ export default function FormEditProduct({ product, categories }) {
                             Subir Imagen
                         </div>
                     </label>
-                    <input onChange={previewImage} id="images" type="file" accept="image/png, image/gif, image/jpeg" hidden />
+                    <input onClick={(e)=>{
+                        e.target.value = null
+                    }} onInput={previewImage} id="images" type="file" accept="image/png, image/gif, image/jpeg" hidden />
                     {product.images.map((img) => (
                         <ImgPreview key={img.id} img={img} />
                     ))}
@@ -206,7 +208,7 @@ const ImgPreview = ({ img }) => {
     const handleDelete = (public_id) => {
 
         startDeleting(async () => {
-            const result = await deleteProductImage(public_id);
+            const result = await deleteProductImage(public_id, img.url);
             if (result?.error) {
                 return;
             }
