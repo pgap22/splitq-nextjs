@@ -5,6 +5,7 @@ import { authUser } from "@/lib/authUser";
 import { revalidatePath } from "next/cache";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone"
 
 dayjs.extend(utc);
 dayjs.extend(timezone);

@@ -31,7 +31,8 @@ export default function TicketsView({ tickets }) {
           setItemType={setItemType}
         />
       </div>
-      {tickets
+      {!tickets.length && <p className="p-4">No tienes tickets :(</p>}
+      {tickets.length && tickets
         .filter((ticket) => {
           if (active == "enable" && !ticket.ticket_redeem) return ticket;
           if (active == "claimed" && ticket.ticket_redeem) return ticket;
@@ -65,7 +66,7 @@ const CardProduct = ({ ticket }) => {
           <h1 className="font-bold text-lg">{product.name}</h1>
           <p className="text-xs text-text-secundary">{product.seller.name}</p>
           <div className="border text-text-secundary w-fit my-1 border-border text-xs p-1 rounded bg-foreground">
-            Comprado {dayjs(ticket.createdAt).format("DD/MM/YYYY hh:mm:ss A")}
+            Comprado {dayjs(ticket.purchaseAt).format("DD/MM/YYYY hh:mm:ss A")}
           </div>
           {ticket.claimedAt && (
             <div className="border text-text-secundary w-fit my-1 border-border text-xs p-1 rounded bg-foreground">

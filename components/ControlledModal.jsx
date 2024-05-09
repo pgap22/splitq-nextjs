@@ -17,8 +17,8 @@ export default function ControlledModal({ children, open,setOpen, title="", desc
             </DialogDescription>
           </DialogHeader>
           {children}
-          <DialogClose>
-            <Button variant="outline">{cancelLabel}</Button>
+          <DialogClose className="w-full">
+            <Button className="w-full" variant="outline">{cancelLabel}</Button>
           </DialogClose>
         </DialogContent>
       </Dialog>

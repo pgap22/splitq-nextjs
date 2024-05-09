@@ -5,12 +5,14 @@ import { redirect } from "next/navigation";
 import QRCode from "react-qr-code";
 
 export default async function TicketInfoPage({ params }) {
+  
   const ticket = await getTicketById(params.id);
 
-  if (!ticket) return redirect("/home");
+  if(!ticket) return redirect("/home");
+
+  if (ticket?.error) return <p>Hubo un error con el servidor. Recarga la pagina</p>
 
   const { product } = ticket;
-  console.log(ticket);
   return (
     <main className="p-4">
       <BackButton href={"/home/tickets"} />

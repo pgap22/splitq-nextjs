@@ -24,7 +24,8 @@ export async function getTicketById(id) {
       },
     });
 
-    if (ticket.combo) {
+
+    if (ticket && ticket.combo) {
       ticket.product = { ...ticket.combo };
       delete ticket.combo;
     }

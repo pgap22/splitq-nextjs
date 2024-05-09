@@ -6,7 +6,7 @@ export default async function CheckoutPage() {
   return (
     <>
       <main className="p-4">
-        <BackButton href="/home"/>
+        <BackButton href="/home/cart"/>
         <Checkout checkoutData={checkoutData} />
       </main>
     </>
