@@ -16,6 +16,7 @@ export default function SignUp() {
     const [loading, startTransition] = useTransition();
     const [loadingResend, startResending] = useTransition();
     const [succes, setSucces] = useState(false);
+    const [sucessLocal, setSuccesLocal] = useState(false)
     const router = useRouter()
 
     const [id, setID] = useState();
@@ -40,7 +41,8 @@ export default function SignUp() {
             }
 
             if (result?.local) {
-                router.push("/auth/login")
+                setSuccesLocal(true)
+                return
             }
 
             if (!result?.error) {
@@ -62,6 +64,18 @@ export default function SignUp() {
             }
         })
     }
+
+    if (sucessLocal) return (
+        <>
+            <h1 className="text-xl font-bold text-center">Haz creado tu cuenta exitosamente</h1>
+            <p className="text-md text-text-secundary text-center mb-5">Haz click en el boton para inicies sesion y disfrutes de SplitQ<span className="opacity-5">👻</span></p>
+            <Link className="w-full" href={"/auth/login"}>
+                <Button className="w-full">
+                    Iniciar Sesion
+                </Button>
+            </Link>
+        </>
+    )
 
     if (succes) return (
         <>
