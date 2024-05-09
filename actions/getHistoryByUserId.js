@@ -1,16 +1,17 @@
 "use server";
 
-import prismaDev from "@/db/prismaDev";
+import prisma from "@/db/prisma";
 
 export async function getHistoryByUserId(id_user) {
+  if (!id_user) return { error: "No userid provided" };
   const [refounds, recharges, cart] = await Promise.all([
-    prismaDev.userRefoundBalance.findMany({
+    prisma.userRefoundBalance.findMany({
       where: {
         id_user,
       },
       orderBy: {},
     }),
-    prismaDev.recharges.findMany({
+    prisma.recharges.findMany({
       where: {
         userID: id_user,
       },
@@ -18,8 +19,11 @@ export async function getHistoryByUserId(id_user) {
         createdAt: true,
         balance: true,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     }),
-    prismaDev.cartUserProducts.findMany({
+    prisma.cartUserProducts.findMany({
       where: {
         id_user,
       },
@@ -57,36 +61,69 @@ export async function getHistoryByUserId(id_user) {
         type: "refound",
       });
     }
+    if (!actions.length) return null;
 
-    return actions;
+    if (actions.length > 1) return actions;
+
+    return actions[0];
   });
 
-  const cartActions = cart.map((cart) => {
-    const actions = [];
-    if (cart.purchaseAt) {
-      actions.push({
-        date: cart.purchaseAt,
-        value: cart.product || cart.combo,
-        status: "pending_claim",
-        type: "purchase"
-      });
-    }
-
-    if(cart.claimedAt){
+  const rechargesActions = recharges.map((recharge) => ({
+    date: recharge.createdAt,
+    value: recharge.balance,
+    type: "recharge",
+  }));
+  const cartActions = cart
+    .map((cart) => {
+      const actions = [];
+      if (cart.purchaseAt) {
         actions.push({
-            date: cart.claimedAt,
-            value: cart.product || cart.combo,
-            status: "claimed",
-            type: "ticket"
-        })
+          date: cart.purchaseAt,
+          value: cart.product || cart.combo,
+          quantity: cart.quantity,
+          status: "pending_claim",
+          type: "purchase",
+        });
+      }
+
+      if (cart.claimedAt) {
+        actions.push({
+          date: cart.claimedAt,
+          value: cart.product || cart.combo,
+          quantity: cart.quantity,
+          status: "claimed",
+          type: "ticket",
+        });
+      }
+
+      if (!actions.length) return null;
+
+      if (actions.length > 1) return actions;
+
+      return actions[0];
+    })
+    .filter((actions) => actions);
+
+  const allActions = [
+    ...refoundsActions.flat(),
+    ...rechargesActions,
+    ...cartActions.flat(),
+  ];
+
+  const groupedActions = allActions.reduce((acc, action) => {
+    const dateKey = new Date(action.date).toDateString();
+    const existingGroup = acc.find((group) => group.date === dateKey);
+    if (existingGroup) {
+      existingGroup.actions.push(action);
+    } else {
+      acc.push({ date: dateKey, actions: [action] });
     }
+    return acc;
+  }, []);
 
-    return actions;
-  }).filter(actions => actions.length);
-
-  console.log({
-    refoundsActions,
-    recharges,
-    cartActions,
-  });
+  groupedActions.map(date => {
+    date.actions = date.actions.sort((a, b) => a.date - b.date).reverse()
+    return date;
+  })
+  return groupedActions;
 }
