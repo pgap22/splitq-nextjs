@@ -68,7 +68,7 @@ export default function SignUp() {
     if (sucessLocal) return (
         <>
             <h1 className="text-xl font-bold text-center">Haz creado tu cuenta exitosamente</h1>
-            <p className="text-md text-text-secundary text-center mb-5">Haz click en el boton para inicies sesion y disfrutes de SplitQ<span className="opacity-5">👻</span></p>
+            <p className="text-md text-text-secundary text-center mb-5">Tu cuenta ha sido creada con exito en SplitQ, porfavor haz click en el boton para iniciar sesion y disfrutar de SplitQ<span className="opacity-5">👻</span></p>
             <Link className="w-full" href={"/auth/login"}>
                 <Button className="w-full">
                     Iniciar Sesion
