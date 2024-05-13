@@ -9,6 +9,9 @@ import { MdAdd, MdOutlineArrowBack, MdOutlineLocalOffer, MdRemove } from "react-
 const CartProductCard = ({ item }) => {
     const product = item.product
     const quantities = item.quantity
+    const sub = quantities * product.price
+
+    console.log(sub)
 
     const [loading, startTransition] = useTransition();
 
@@ -29,7 +32,7 @@ const CartProductCard = ({ item }) => {
                     <div className="flex flex-col">
                         <h1 className="font-bold text-lg">{product.name}</h1>
                         <p className="text-xs text-text-secundary">{product.seller.name}</p>
-                        <h1 className="font-bold text-lg text-gradient bg-gradient-principal">${product.price}</h1>
+                        <h1 className="font-bold text-lg text-gradient bg-gradient-principal">${sub}</h1>
                     </div>
                     <div className="flex justify-between">
                         {
