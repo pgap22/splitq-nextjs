@@ -7,7 +7,7 @@ export default async function QrPage() {
         <>
             <section className="sm:flex-row flex flex-col gap-4 text-center items-center">
                 <div className="bg-white p-4">
-                    <QRCode value={user.id} />
+                    <QRCode value={user.id+"-user"} />
                 </div>
                 <div className="space-y-2">
                     <h1 className="font-bold text-2xl">Tu Tarjeta Virtual</h1>
