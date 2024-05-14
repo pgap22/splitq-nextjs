@@ -2,6 +2,7 @@
 
 import prismaDev from "@/db/prismaDev"
 import { authUser } from "@/lib/authUser"
+import { revalidatePath } from "next/cache";
 
 export async function getUserTicketBySeller(id) {
     try {
@@ -20,6 +21,7 @@ export async function getUserTicketBySeller(id) {
                 cart: {
                     where: {
                         ticket_enabled: true,
+                        ticket_redeem: false,
                     },
                     include: {
                         product: {
@@ -43,6 +45,8 @@ export async function getUserTicketBySeller(id) {
             }
             return cartItem
         }).filter(cartItem => cartItem.product)
+
+        revalidatePath("/")
 
         return usuario
 
