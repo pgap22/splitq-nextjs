@@ -9,7 +9,9 @@ export async function getHistoryByUserId(id_user) {
       where: {
         id_user,
       },
-      orderBy: {},
+      orderBy: {
+        createdAt: 'desc'
+      },
     }),
     prisma.recharges.findMany({
       where: {
@@ -119,11 +121,12 @@ export async function getHistoryByUserId(id_user) {
       acc.push({ date: dateKey, actions: [action] });
     }
     return acc;
-  }, []);
+  }, []).sort((a,b) => Number(new Date(a.date)) - Number(new Date(b.date))).reverse();
 
   groupedActions.map(date => {
-    date.actions = date.actions.sort((a, b) => a.date - b.date).reverse()
+    date.actions = date.actions.sort((a, b) => Number(new Date(a.date)) - Number(new Date(b.date))).reverse()
     return date;
   })
+
   return groupedActions;
 }

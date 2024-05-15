@@ -1,5 +1,6 @@
 "use client";
 
+import StatusRefound from "@/components/StatusRefound";
 import { IconTabs } from "@/components/icon-tabs";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -7,6 +8,7 @@ import { useState } from "react";
 import {
   MdOutlineAlarm,
   MdOutlineBlock,
+  MdOutlineCancel,
   MdOutlineCheckCircle,
 } from "react-icons/md";
 
@@ -15,10 +17,10 @@ export default function MyRefoundsList({
   redirect = "/home/my-refounds/",
 }) {
   const [itemtype, setItemType] = useState("pending");
-
+  console.log(refounds)
   return (
     <>
-      <div className="mt-4 grid grid-cols-3 border-b border-border mb-4">
+      <div className="mt-4 grid grid-cols-4 border-b border-border mb-4">
         <IconTabs
           setItemType={setItemType}
           active={itemtype}
@@ -39,6 +41,13 @@ export default function MyRefoundsList({
           type={"denied"}
           label={"Denegadas"}
           Icon={MdOutlineBlock}
+        />
+        <IconTabs
+          setItemType={setItemType}
+          active={itemtype}
+          type={"canceled"}
+          label={"Canceladas"}
+          Icon={MdOutlineCancel}
         />
       </div>
 
@@ -64,30 +73,3 @@ export default function MyRefoundsList({
   );
 }
 
-export function StatusRefound({ status }) {
-  let statusClassname = "";
-  let statusLabel = "";
-  if (status == "pending") {
-    statusClassname = "bg-gray-background border-gray-border text-gray-text";
-    statusLabel = "Pendiente";
-  }
-  if (status == "accepted") {
-    statusClassname = "bg-green-background border-green-border text-green-text";
-    statusLabel = "Aceptada";
-  }
-  if (status == "denied") {
-    statusClassname = "bg-red-background border-red-border text-red-text";
-    statusLabel = "Denegado";
-  }
-
-  return (
-    <div
-      className={cn(
-        "p-2 w-fit text-xs rounded border text-white font-bold",
-        statusClassname
-      )}
-    >
-      {statusLabel}
-    </div>
-  );
-}
