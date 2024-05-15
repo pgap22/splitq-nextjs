@@ -119,7 +119,7 @@ export default function ContainerManageProfile({perfiles}) {
                                         Icon={MdOutlineGroup} variant={"square"} className={" bg-[#262626] border-[#414141] rounded ml-4"}
                                     />
             
-                                    <p className=" text-base font-semibold"> {perfil3.name} </p>
+                                    <p className=" text-base font-semibold"> {perfil3.name + " " + perfil3.lastname} </p>
                                 </div>
                                 </Link>
                             ))
@@ -140,7 +140,7 @@ export default function ContainerManageProfile({perfiles}) {
                                     Icon={usuario.role == 'mod' ? MdOutlineBuild : usuario.role == 'seller' ? MdOutlineStorefront : MdOutlineGroup} variant={"square"} className={" bg-[#262626] border-[#414141] rounded ml-4"}
                                 />
         
-                                <p className=" text-base font-semibold"> {usuario.name} </p>
+                                <p className=" text-base font-semibold"> {usuario.name + " "} {usuario.lastname && usuario.lastname} </p>
                             </div>
                             </Link>                        ))
                         )}  
