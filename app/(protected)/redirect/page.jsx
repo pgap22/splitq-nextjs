@@ -1,14 +1,15 @@
-import { authUser } from "@/lib/authUser"
+import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 export default async function RedirectPage() {
-    const user = await authUser();
+    const data = await auth();
+    const user =  data.user
     
-    if(user.role == "user") return redirect("/home")
-    if(user.role == "admin") return redirect("/admin")
-    if(user.role == "seller") return redirect("/seller")
-    if(user.role == "mod") return redirect("/mod")
+    if (user.role == "user") return redirect("/home")
+    if (user.role == "admin") return redirect("/admin")
+    if (user.role == "seller") return redirect("/seller")
+    if (user.role == "mod") return redirect("/mod")
 
-    return(
+    return (
         <p>
             Redirect...
         </p>

@@ -23,7 +23,7 @@ export default async function TicketInfoPage({ params }) {
           </div>
         ) : (
           <div className="bg-white p-4 w-fit mx-auto">
-            <QRCode value={ticket.ticket_qr} />
+            <QRCode value={ticket.ticket_qr+"-ticket"} />
           </div>
         )}
 

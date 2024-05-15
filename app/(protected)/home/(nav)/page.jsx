@@ -5,19 +5,9 @@ import SettingButtonUser from "@/components/buttons/SettingButtonUser";
 import ThemeToggle from "@/components/buttons/theme-toggle";
 import { authUser } from "@/lib/authUser";
 import {
-  MdFastfood,
-  MdIcecream,
-  MdLandscape,
   MdOutlineFastfood,
-  MdOutlineLandscape,
-  MdOutlineLocalCafe,
-  MdOutlineLocalOffer,
-  MdOutlineLunchDining,
-  MdOutlineSportsBar,
   MdOutlineStore,
-  MdOutlineVerifiedUser,
 } from "react-icons/md";
-import { getProducts } from "@/actions/getProducts";
 import { getCategories } from "@/actions/categories";
 import { getSellers } from "@/actions/getSellers";
 import Link from "next/link";
