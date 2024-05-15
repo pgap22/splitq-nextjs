@@ -13,6 +13,7 @@ const ProductBuy = ({ product }) => {
   const [error, setError] = useState();
   const router = useRouter();
   const [quantity, setQuantity] = useState(1);
+  const sub = product.price * quantity
   const handleInput = (e) => {
     const value = +e.target.value;
 
@@ -68,7 +69,7 @@ const ProductBuy = ({ product }) => {
           </div>
 
           <p className="text-2xl font-bold text-gradient bg-gradient-principal">
-            ${product.price}
+            ${sub}
           </p>
         </div>
         <Button disabled={loading} onClick={submitCart}>
