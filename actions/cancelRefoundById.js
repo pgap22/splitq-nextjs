@@ -2,6 +2,7 @@
 
 import prisma from "@/db/prisma";
 import { authUser } from "@/lib/authUser";
+import dayjs from "dayjs";
 import { revalidatePath } from "next/cache";
 
 export async function cancelRefoundById(id) {
@@ -16,7 +17,7 @@ export async function cancelRefoundById(id) {
             },
             data: {
                 status: 'canceled',
-                
+                checkedAt: new Date()
             }
         })
 
