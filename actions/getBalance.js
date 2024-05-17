@@ -15,7 +15,7 @@ export async function getBalance() {
                 balance: true
             }
         })
-        revalidatePath("/home")
+        revalidatePath("/")
         return user.balance
     } catch (error) {
         console.log(error)

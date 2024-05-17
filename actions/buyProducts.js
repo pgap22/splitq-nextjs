@@ -3,13 +3,7 @@
 import prisma from "@/db/prisma";
 import { getCheckout } from "./getCheckout";
 import { revalidatePath } from "next/cache";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone"
 
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
 export async function buyProducts() {
   try {
     const { enableToBuy, newBalance, user_id } = await getCheckout();
@@ -29,7 +23,7 @@ export async function buyProducts() {
       data: {
         enableToBuy: false,
         ticket_enabled: true,
-        purchaseAt: dayjs().tz("America/El_Salvador").toDate(),
+        purchaseAt: new Date(),
       },
     });
 
