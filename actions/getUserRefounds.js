@@ -11,12 +11,7 @@ export async function getUserRefounds() {
         AND: [
           {
             id_user: id,
-          },
-          {
-            NOT: {
-              status: "canceled",
-            },
-          },
+          }
         ],
       },
     });

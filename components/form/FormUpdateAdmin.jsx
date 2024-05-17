@@ -94,7 +94,7 @@ export default function UpdateAdmin({name, email, role, id, balance, freezebalan
                 />
 
                 {role == 'user' &&(
-                <div>
+                <div className="flex flex-col gap-4">
                     <FormInput
                         label={"Balance del perfil"}
                         placeholder={"Balance del perfil"}
@@ -102,7 +102,7 @@ export default function UpdateAdmin({name, email, role, id, balance, freezebalan
                     />
                     <FormInput
                         label={"Balance congelado del perfil"}
-                        placeholder={"Balance congelado del perfil cn"}
+                        placeholder={"Balance congelado del perfil"}
                         register={register("freezebalance")}
                     />
                 </div>
