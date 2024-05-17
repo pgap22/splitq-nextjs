@@ -1,6 +1,7 @@
 "use server"
 
 import prisma from "@/db/prisma"
+import { revalidatePath } from "next/cache"
 
 export default async function multiConfirmTickets(tickets) {
     try {
