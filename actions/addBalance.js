@@ -8,8 +8,8 @@ import { revalidatePath } from "next/cache";
 export default async function addBalance(userID, newBalance) {
     try {
         const currentMod = await authUser();
-
-        const [_, user] = await prisma.$transaction([
+        console.log(new Date())
+        const [_, user] = await Promise.all([
             prisma.recharges.create({
                 data: {
                     userID: userID,
