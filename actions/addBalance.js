@@ -14,7 +14,8 @@ export default async function addBalance(userID, newBalance) {
                 data: {
                     userID: userID,
                     modID: currentMod.id,
-                    balance: newBalance
+                    balance: newBalance,
+                    createdAt: new Date()
                 }
             }),
             prisma.users.findFirst({
