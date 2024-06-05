@@ -32,7 +32,7 @@ const CartProductCard = ({ item }) => {
     return (
         <>
             <div className={clsx(load && "opacity-70 -z-10", "border-b flex p-2 gap-2 border-border w-full")}>
-                {(product?.images && product?.images.length) ? <img className="max-h-16 aspect-square object-cover rounded border border-border" src={product.images[0].url} />
+                {(product?.images && product?.images.length) ? <img className="max-h-16 aspect-square object-contain rounded border border-border" src={product.images[0].url} />
                     : <div className="h-16 aspect-square flex items-center justify-center">
                         <MdOutlineLocalOffer size={30} />
                     </div>}

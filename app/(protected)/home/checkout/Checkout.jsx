@@ -116,7 +116,7 @@ const CardProduct = ({ product, quantity }) => {
     <div className="border-b last:border-none flex p-2 gap-2 border-border w-full">
       {product?.images && product?.images.length ? (
         <img
-          className="max-h-16 aspect-square object-cover rounded border border-border"
+          className="max-h-16 aspect-square object-contain rounded border border-border"
           src={product.images[0].url}
         />
       ) : (

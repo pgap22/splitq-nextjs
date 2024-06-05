@@ -27,7 +27,7 @@ export default function UserDetailsUI({userDetails}) {
 
             </section>
             <LinkButton href={userDetails.id+"/add-balance"} first Icon={MdOutlineAttachMoney}>Agregar Saldo</LinkButton>
-            <LinkButton Icon={MdOutlineHistory}>Ver Historial</LinkButton>
+            <LinkButton href={userDetails.id+"/history"} Icon={MdOutlineHistory}>Ver Historial</LinkButton>
             <LinkButton href={userDetails.id+"/refounds"} Icon={MdOutlineCurrencyExchange}>Rembolsos Pendientes</LinkButton>
         </>
     )

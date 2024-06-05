@@ -75,7 +75,6 @@ export async function getHistoryByUserId(id_user) {
     value: recharge.balance,
     type: "recharge",
   }));
-  console.log(cart)
   const cartActions = cart
     .map((cart) => {
       const actions = [];

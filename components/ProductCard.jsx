@@ -9,7 +9,7 @@ export default function ProductCard({ product }) {
         <Link href={"/home/products/" + product.id}>
           {product?.images && product?.images.length ? (
             <img
-              className="object-cover w-full aspect-square rounded-t border-b border-border"
+              className="object-contain w-full aspect-square rounded-t border-b border-border"
               src={product.images[0].url}
             />
           ) : (

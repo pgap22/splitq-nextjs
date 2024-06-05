@@ -158,7 +158,7 @@ export default function FormEditProduct({ product, categories }) {
                         Subida de imagen
                     </DialogHeader>
                     <DialogDescription>Deseas subir esta imagen para el producto?</DialogDescription>
-                    {imgUploadPreview && <Image width={200} height={40} className="w-full aspect-square rounded object-cover" src={URL.createObjectURL(imgUploadPreview)} alt="" />
+                    {imgUploadPreview && <Image width={200} height={40} className="w-full aspect-square rounded object-contain" src={URL.createObjectURL(imgUploadPreview)} alt="" />
                     }
                     <Button disabled={loadingUpload} onClick={uploadImage}>{
                         loadingUpload
@@ -220,7 +220,7 @@ const ImgPreview = ({ img }) => {
         <>
             <div className="mt-4 grid grid-cols-[1fr_max-content] items-center">
                 <div className="flex gap-2 items-center">
-                    <img className="w-12 h-12  object-cover rounded" src={img.url} />
+                    <img className="w-12 h-12  object-contain rounded" src={img.url} />
                     <p className="text-sm max-w-[30ch] truncate font-bold">{img.url.split("/")[img.url.split("/").length - 1]}</p>
                 </div>
                 <MdOutlineDelete onClick={() => setOpen(true)} size={24} />

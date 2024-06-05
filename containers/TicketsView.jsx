@@ -53,7 +53,7 @@ const CardProduct = ({ ticket }) => {
     >
       {product?.images && product?.images.length ? (
         <img
-          className="max-h-16 aspect-square object-cover rounded border border-border"
+          className="max-h-16 aspect-square object-contain rounded border border-border"
           src={product.images[0].url}
         />
       ) : (

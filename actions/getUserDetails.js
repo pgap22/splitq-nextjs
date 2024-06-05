@@ -1,9 +1,10 @@
 "use server"
 
 import { getUserById } from "@/lib/user"
-import { redirect } from "next/navigation"
 export const getUserDetails = async(id)=>{
-    const user =  await getUserById(id)
-    if(!user) return redirect("/mod");
+    const user = await getUserById(id)
+    
+    if(!user) return {error: "not found"}
+
     return user
 }
