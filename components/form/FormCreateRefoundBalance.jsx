@@ -44,7 +44,7 @@ export default function FormCreateRefoundBalance({ balance, id}) {
         })
 
         socket.on("current_balance", (data) => {
-            setCurrentBalance(data)
+            setCurrentBalance(data.balance)
         })
 
         return () => {
