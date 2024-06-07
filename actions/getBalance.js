@@ -2,7 +2,6 @@
 
 import prisma from "@/db/prisma";
 import { authUser } from "@/lib/authUser";
-import { revalidatePath } from "next/cache";
 
 export async function getBalance() {
     try {
@@ -16,7 +15,6 @@ export async function getBalance() {
                 balance: true
             }
         })
-        revalidatePath("/")
         return user
     } catch (error) {
         console.log(error)

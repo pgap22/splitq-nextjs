@@ -4,27 +4,24 @@ import { sumDecimal } from "@/lib/decimal"
 import { socket } from "@/lib/socketio"
 import { useEffect, useState } from "react"
 
-export default function Balance({balance,id}) {
-    const [currentBalance, setCurrentBalance] = useState(+balance)
+export default function Balance({ balance, id }) {
+    const [currentBalance, setCurrentBalance] = useState(balance)
 
-    useEffect(()=>{
+    useEffect(() => {
         socket.connect()
-
         socket.emit("get_balance", id)
-
-        
-        socket.on("add_balance", (data)=>{
-            setCurrentBalance(sumDecimal(data.balance, data.recharge))
-        })
-        
-        socket.on("current_balance", (data)=>{
+        socket.on("current_balance", (data) => {
             setCurrentBalance(data.balance)
         })
-
-        return ()=>{
+        socket.on("add_balance", (data) => {
+            setCurrentBalance(sumDecimal(data.balance, data.recharge))
+        })
+        return () => {
+            socket.off("current_balance")
+            socket.off("add_balance")
             socket.disconnect()
         }
-    },[])
+    }, [])
 
     return (
         <div className="bg-foreground border-border border rounded p-4">

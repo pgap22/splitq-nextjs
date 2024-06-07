@@ -17,7 +17,7 @@ export default async function Home() {
   const user = await authUser();
   const categorie = await getCategories();
   const sellers = await getSellers();
-  const balance = await getBalance();
+  const {balance} = await getBalance();
   //Por veces no agarraba el logout asiq esto lo solucionaxd
   async function logout() {
     "use server";
@@ -38,14 +38,14 @@ export default async function Home() {
       <h1 className="text-2xl mt-4 font-bold">Categorias</h1>
       <div className="flex mt-4 gap-4 overflow-auto">
         {categorie.map((item) => (
-          <CategorieCard categorie={item} />
+          <CategorieCard key={item.id} categorie={item} />
         ))}
       </div>
       <div className="mt-4">
         <h1 className="text-2xl font-bold">Favoritos de la comunidad</h1>
         <div className="flex-col gap-4">
           {sellers.map((item) => (
-            <SellerCard seller={item} />
+            <SellerCard key={item.id} seller={item} />
           ))}
         </div>
       </div>
