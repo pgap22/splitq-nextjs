@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 export default function LayoutGetUserDetail({params, children}) {
     const { userDetails, setUserDetails } = useUserDetail();
     const router = useRouter();
+    // console.log(process.env.NEXT_PUBLIC_SOCKET_IO_SERVER)
     useEffect(() => {
         (async () => {
             if (!userDetails.name) {

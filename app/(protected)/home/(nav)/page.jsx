@@ -11,6 +11,7 @@ import {
 import { getCategories } from "@/actions/categories";
 import { getSellers } from "@/actions/getSellers";
 import Link from "next/link";
+import Balance from "@/components/realtime/Balance";
 
 export default async function Home() {
   const user = await authUser();
@@ -32,20 +33,7 @@ export default async function Home() {
         </div>
       </div>
       <section className="mt-6">
-        <div className="bg-foreground border-border border rounded p-4">
-          <h1 className="font-bold text-2xl">
-            Tu saldo:{" "}
-            <span className="font-bold text-gradient-principal text-gradient bg-gradient-principal">
-              ${+balance}
-            </span>
-          </h1>
-          <p className="text-text-secundary text-md">
-            Tu saldo actual para comprar productos dentro de{" "}
-            <span className="font-bold text-gradient-principal text-gradient bg-gradient-principal">
-              SplitQ
-            </span>
-          </p>
-        </div>
+        <Balance balance={balance} id={user.id} />
       </section>
       <h1 className="text-2xl mt-4 font-bold">Categorias</h1>
       <div className="flex mt-4 gap-4 overflow-auto">

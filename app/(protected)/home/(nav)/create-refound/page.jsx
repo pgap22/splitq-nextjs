@@ -5,7 +5,7 @@ import Link from "next/link";
 import { MdOutlineArrowBack } from "react-icons/md";
 
 export default async function CreateRefound() {
-    const balance = await getBalance();
+    const {balance, id} = await getBalance();
     return (
         <>
             <Link href={"/home"}>
@@ -13,10 +13,8 @@ export default async function CreateRefound() {
             </Link>
 
             <h1 className="font-bold text-2xl mt-4">Solicitud de rembolso de saldo</h1>
-            <div className="text-xs my-2 border border-border w-fit p-2 rounded bg-foreground text-text-secundary">
-                Saldo Actual: <span className="text-gradient bg-gradient-principal font-bold">${balance}</span>
-            </div>
-            <FormCreateRefoundBalance balance={balance} />
+            
+            <FormCreateRefoundBalance balance={balance} id={id} />
         </>
     )
 }

@@ -12,11 +12,12 @@ export async function getBalance() {
                 id
             },
             select: {
+                id: true,
                 balance: true
             }
         })
         revalidatePath("/")
-        return user.balance
+        return user
     } catch (error) {
         console.log(error)
         return NaN

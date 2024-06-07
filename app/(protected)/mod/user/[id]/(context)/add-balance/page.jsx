@@ -15,12 +15,12 @@ import {
     DrawerHeader,
     DrawerTitle,
 } from "@/components/ui/drawer"
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import FormInput from "@/components/form/FormInput";
 import addBalance from "@/actions/addBalance";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader";
-import { revalidatePath } from "next/cache";
+import { socket } from "@/lib/socketio";
 
 
 export default function AddBalance() {
@@ -46,13 +46,21 @@ export default function AddBalance() {
         startTransition(async()=>{
             const user = await addBalance(userDetails.id, +getValues("balance"))
             if(!user?.error){
+                socket.emit("recharge",{
+                    room: userDetails.id,
+                    recharge: +getValues("balance"),
+                    balance: userDetails.balance,
+                })
                 alert("Recarga Satisfactoria")
                 router.push("/mod/user/"+userDetails.id)
             }
         })
     }
     
-    
+    useEffect(()=>{
+        socket.emit("user_data", userDetails.id)
+    },[])
+
     return (
         <>
             <main className="p-4">
