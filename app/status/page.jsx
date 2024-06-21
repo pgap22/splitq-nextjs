@@ -4,6 +4,7 @@ import clsx from "clsx"
 export default async function Status() {
     const imgStatus = await statusImgServer();
     const socketStatus = await statusSocketIO();
+    console.log(socketStatus)
     return (
         <main className="p-2 md:min-h-screen flex justify-center items-center">
             <div className="border w-full md:max-w-md space-y-4 select-none border-border bg-foreground p-4 rounded">
