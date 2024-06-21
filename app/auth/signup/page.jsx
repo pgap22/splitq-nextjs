@@ -7,16 +7,21 @@ import AlertWarning from "@/components/ui/AlertWarning";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
+import { useLocalStorage } from "usehooks-ts";
 
+export const ppr = true;
 
 export default function SignUp() {
     const [warning, setWarning] = useState(false)
     const [loading, startTransition] = useTransition();
     const [loadingResend, startResending] = useTransition();
     const [succes, setSucces] = useState(false);
-    const [sucessLocal, setSuccesLocal] = useState(false)
+    const [passToken, setPassToken, clearPasstoken] = useLocalStorage('temp_recovery_token');
+    const [recovery, setRecovery, clearRecovery] = useLocalStorage('recovery_token');
+    const [accepted, setAccepted] = useState(false);
+    const [userCreated, setUserCreated] = useState(false)
     const router = useRouter()
 
     const [id, setID] = useState();
@@ -30,6 +35,23 @@ export default function SignUp() {
     });
 
 
+    useEffect(() => {
+        if (passToken) {
+            setUserCreated(true)
+        }
+    }, [])
+
+    const acceptedRecovery = () => {
+        if (accepted) {
+            setAccepted(false)
+            setPassToken(recovery)
+            clearRecovery()
+            return
+        }
+        setAccepted(true)
+        setRecovery(passToken)
+        clearPasstoken()
+    }
 
     const signup = (data) => {
         setWarning(false)
@@ -41,7 +63,8 @@ export default function SignUp() {
             }
 
             if (result?.local) {
-                setSuccesLocal(true)
+                setUserCreated(result)
+                setPassToken(result.passToken)
                 return
             }
 
@@ -65,15 +88,27 @@ export default function SignUp() {
         })
     }
 
-    if (sucessLocal) return (
+
+
+    if (userCreated) return (
         <>
             <h1 className="text-xl font-bold text-center">Haz creado tu cuenta exitosamente</h1>
             <p className="text-md text-text-secundary text-center mb-5">Tu cuenta ha sido creada con exito en SplitQ, porfavor haz click en el boton para iniciar sesion y disfrutar de SplitQ<span className="opacity-5">👻</span></p>
-            <Link className="w-full" href={"/auth/login"}>
-                <Button className="w-full">
+            <AlertWarning
+                title={"IMPORTANTE"}
+                description={"Se te mostrara un codigo de recuperacion, este sera IMPORTANTE porque sera la manera en que puedas recuperar tu cuenta en caso no tengas tu contraseña"}
+            />
+            <p className="mt-4">Tu codigo de recuperacion: <span className="font-black">{passToken || recovery}</span></p>
+            <label className="text-sm mt-4 flex items-center gap-2 text-gray-text" htmlFor="tos">
+                <input onClick={acceptedRecovery} id="tos" type="checkbox" />
+                <p>He copiado y guardado mi codigo de recuperacion</p>
+            </label>
+            {
+                accepted && (<Button onClick={()=> router.push("/auth/login")} className="w-full mt-4">
                     Iniciar Sesion
                 </Button>
-            </Link>
+                )
+            }
         </>
     )
 

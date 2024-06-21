@@ -1,0 +1,75 @@
+services:
+  nextjs:
+    image: pgap22/splitq-nextjs
+    environment:
+      - DATABASE_URL=postgres://postgres:root@192.168.0.2:5432/splitq
+      - AUTH_SECRET=pollito
+      - API_IMAGE_LOCAL=https://images.splitq.duckdns.org
+      - API_IMAGE_LOCAL_SERVER=http://192.168.0.3:5000
+      - NEXT_PUBLIC_SOCKET_IO_SERVER=https://socketio.splitq.duckdns.org
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      splitq-net:
+        ipv4_address: 192.168.0.5
+
+  image_api:
+    image: pgap22/splitq-image-api
+    environment:
+      - DATABASE_URL=postgres://postgres:root@192.168.0.2:5432/splitq-image
+    ports:
+      - "5000:5000"
+    volumes:
+      - images:/app/public
+    depends_on:
+      - db
+    networks:
+      splitq-net:
+        ipv4_address: 192.168.0.3
+
+  socketio:
+    image: pgap22/splitq-socketio
+    environment:
+      - DATABASE_URL=postgres://postgres:root@192.168.0.2:5432/splitq
+    ports:
+      - "4000:4000"
+      - "5555:5555"
+    depends_on:
+      - db
+    networks:
+      splitq-net:
+        ipv4_address: 192.168.0.4
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: root
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      splitq-net:
+        ipv4_address: 192.168.0.2
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    networks:
+      splitq-net:
+        ipv4_address: 192.168.0.6
+
+volumes:
+  pgdata:
+  images:
+
+networks:
+  splitq-net:
+    external: true

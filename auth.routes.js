@@ -6,5 +6,8 @@ export const PUBLIC_ROUTES = [
     "/auth/forget-password",
     "/auth/change-password",
 ]
+export const EVERYONE_ROUTES = [
+    "/status"
+]
 export const LOGIN_REDIRECT = "/redirect"
 export const NOAUTH_REDIRECT = "/"

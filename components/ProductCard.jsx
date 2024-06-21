@@ -5,7 +5,7 @@ import AddToCart from "./buttons/AddToCart";
 export default function ProductCard({ product }) {
   return (
     <div className="border border-border rounded bg-foreground">
-      <div className="flex flex-col">
+      <div className="flex flex-col h-full">
         <Link href={"/home/products/" + product.id}>
           {product?.images && product?.images.length ? (
             <img
@@ -19,7 +19,7 @@ export default function ProductCard({ product }) {
           )}
         </Link>
 
-        <div className="flex-col p-2 flex">
+        <div className="flex-col justify-between h-full p-2 flex">
           <Link href={"/home/products/" + product.id}>
             <p className="font-bold">{product.name}</p>
 

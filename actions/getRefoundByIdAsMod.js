@@ -5,6 +5,9 @@ export async function getRefoundBalaceByIdAsMod(id) {
         const refound = await prisma.userRefoundBalance.findFirst({
             where: {
                 id,
+            },
+            include: {
+                user: true
             }
         })
 

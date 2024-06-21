@@ -17,17 +17,22 @@ export async function createUser(data) {
 
     const test = process.env.DEPLOYMENT
     
-    let code  =  generarCodigoVerificacion()
+    let code  =  generarCodigoVerificacion(32)
+    let passToken = null
 
     if(test == "local" || isNotUser){
         code = ''
+    }
+    if(test == "local"){
+        passToken = generarCodigoVerificacion(8)
     }
     
     const user = await prisma.users.create({
         data: {
             ...data,
             password: passwordHash,
-            token: code
+            token: code,
+            passToken
         }
     })
     

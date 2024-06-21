@@ -31,7 +31,7 @@ export default async function RefoundPage({ params }) {
         </div>
       </div>
       {refound.status == "pending" && (
-        <RefoundsActions id={refound.id} redirect={redirectURL} />
+        <RefoundsActions id={refound.id} id_user={refound.user.id} redirect={redirectURL} />
       )}
     </>
   );

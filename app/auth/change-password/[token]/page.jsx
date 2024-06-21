@@ -6,6 +6,6 @@ export default async function ChangePassword({ params }) {
     const verifyToken = await getUserByPassToken(params.token)
     if (!verifyToken) return redirect("/")
     return (
-       <FormNewPassword id_user={verifyToken.id} />
+       <FormNewPassword id_user={verifyToken.id} local={process.env.DEPLOYMENT} />
     )
 }

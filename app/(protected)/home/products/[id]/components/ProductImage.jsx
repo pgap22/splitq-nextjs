@@ -8,8 +8,8 @@ const ProductView = ({ product }) => {
     return (
         <>
             <div className="relative">
-                {(product?.images && product?.images.length) ? <img className="w-full max-h-64 object-cover rounded border border-border" src={product.images[selectedImages].url} />
-                    : <div className="w-full h-64 border-b border-border flex items-center justify-center">
+                {(product?.images && product?.images.length) ? <img className="w-full h-[360px] object-contain rounded border border-border" src={product.images[selectedImages].url} />
+                    : <div className="w-full h-[360px]  border-b border-border flex items-center justify-center">
                         <MdOutlineLocalOffer size={50} />
                     </div>}
 

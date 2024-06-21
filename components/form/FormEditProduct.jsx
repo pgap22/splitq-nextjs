@@ -120,7 +120,7 @@ export default function FormEditProduct({ product, categories }) {
                     </label>
                     <input onClick={(e)=>{
                         e.target.value = null
-                    }} onInput={previewImage} id="images" type="file" accept="image/png, image/gif, image/jpeg" hidden />
+                    }} onInput={previewImage} id="images" type="file" accept="image/*" hidden />
                     {product.images.map((img) => (
                         <ImgPreview key={img.id} img={img} />
                     ))}

@@ -3,10 +3,10 @@ import BackButton from "@/components/buttons/BackButton";
 import { multiplyDecimal } from "@/lib/decimal";
 import showEsDate from "@/lib/showEsDate";
 
-export function HistoryUser({ history }) {
+export function HistoryUser({ history, href = null }) {
     return(<main>
         <div className="p-4">
-            <BackButton />
+            <BackButton href={href} />
             <h1 className="font-bold my-4 text-2xl">Historial de Acciones</h1>
             {history.map((day) => (
                 <div className="border border-border mb-4 rounded-md bg-foreground">

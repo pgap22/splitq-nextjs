@@ -4,10 +4,11 @@ import { refoundModAction } from "@/actions/refoundModAction";
 import Loader from "@/components/Loader";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { socket } from "@/lib/socketio";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
-export default function RefoundsActions({id, redirect}) {
+export default function RefoundsActions({id,id_user, redirect}) {
   const [open, setOpen] = useState(false);
   const [loading, startRefounding] = useTransition();
   const [type, setType] = useState();
@@ -17,9 +18,13 @@ export default function RefoundsActions({id, redirect}) {
   const confirmAction = () =>{
     startRefounding(async()=>{
         const result = await refoundModAction(type, id);
+
+        socket.emit("update_balance", id_user)
+
         if(result?.error){
             return;
         }
+        
         router.push(redirect)
     })
   }

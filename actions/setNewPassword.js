@@ -1,9 +1,16 @@
 "use server"
 import bcryptjs from "bcryptjs"
 import prisma from "@/db/prisma";
+import { generarCodigoVerificacion } from "@/lib/code";
 export async function setNewPassword(newPassword, id){
     try {
         const password = await bcryptjs.hash(newPassword, 5)
+
+        let passToken = ''
+
+        if(process.env.DEPLOYMENT == "local"){
+            passToken = generarCodigoVerificacion(8)
+        }
 
         await prisma.users.update({
             where: {
@@ -11,11 +18,11 @@ export async function setNewPassword(newPassword, id){
             },
             data: {
                 password,
-                passToken: ''
+                passToken
             }
         })
         
-        return true;
+        return {passToken};
 
     } catch (error) {
         console.log(error)

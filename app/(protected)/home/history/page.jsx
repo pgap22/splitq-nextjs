@@ -6,6 +6,6 @@ export default async function HistoryPage() {
   const { id } = await authUser();
   const history = await getHistoryByUserId(id);
   return (
-    <HistoryUser history={history} />
+    <HistoryUser href={"/home"} history={history} />
   );
 }

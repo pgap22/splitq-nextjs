@@ -2,13 +2,15 @@
 
 import { setNewPassword } from "@/actions/setNewPassword";
 import Link from "next/link";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form"
 import FormInput from "./FormInput";
 import { Button } from "../ui/button";
 import Loader from "../Loader";
+import { useLocalStorage } from "usehooks-ts";
+import AlertWarning from "../ui/AlertWarning";
 
-export default function FormNewPassword({ id_user }) {
+export default function FormNewPassword({ id_user, local }) {
     const { register, handleSubmit, formState, watch} = useForm({
         defaultValues: {
             password: ''
@@ -18,6 +20,9 @@ export default function FormNewPassword({ id_user }) {
     const [loading, startChanging] = useTransition();
     const [success, setSuccess] = useState();
 
+    const [passToken, setPassToken] = useLocalStorage('recovery_token');
+
+
     const updatePassword = (data) => {
         startChanging(async () => {
             const result = await setNewPassword(data.password, id_user);
@@ -25,6 +30,8 @@ export default function FormNewPassword({ id_user }) {
                 setError(result.error)
                 return;
             }
+
+            setPassToken(result.passToken)
             setSuccess(true)
         })
     }
@@ -34,6 +41,12 @@ export default function FormNewPassword({ id_user }) {
         <>
             <h1 className="text-xl font-bold text-center">Cambio de Contraseña</h1>
             <p className="text-md text-text-secundary text-center mb-5">Tu contraseña se ha restablecido correctamente</p>
+            <AlertWarning
+                title={"IMPORTANTE"}
+                description={"Se te mostrara un codigo de recuperacion, este sera IMPORTANTE porque sera la manera en que puedas recuperar tu cuenta en caso no tengas tu contraseña"}
+            />
+            <p className="my-4">Tu codigo de recuperacion: <span className="font-black">{passToken}</span></p>
+            
             <Link href={"/auth/login"}>
                 <Button className="w-full">Iniciar Sesion</Button>
             </Link>
