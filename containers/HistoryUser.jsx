@@ -4,12 +4,12 @@ import { multiplyDecimal } from "@/lib/decimal";
 import showEsDate from "@/lib/showEsDate";
 
 export function HistoryUser({ history, href = null }) {
-    return(<main>
+    return (<main>
         <div className="p-4">
             <BackButton href={href} />
             <h1 className="font-bold my-4 text-2xl">Historial de Acciones</h1>
-            {history.map((day) => (
-                <div className="border border-border mb-4 rounded-md bg-foreground">
+            {history.map((day, i) => (
+                <div key={i} className="border border-border mb-4 rounded-md bg-foreground">
                     <div className="flex flex-col sm:flex-row gap-4 mt-4 sm:items-center">
                         <p className="font-bold px-4 pb-0 text-text-secundary capitalize text-lg">
                             {showEsDate(day.date, false)}
@@ -19,8 +19,8 @@ export function HistoryUser({ history, href = null }) {
                             <p className="font-bold">Saldo recibido: <span className="text-green-500">${day.actions.filter(action => action.type == "recharge").reduce((total, action) => (total + action.value), 0)}</span></p>
                         </div>
                     </div>
-                    {day.actions.map((action) => (
-                        <ActionItem action={action} />
+                    {day.actions.map((action,i) => (
+                        <ActionItem key={"action-"+i} action={action} />
                     ))}
                 </div>
             ))}
