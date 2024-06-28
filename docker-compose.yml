@@ -4,8 +4,8 @@ services:
     environment:
       - DATABASE_URL=postgres://postgres:root@192.168.0.2:5432/splitq
       - AUTH_SECRET=pollito
-      - API_IMAGE_LOCAL=https://images.splitq.duckdns.org
-      - API_IMAGE_LOCAL_SERVER=http://192.168.0.3:5000
+      - API_IMAGE_LOCAL=http://192.168.0.3:5000
+      - API_IMAGE_LOCAL_SERVER=https://images.splitq.duckdns.org
       - NEXT_PUBLIC_SOCKET_IO_SERVER=https://socketio.splitq.duckdns.org
     ports:
       - "3000:3000"
@@ -16,13 +16,13 @@ services:
         ipv4_address: 192.168.0.5
 
   image_api:
-    image: pgap22/splitq-image-api
+    image: pgap22/splitq-api-image
     environment:
       - DATABASE_URL=postgres://postgres:root@192.168.0.2:5432/splitq-image
     ports:
       - "5000:5000"
     volumes:
-      - images:/app/public
+      - ./images:/app/public
     depends_on:
       - db
     networks:
@@ -30,7 +30,7 @@ services:
         ipv4_address: 192.168.0.3
 
   socketio:
-    image: pgap22/splitq-socketio
+    image: pgap22/splitq-socket-io
     environment:
       - DATABASE_URL=postgres://postgres:root@192.168.0.2:5432/splitq
     ports:
@@ -48,7 +48,7 @@ services:
     environment:
       POSTGRES_PASSWORD: root
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ./pgdata:/var/lib/postgresql/data
     networks:
       splitq-net:
         ipv4_address: 192.168.0.2
@@ -65,10 +65,6 @@ services:
     networks:
       splitq-net:
         ipv4_address: 192.168.0.6
-
-volumes:
-  pgdata:
-  images:
 
 networks:
   splitq-net:

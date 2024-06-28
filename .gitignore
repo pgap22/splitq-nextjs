@@ -37,3 +37,8 @@ yarn-error.log*
 certificates
 letsencrypt
 data
+**/certificates
+**/letsencrypt
+**/data
+**/pgdata
+**/images

@@ -34,3 +34,7 @@ build
 public/uploads/*
 
 **/certificates
+**/letsencrypt
+**/data
+**/pgdata
+**/images
