@@ -3,7 +3,7 @@
 import prisma from "@/db/prisma";
 import { authUser } from "@/lib/authUser"
 
-export async function getMyTickets(){
+export async function getMyTickets(id){
     try {
         const {id} = await authUser();
         const tickets = (await prisma.cartUserProducts.findMany({

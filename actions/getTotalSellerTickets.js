@@ -1,9 +1,19 @@
 "use server"
 
+import { auth } from "@/auth"
 import prismaDev from "@/db/prismaDev"
+function groupBy(array, key) {
+    return array.reduce((result, currentValue) => {
+        (result[currentValue[key]] = result[currentValue[key]] || []).push(currentValue);
+        return result;
+    }, {});
+}
 
-export async function getHistoryByCartId(id_user) {
-    console.log(id_user)
+export async function getTotalSellerTickets() {
+    const user = await auth();
+
+    const id_user = user.user.id;
+
     const tickets = await prismaDev.cartUserProducts.findMany({
         include: {
             product: {
@@ -18,7 +28,7 @@ export async function getHistoryByCartId(id_user) {
             }
         },
         where: {
-            ticket_redeem: true,
+            ticket_enabled: true,
             OR: [
                 {
                     product: {
@@ -34,6 +44,11 @@ export async function getHistoryByCartId(id_user) {
             ]
         }
     })
+    // Agrupar por id_product
+    const groupedByIdProduct = groupBy(tickets, 'id_product');
+    console.log('Agrupado por id_product:');
+    console.log(groupedByIdProduct);
 
-    console.log(tickets)
+    const totaltickets = tickets.reduce((total, ticket) => { return ticket.quantity + total }, 0)
+    return totaltickets
 }
