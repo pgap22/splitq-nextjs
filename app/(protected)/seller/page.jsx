@@ -7,6 +7,7 @@ import ThemeToggle from "@/components/buttons/theme-toggle";
 import { authUser } from "@/lib/authUser";
 import Link from "next/link";
 import { MdOutlineFastfood, MdOutlineFoodBank, MdOutlineLocalPizza } from "react-icons/md";
+import { getTotalSellerTickets } from "@/actions/getTotalSellerTickets";
 
 export default async function SellerHome() {
     const user = await authUser()
@@ -17,6 +18,7 @@ export default async function SellerHome() {
         await signOut();
     }
 
+    const tickets = await getTotalSellerTickets()
 
     return (
         <>
@@ -86,7 +88,7 @@ export default async function SellerHome() {
                     <h2 className="text-lg mb-4 font-bold">Ventas</h2>
                     <div className="border border-border bg-foreground font-bold rounded-lg">
                         <div className="flex flex-row p-2">
-                            <p className="text-xs">Total de tickets vendidos: <span className="text-gradient bg-gradient-principal">0</span> </p>
+                            <p className="text-xs">Total de tickets vendidos: <span className="text-gradient bg-gradient-principal">{tickets}</span> </p>
                         </div>
                         <div className="flex flex-row p-2">
                             <p className="text-xs">Producto mas vendido: <span className="text-gradient bg-gradient-principal">Chory</span> </p>

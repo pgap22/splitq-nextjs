@@ -1,10 +1,8 @@
-import { getHistoryByCartId } from "@/actions/getHistoryByCartId"
-import { authUser } from "@/lib/authUser"
+import { getTotalSellerTickets } from "@/actions/getTotalSellerTickets"
 
 export default async function HistoryPage(){
-    const {id} = await authUser()
-    await getHistoryByCartId(id);
+    await getTotalSellerTickets();
     return(
-        <p>xd</p>
+        <p>xd waaaaaa seeeee</p>
     )
 }
