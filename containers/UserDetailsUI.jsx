@@ -5,13 +5,18 @@ import { MdOutlineArrowBack, MdOutlineAttachMoney, MdOutlineHistory,MdOutlineCur
 import Link from "next/link";
 import { useUserDetail } from "@/hooks/useUserDetails";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function UserDetailsUI({userDetails}) {
     const {setUserDetails} = useUserDetail();
-    
+    const router = useRouter();
     useEffect(()=>{
+        if(!userDetails) return router.push("/mod")
         setUserDetails(userDetails)
     },[])
+
+    if(!userDetails) return <p>no user provided</p>
+
     return (
         <>
             <section className="p-4">

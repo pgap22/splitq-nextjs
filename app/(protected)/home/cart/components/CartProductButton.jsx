@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
-const CartProductButton = ({ total }) => {
+const CartProductButton = ({ total, noProducts }) => {
   const router =useRouter();
   return (
     <div className="fixed bg-background bottom-0 left-0 right-0 p-4">
@@ -12,7 +12,7 @@ const CartProductButton = ({ total }) => {
           ${total}
         </p>
       </div>
-      <Button onClick={()=> router.push("/home/checkout")} disabled={!total} className="w-full">Comprar</Button>
+      <Button onClick={()=> router.push("/home/checkout")} disabled={!total || noProducts} className="w-full">Comprar</Button>
     </div>
   );
 };

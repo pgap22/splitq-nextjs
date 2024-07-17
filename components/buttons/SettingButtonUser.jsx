@@ -40,7 +40,7 @@ export default function SettingButtonUser({ user, logout }) {
         item ? (
           <animated.div
             style={style}
-            className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-10"
+            className="fixed inset-0 min-h-screen bg-black bg-opacity-30 backdrop-blur-sm z-10"
           >
             {transitionsMenu((style, item) =>
               item ? (

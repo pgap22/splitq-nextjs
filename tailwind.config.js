@@ -18,6 +18,9 @@ module.exports = {
       },
     },
     extend: {
+      opacity: {
+        "item-bg-opacity": "var(--item-bg-opacity)",
+      },
       borderRadius:{
         DEFAULT: "var(--rounded)" 
       },

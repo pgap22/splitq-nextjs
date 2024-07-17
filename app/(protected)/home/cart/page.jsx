@@ -19,6 +19,7 @@ export default async function CartPage() {
         total = sumDecimal(...productPrices)
     }
 
+    const noProducts = !products.some(product => product.enableToBuy)
 
     return (
         <>
@@ -30,12 +31,13 @@ export default async function CartPage() {
                 </div>
                 <h1 className="mt-4 font-bold text-3xl">Carrito de compras</h1>
             </div>
-            <div className="flex flex-col gap-4 mb-28">
+            <div className="flex flex-col mb-28">
                 {
                     products.length ? products.map(product => <CartProductCard item={product} key={product.id} />) : <NoProducts />
                 }
             </div>
             <CartProductButton
+                noProducts={noProducts}
                 total={total}
             />
         </>

@@ -39,6 +39,7 @@
         --action-text-button: #FFFFFF;
         --text: #18181B;
         --rounded: 4px;
+        --item-bg-opacity: 0.05
 
     }
 
@@ -51,8 +52,10 @@
         --action-text-button: #000000;
         --text: #FFFFFF;
         --yellow-text-notification: white;
+        --item-bg-opacity: 0.05;
 
     }
+
 
 }
 
