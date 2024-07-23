@@ -1,17 +1,55 @@
 "use client";
 
 import { IconTabs } from "@/components/icon-tabs";
-import dayjs from "dayjs";
-import Link from "next/link";
-import { useState } from "react";
+import TicketCard from "@/components/TicketCard";
+import { socket } from "@/lib/socketio";
+
+import { useEffect, useState, useTransition } from "react";
 import {
   MdOutlineCheckCircle,
   MdOutlineLocalActivity,
-  MdOutlineLocalOffer,
 } from "react-icons/md";
 
-export default function TicketsView({ tickets }) {
+export default function TicketsView({ user_id }) {
   const [active, setItemType] = useState("enable");
+  const [myTickets, setMyTickets] = useState("loading")
+
+
+  useEffect(() => {
+    socket.connect()
+    socket.emit("get_tickets", user_id)
+    socket.emit("ticket-room", user_id)
+    socket.on("current_tickets", data => {
+      setMyTickets(data.payload)
+    })
+
+    return () => {
+      socket.disconnect()
+    }
+
+  }, [])
+
+  useEffect(() => {
+    if (myTickets == "loading") return
+    socket.on("ticket-completed", data => {
+
+      const updated = myTickets.map(ticket => {
+        const newTicket = data.find(item => ticket.id == item.id)
+        if (newTicket) {
+          ticket = {
+            ...ticket,
+            ...newTicket
+          }
+          console.log(ticket)
+          return ticket
+        }
+        return ticket
+      })
+      setMyTickets(updated)
+    }
+    )
+  }, [myTickets])
+
 
   return (
     <>
@@ -31,50 +69,16 @@ export default function TicketsView({ tickets }) {
           setItemType={setItemType}
         />
       </div>
-      {!tickets.length && <p className="p-4">No tienes tickets :(</p>}
-      {tickets.length && tickets
+      {myTickets == "loading" ? <p className="p-4">Cargando Tickets</p> : !!myTickets.length && myTickets
         .filter((ticket) => {
           if (active == "enable" && !ticket.ticket_redeem) return ticket;
           if (active == "claimed" && ticket.ticket_redeem) return ticket;
         })
         .map((ticket) => (
-          <CardProduct ticket={ticket} />
+          <TicketCard ticket={ticket} />
         ))}
+      {!myTickets.length && <p className="p-4">No tienes tickets :(</p>}
     </>
   );
 }
 
-const CardProduct = ({ ticket }) => {
-  const { product } = ticket;
-  return (
-    <Link
-      href={"/home/tickets/" + ticket.id}
-      className="border-b flex p-2 gap-2 border-border w-full"
-    >
-      {product?.images && product?.images.length ? (
-        <img
-          className="max-h-16 aspect-square object-contain rounded border border-border"
-          src={product.images[0].url}
-        />
-      ) : (
-        <div className="h-16 aspect-square rounded border border-border flex items-center justify-center">
-          <MdOutlineLocalOffer size={30} />
-        </div>
-      )}
-      <div className="flex flex-row justify-between w-full items-center">
-        <div className="flex flex-col">
-          <h1 className="font-bold text-lg">{product.name}</h1>
-          <p className="text-xs text-text-secundary">{product.seller.name}</p>
-          <div className="border text-text-secundary w-fit my-1 border-border text-xs p-1 rounded bg-foreground">
-            Comprado {dayjs(ticket.purchaseAt).format("DD/MM/YYYY hh:mm:ss A")}
-          </div>
-          {ticket.claimedAt && (
-            <div className="border text-text-secundary w-fit my-1 border-border text-xs p-1 rounded bg-foreground">
-              Canejado {dayjs(ticket.claimedAt).format("DD/MM/YYYY hh:mm:ss A")}
-            </div>
-          )}
-        </div>
-      </div>
-    </Link>
-  );
-};

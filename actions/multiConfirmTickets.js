@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache"
 export default async function multiConfirmTickets(tickets) {
     try {
 
-        await Promise.all(
+        const myTickets = await Promise.all(
             tickets.map(ticketsid => prisma.cartUserProducts.update({
                 where: {
                     id: ticketsid
@@ -19,7 +19,7 @@ export default async function multiConfirmTickets(tickets) {
         )
 
         revalidatePath("/")
-        return true
+        return myTickets
     } catch (error) {
         console.log(error)
         return { error: "Hubo un error en el servidor" }

@@ -10,7 +10,7 @@ export default function BackButton({ href }) {
   if (href) {
     return (
       <div className="w-fit">
-        <Link href={href}>
+        <Link replace href={href}>
           <IconBox variant={"square"} Icon={MdOutlineArrowBack} />
         </Link>
       </div>

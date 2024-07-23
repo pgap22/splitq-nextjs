@@ -1,6 +1,6 @@
 "use server"
 
-import prismaDev from "@/db/prismaDev"
+import prisma from "@/db/prisma"
 import { authUser } from "@/lib/authUser"
 import { revalidatePath } from "next/cache";
 
@@ -12,7 +12,7 @@ export async function getUserTicketBySeller(id) {
 
         console.log(seller.id)
 
-        const usuario = await prismaDev.users.findFirst({
+        const usuario = await prisma.users.findFirst({
             where: {
                 id
             },

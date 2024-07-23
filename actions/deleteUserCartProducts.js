@@ -1,9 +1,9 @@
 "use server"
-import prismaDev from "@/db/prismaDev"
+import prisma from "@/db/prisma"
 import { revalidatePath } from "next/cache"
 export default async function deleteUserCartProducts(id) {
     try {
-        await prismaDev.cartUserProducts.delete({
+        await prisma.cartUserProducts.delete({
             where: {
                 id
             }

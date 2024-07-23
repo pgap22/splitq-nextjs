@@ -1,10 +1,10 @@
 "use server"
 
-import prismaDev from "@/db/prismaDev"
+import prisma from "@/db/prisma"
 
 export async function getHistoryByCartId(id_user) {
     console.log(id_user)
-    const tickets = await prismaDev.cartUserProducts.findMany({
+    const tickets = await prisma.cartUserProducts.findMany({
         include: {
             product: {
                 where: {

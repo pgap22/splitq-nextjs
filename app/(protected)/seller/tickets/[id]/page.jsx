@@ -11,7 +11,6 @@ export default async function TicketSellerPage({ params }) {
 
   if (!ticket) return redirect("/seller");
 
-  console.log(ticket);
   return (
     <main className="p-4">
       <BackButton href={"/seller"} />

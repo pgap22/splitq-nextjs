@@ -2,7 +2,6 @@
 
 import prisma from "@/db/prisma";
 
-
 export async function getTicketByQR(id) {
   try {
     const ticket = await prisma.cartUserProducts.findFirst({
@@ -15,6 +14,7 @@ export async function getTicketByQR(id) {
         combo: {
           include: {
             seller: true,
+            products: true
           },
         },
         product: {
@@ -25,10 +25,18 @@ export async function getTicketByQR(id) {
       },
     });
 
-    
+    if (ticket.combo) {
+      ticket.product = {
+        ...ticket.combo
+      }
+    }
+
+
     return ticket;
   } catch (error) {
     console.log(error);
-    return { error: "Hubo un error en el servidor" };
+    return {
+      error: "Hubo un error en el servidor"
+    };
   }
 }

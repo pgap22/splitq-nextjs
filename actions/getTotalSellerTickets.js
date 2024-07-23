@@ -1,7 +1,7 @@
 "use server"
 
 import { auth } from "@/auth"
-import prismaDev from "@/db/prismaDev"
+import prisma from "@/db/prisma"
 function groupBy(array, key) {
     return array.reduce((result, currentValue) => {
         (result[currentValue[key]] = result[currentValue[key]] || []).push(currentValue);
@@ -14,7 +14,7 @@ export async function getTotalSellerTickets() {
 
     const id_user = user.user.id;
 
-    const tickets = await prismaDev.cartUserProducts.findMany({
+    const tickets = await prisma.cartUserProducts.findMany({
         include: {
             product: {
                 where: {

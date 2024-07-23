@@ -4,13 +4,23 @@ import TicketItem from "./TicketItem";
 import { useState, useTransition } from "react";
 import multiConfirmTickets from "@/actions/multiConfirmTickets";
 
-export default function TicketContainer({ tickets }) {
+import { socket } from "@/lib/socketio";
+import { useEffect } from "react";
+
+export default function TicketContainer({ tickets, user_id }) {
     const [selectedTickets, setSelectedTickets] = useState([])
     const [loading, startConfirming] = useTransition();
     
+    
+
+    useEffect(()=>{
+        socket.emit("ticket-room", user_id)
+    },[])
+
     const confirmAllTickets = ()=>{
         startConfirming(async()=>{
             const result = await multiConfirmTickets(selectedTickets)
+            socket.emit("ticket-redeem", {tickets: result, room: user_id})
             setSelectedTickets([]);
         })
     }
@@ -21,7 +31,9 @@ export default function TicketContainer({ tickets }) {
                     tickets.map(ticket => <TicketItem
                         setSelectedTickets={setSelectedTickets}
                         selectedTickets={selectedTickets}
-                        ticket={ticket} />
+                        ticket={ticket} 
+                        user_id={user_id}
+                        />
                     )
                 }
             </div>

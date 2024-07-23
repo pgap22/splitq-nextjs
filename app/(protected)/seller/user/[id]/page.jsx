@@ -18,7 +18,7 @@ export default async function UserTickets({ params }) {
             <main className="p-4">
                 <BackButton />
                 <h1 className="font-bold text-2xl mt-4">Tickets "{usuarioTickets.name + " " + usuarioTickets.lastname}"</h1>
-                <TicketContainer tickets={tickets} />
+                <TicketContainer tickets={tickets} user_id={params.id} />
             </main>
         </>
     )

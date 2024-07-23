@@ -43,7 +43,7 @@ const CartProductCard = ({ item }) => {
     }
     return (
         <>
-            <div className={cn(item.enableToBuy && "!bg-white bg-opacity-item-bg-opacity", load && "opacity-70 -z-10", "border-b flex py-8 px-4 gap-2  bg-text-text border-border w-full")}>
+            <div className={cn(load && "opacity-70 -z-10",item.enableToBuy && "bg-white !bg-opacity-item-bg-opacity", "border-b transition-all duration-150 flex py-8 px-4 gap-2 border-border w-full")}>
                 <div className="grid grid-cols-[max-content_1fr] gap-2 h-fit">
                     <input onChange={toggleEnable} hidden checked={item.enableToBuy} type="checkbox" className="peer" id={item.id} />
                     <label htmlFor={item.id} className="w-8 peer-checked:bg-text rounded-md aspect-square border flex justify-center items-center self-center border-border">
