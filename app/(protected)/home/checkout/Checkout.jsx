@@ -17,12 +17,13 @@ import { buyProducts } from "@/actions/buyProducts";
 import Loader from "@/components/Loader";
 import Link from "next/link";
 import AlertWarning from "@/components/ui/AlertWarning";
+import BackButton from "@/components/buttons/BackButton";
 export default function Checkout({ checkoutData }) {
   const [loading, startBuying] = useTransition();
   const [success, setSucess] = useState();
   const confirmPay = () => {
     startBuying(async () => {
-      const result = await buyProducts();
+      const result = await buyProducts(checkoutData);
       if (result?.error) {
         return;
       }
@@ -33,6 +34,7 @@ export default function Checkout({ checkoutData }) {
   if (success) {
     return (
       <>
+        <BackButton href="/home" />
         <h1 className="font-bold text-2xl">La compra ha sido exitosa!</h1>
         <p>
           Ahora puedes canjear tus productos comprados con los tickets que has
@@ -51,6 +53,7 @@ export default function Checkout({ checkoutData }) {
 
   return (
     <>
+      <BackButton href="/home/cart" />
       <h1 className="font-bold text-2xl my-4">Pago</h1>
       <h2 className="font-bold text-lg">Detalles de tus productos</h2>
       <div className="border border-border rounded-md mt-2 mb-4">

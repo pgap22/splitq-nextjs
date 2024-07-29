@@ -10,7 +10,7 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 // import { useRouter } from "next/navigation";
 export default function LoginPage() {
-    const { register, formState, handleSubmit } = useForm({
+    const { register, formState, handleSubmit, watch } = useForm({
         defaultValues: {
             email: "",
             password: ""
@@ -50,6 +50,7 @@ export default function LoginPage() {
                     label={"Contraseña"}
                     placeholder={"Contraseña"}
                     type={"password"}
+                    value={watch("password")}
                     error={formState.errors.password?.message}
                     register={register("password", { required: { value: true, message: "Contraseña esta vacia" }, minLength: { value: 8, message: "Minimo 8 caracteres" } })}
                 />

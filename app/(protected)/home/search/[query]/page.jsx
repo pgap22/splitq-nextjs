@@ -20,7 +20,7 @@ export default async function SearchedPageResults({ params }) {
         </Link>
       </div>
       <h1 className="font-bold text-2xl mt-4">Resultados de "{params.query}"</h1>
-      <div className=" mt-4 grid grid-cols-2 gap-4">
+      <div className="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {products.map((item) => (
           <ProductCard product={item} />
         ))}

@@ -10,18 +10,18 @@ import {
   MdOutlineLocalActivity,
 } from "react-icons/md";
 
-export default function TicketsView({ user_id }) {
+export default function TicketsView({ user_id, initialTickets }) {
   const [active, setItemType] = useState("enable");
-  const [myTickets, setMyTickets] = useState("loading")
+  const [myTickets, setMyTickets] = useState([])
 
 
   useEffect(() => {
     socket.connect()
-    socket.emit("get_tickets", user_id)
+    // socket.emit("get_tickets", user_id)
     socket.emit("ticket-room", user_id)
-    socket.on("current_tickets", data => {
-      setMyTickets(data.payload)
-    })
+    // socket.on("current_tickets", data => {
+    //   setMyTickets(data.payload)
+    // })
 
     return () => {
       socket.disconnect()
@@ -30,10 +30,9 @@ export default function TicketsView({ user_id }) {
   }, [])
 
   useEffect(() => {
-    if (myTickets == "loading") return
     socket.on("ticket-completed", data => {
-
-      const updated = myTickets.map(ticket => {
+      console.log("XD")
+      const updated = initialTickets.map(ticket => {
         const newTicket = data.find(item => ticket.id == item.id)
         if (newTicket) {
           ticket = {
@@ -48,9 +47,17 @@ export default function TicketsView({ user_id }) {
       setMyTickets(updated)
     }
     )
-  }, [myTickets])
+  }, [])
 
-
+  const showTickets = (array)=> array
+  .filter((ticket) => {
+    if (active == "enable" && !ticket.ticket_redeem) return ticket;
+    if (active == "claimed" && ticket.ticket_redeem) return ticket;
+  })
+  .map((ticket) => (
+    <TicketCard ticket={ticket} />
+  ))
+  
   return (
     <>
       <div className="grid grid-cols-2 border-b border-border mb-4">
@@ -69,15 +76,9 @@ export default function TicketsView({ user_id }) {
           setItemType={setItemType}
         />
       </div>
-      {myTickets == "loading" ? <p className="p-4">Cargando Tickets</p> : !!myTickets.length && myTickets
-        .filter((ticket) => {
-          if (active == "enable" && !ticket.ticket_redeem) return ticket;
-          if (active == "claimed" && ticket.ticket_redeem) return ticket;
-        })
-        .map((ticket) => (
-          <TicketCard ticket={ticket} />
-        ))}
-      {!myTickets.length && <p className="p-4">No tienes tickets :(</p>}
+      {!!myTickets.length && showTickets(myTickets)}
+      {!!initialTickets.length && !myTickets.length && showTickets(initialTickets)}
+      {!myTickets.length || !initialTickets.length && <p className="p-4">No tienes tickets :(</p>}
     </>
   );
 }

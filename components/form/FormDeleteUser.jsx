@@ -36,7 +36,6 @@ export default function FormDeleteUser() {
                     error={formState.errors.password?.message}
                     placeholder={"Contraseña"}
                     type="password"
-                    showpass
                 />
                 <Button disabled={loading} className="!bg-danger-action hover:!bg-red-900/80 w-full !text-white">{
                     loading

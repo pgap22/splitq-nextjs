@@ -28,6 +28,8 @@ model Users {
 
   refoundBalance UserRefoundBalance[] @relation("user")
   refoundsAsMod  UserRefoundBalance[] @relation("mod")
+  orders         Orders[]
+  tickets        Tickets[]
 }
 
 model Categories {
@@ -48,6 +50,7 @@ model Products {
   images      ProductImages[]
   categorie   Categories         @relation(fields: [categorieID], references: [id], onDelete: Cascade)
   seller      Users              @relation(fields: [seller_id], references: [id])
+  ticketsOn     Tickets[]
 }
 
 model ProductImages {
@@ -67,6 +70,7 @@ model Combo {
   seller           Users              @relation(fields: [id_seller], references: [id], onDelete: Cascade)
   products         ComboProducts[]
   CartUserProducts CartUserProducts[]
+  ticketsOn          Tickets[]
 }
 
 model ComboProducts {
@@ -93,24 +97,62 @@ model CartUserProducts {
   id_user     String
   id_product  String?
   id_combo    String?
-  //It can be disabled on cart //TODO
+  //It can be disabled on cart
   enableToBuy Boolean @default(true)
 
-  ticket_qr      String @default(uuid())
+  ticket_qr String @default(uuid())//TODO May Delete
 
   //If this is true it means that some one bought it 
-  ticket_enabled Boolean @default(false)
-  
-  //If it is true has been claimed
-  ticket_redeem Boolean @default(false)
+  ticket_enabled Boolean @default(false)//TODO May Delete
 
-  claimedAt DateTime?
+  //If it is true has been claimed
+  ticket_redeem Boolean @default(false)//TODO May Delete
+
+  
+  claimedAt  DateTime?//TODO May delete
+
   purchaseAt DateTime?
-  createdAt DateTime @default(now())
-  quantity Int
-  product  Products? @relation(fields: [id_product], references: [id], onDelete: Cascade)
-  combo    Combo?    @relation(fields: [id_combo], references: [id], onDelete: Cascade)
-  user     Users     @relation(fields: [id_user], references: [id], onDelete: Cascade)
+  createdAt  DateTime  @default(now())
+  quantity   Int
+  product    Products? @relation(fields: [id_product], references: [id], onDelete: Cascade)
+  combo      Combo?    @relation(fields: [id_combo], references: [id], onDelete: Cascade)
+  user       Users     @relation(fields: [id_user], references: [id], onDelete: Cascade)
+}
+
+model Tickets {
+  id         String    @id @default(uuid())
+  id_user    String
+  id_product String?
+  id_combo   String?
+
+  ticket_redeem Boolean @default(false)
+  claimedAt  DateTime?
+  quantity   Int
+
+  product Products? @relation(fields: [id_product], references: [id], onDelete: Cascade)
+  combo   Combo?    @relation(fields: [id_combo], references: [id], onDelete: Cascade)
+  user    Users     @relation(fields: [id_user], references: [id], onDelete: Cascade)
+}
+
+model Orders {
+  id         String   @id @default(uuid())
+  id_user    String
+  totalPrice Float
+  createdAt  DateTime @default(now())
+
+  user           Users            @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ordersProducts OrdersProducts[]
+}
+
+//Maybe not a relationship with products cuz, dont want to update dynamic data, want to store static
+model OrdersProducts {
+  id            String @id @default(uuid())
+  id_order      String
+  product_name  String
+  product_price Float
+  quantity      Int
+
+  order Orders @relation(fields: [id_order], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 enum UserRefoundStatus {
@@ -130,9 +172,8 @@ model UserRefoundBalance {
   //Who give refound/money
   id_mod String?
 
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
   checkedAt DateTime?
-
 
   mod  Users? @relation("mod", fields: [id_mod], references: [id], onDelete: Cascade, onUpdate: Cascade)
   user Users  @relation("user", fields: [id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)

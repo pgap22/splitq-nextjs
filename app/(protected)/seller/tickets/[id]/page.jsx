@@ -17,8 +17,9 @@ export default async function TicketSellerPage({ params }) {
       <p className="font-bold text-lg mt-4">
         {ticket.user.name} {ticket.user.lastname}
       </p>
+
       <div className="border border-border rounded mt-4 p-2 bg-foreground">
-        <div className="flex items-center gap-2">
+        <div className="gap-2">
           <IconBox
             Icon={
               !!ticket.product.products
@@ -26,7 +27,12 @@ export default async function TicketSellerPage({ params }) {
                 : MdOutlineLocalPizza
             }
           />
-          <p>{ticket.product.name}</p>
+          <div>
+            <p>{ticket.product.name}</p>
+            <p className="text-sm text-gray-text">
+              {ticket.product.description}
+            </p>
+          </div>
         </div>
         <div className="mt-4">
           <p className="font-bold text-text-secundary">

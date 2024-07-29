@@ -4,6 +4,7 @@ import LiveNotification from "./LiveNotification";
 
 export default async function QrPage() {
     const user = await authUser();
+    console.log(user.id)
     return (
         <>
             <section className="sm:flex-row flex flex-col gap-4 text-center items-center">

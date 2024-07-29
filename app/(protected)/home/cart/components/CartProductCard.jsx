@@ -51,7 +51,7 @@ const CartProductCard = ({ item }) => {
                             item.enableToBuy && <MdOutlineCheck className="text-action-text-button" size={20} />
                         }
                     </label>
-                    {(product?.images && product?.images.length) ? <img className="max-h border-16 aspect-square object-contain rounded border border-border" src={product.images[0].url} />
+                    {(product?.images && product?.images.length) ? <img className="max-h border-16 h-20 aspect-square object-cover rounded border border-border" src={product.images[0].url} />
                         : <div className="h-20 aspect-square border border-border rounded-md flex items-center justify-center">
                             <MdOutlineLocalOffer size={30} />
                         </div>}

@@ -25,7 +25,7 @@ export async function getTicketByQR(id) {
       },
     });
 
-    if (ticket.combo) {
+    if (ticket && ticket.combo) {
       ticket.product = {
         ...ticket.combo
       }

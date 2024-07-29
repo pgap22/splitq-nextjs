@@ -63,7 +63,6 @@ export default function FormNewPassword({ id_user, local }) {
                     label={"Nueva contraseña"}
                     placeholder={"Contraseña"}
                     type={"password"}
-                    showpass
                     value={watch("password")}
                     register={register("password", { required: { value: true, message: "Contraseña esta vacia" }, minLength: { value: 8, message: "Minimo 8 caracteres" } })}
                     error={formState.errors.password?.message}
