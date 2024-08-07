@@ -82,13 +82,20 @@ model ComboProducts {
   product    Products @relation(fields: [id_product], references: [id], onDelete: Cascade)
 }
 
+
+enum RechargeType {
+  default
+  splitpay
+}
+
 model Recharges {
   id        String   @id @default(uuid())
   userID    String
-  modID     String
+  modID     String?
   balance   Float
+  type      RechargeType
   createdAt DateTime @default(now())
-  mod       Users    @relation("mod", fields: [modID], references: [id], onDelete: Cascade)
+  mod       Users?    @relation("mod", fields: [modID], references: [id], onDelete: Cascade)
   user      Users    @relation("user", fields: [userID], references: [id], onDelete: Cascade)
 }
 

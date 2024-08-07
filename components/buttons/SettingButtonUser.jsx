@@ -40,7 +40,7 @@ export default function SettingButtonUser({ user, logout }) {
         item ? (
           <animated.div
             style={style}
-            className="fixed inset-0 min-h-screen bg-black bg-opacity-30 backdrop-blur-sm z-10"
+            className="fixed inset-0  min-h-[100dvh] bg-black bg-opacity-30 backdrop-blur-sm z-10"
           >
             {transitionsMenu((style, item) =>
               item ? (
@@ -115,6 +115,17 @@ function SideMenu({ style, user, close, logout }) {
           <Link href={"/home/my-refounds"}>
             <div className="border-border border-b p-4">
               <p className="font-bold">Mis Rembolsos</p>
+            </div>
+          </Link>
+        </div>
+
+        <div>
+          <h3 className="text-text-secundary p-4 pb-2 font-bold text-lg">
+            SplitPay
+          </h3>
+          <Link href={"/home/splitpay"}>
+            <div className="border-t border-border border-b p-4">
+              <p className="font-bold">Conectarse a SplitPay</p>
             </div>
           </Link>
         </div>

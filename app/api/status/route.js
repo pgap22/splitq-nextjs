@@ -8,10 +8,15 @@ export async function GET(req, res) {
     try {
         const db = await checkDB()
         
-        let imagenes = process.env.DEPLOYMENT == "local" ? process.env.API_IMAGE_LOCAL : `https://${process.env.CLOUDINARY_KEY}:${process.env.CLOUDINARY_SECRET}api.cloudinary.com/v1_1/dft5i06zq/usage`
+        let imagenes = process.env.DEPLOYMENT == "local" ? process.env.API_IMAGE_LOCAL : `https://api.cloudinary.com/v1_1/dft5i06zq/usage`
         let socketio = process.env.NEXT_PUBLIC_SOCKET_IO_SERVER
-
-        imagenes = !!await checkStatus(imagenes);
+        console.log(imagenes);
+        imagenes = !!await checkStatus(imagenes,{
+            auth: {
+                username: process.env.CLOUDINARY_KEY,
+                password: process.env.CLOUDINARY_SECRET,
+            }
+        });
         socketio = !!await checkStatus(socketio);
 
         

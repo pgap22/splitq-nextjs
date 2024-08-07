@@ -5,7 +5,7 @@
 
 @layer base {
     :root {
-        --text-secundary: #A4A8A3;
+        --text-secundary: #555; /* Cambiado para mejor contraste */
         --danger-text: #B71C1C;
         --danger-action: #7F1D1D;
 
@@ -18,32 +18,46 @@
 
         --light-blue: #0093ED;
 
-        --gray-background: #61616140;
+        --gray-background: #E0E0E0; /* Cambiado para mejor contraste */
         --gray-border: #616161;
-        --gray-text: #BDBDBD;
+        --gray-text: #555; /* Cambiado para mejor contraste */
 
-        --green-background: #4CAF5040;
+        --green-background: #E8F5E9; /* Cambiado para mejor contraste */
         --green-border: #4CAF50;
-        --green-text: #68FA7F;
+        --green-text: #388E3C; /* Cambiado para mejor contraste */
 
-        --red-background: #F4433640;
+        --red-background: #FFEBEE; /* Cambiado para mejor contraste */
         --red-border: #F44336;
-        --red-text: #EF5305;
-
+        --red-text: #D32F2F; /* Cambiado para mejor contraste */
 
         --gradient-principal: 90deg, #A297E5 0%, #A29FE5 25.42%, #A4BDE5 95.93%;
-        --background: #F9F9F9;
-        --foreground: #FFFFFF;
+        --background: #FFFFFF;
+        --foreground: #F9F9F9;
         --border: #E2E2E2;
         --action-bg-button: #000000;
         --action-text-button: #FFFFFF;
         --text: #18181B;
         --rounded: 4px;
-        --item-bg-opacity: 1
+        --item-bg-opacity: 1;
 
     }
 
     *.dark {
+        --text-secundary: #A4A8A3;
+        --gray-background: #61616140;
+        --gray-text: #BDBDBD;
+
+        --gray-background: #61616140;
+        --gray-text: #BDBDBD;
+
+        --green-background: #4CAF5040;
+        --green-text: #68FA7F;
+
+        --red-background: #F4433640;
+        --red-text: #EF5305;
+
+
+
         --gradient-principal: 90deg, #AA2A7F 0%, #C13874 42.5%, #BF4040 100%;
         --background: #1B1C1E;
         --foreground: #262626;
@@ -122,7 +136,7 @@ html.dark .icon-gradient {
 ::-webkit-scrollbar-thumb {
     -webkit-border-radius: 10px;
     border-radius: 10px;
-    background: linear-gradient(var(--gradient-principal)); 
+    background: var(--gray-border); 
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
 ::-webkit-scrollbar-thumb:window-inactive {

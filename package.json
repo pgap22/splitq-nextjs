@@ -30,6 +30,7 @@
     "cmdk": "^1.0.0",
     "dayjs": "^1.11.10",
     "fs": "^0.0.1-security",
+    "input-otp": "^1.2.4",
     "lucide-react": "^0.344.0",
     "next": "14.1.1",
     "next-auth": "5.0.0-beta.15",
@@ -49,7 +50,8 @@
     "tailwindcss-animate": "^1.0.7",
     "usehooks-ts": "^3.0.1",
     "uuid": "^9.0.1",
-    "vaul": "^0.9.0"
+    "vaul": "^0.9.0",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",
