@@ -93,7 +93,7 @@ model Recharges {
   userID    String
   modID     String?
   balance   Float
-  type      RechargeType
+  type      RechargeType @default(default)
   createdAt DateTime @default(now())
   mod       Users?    @relation("mod", fields: [modID], references: [id], onDelete: Cascade)
   user      Users    @relation("user", fields: [userID], references: [id], onDelete: Cascade)
