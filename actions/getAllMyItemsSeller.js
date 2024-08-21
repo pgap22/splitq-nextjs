@@ -11,6 +11,9 @@ export default async function getAllMyItemsSeller() {
             where: {
                 seller_id: id
             },
+            orderBy: {
+                createadAt: 'asc'
+            },
             include:{
                 seller: true
             }
@@ -18,6 +21,9 @@ export default async function getAllMyItemsSeller() {
         prisma.combo.findMany({
             where: {
                 id_seller: id
+            },
+            orderBy: {
+                createadAt: 'asc'
             },
             include:{
                 seller: true

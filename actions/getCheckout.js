@@ -14,7 +14,8 @@ export async function getCheckout() {
         include: {
           combo: {
             include: {
-                seller: true
+                seller: true,
+                products: true
             }
           },
           product: {

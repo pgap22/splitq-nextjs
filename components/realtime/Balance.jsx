@@ -19,7 +19,6 @@ export default function Balance({ balance, id }) {
         return () => {
             socket.off("current_balance")
             socket.off("add_balance")
-            socket.disconnect()
         }
     }, [])
 

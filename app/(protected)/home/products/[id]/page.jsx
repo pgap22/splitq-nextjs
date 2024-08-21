@@ -23,17 +23,20 @@ export default async function ProductPage({ params }) {
             <div className="p-4">
                 <h1 className="font-bold text-3xl">{product.name}</h1>
                 <p className="text-text-secundary text-lg mt-2 font-bold">{product.seller.name}</p>
+                <div className="border border-border bg-gray-background rounded-md my-1 w-fit text-text-secundary text-xs p-2">
+                    <span className="font-bold">Stock: {product.stock}</span>
+                </div>
                 <p className="text-text-secundary mt-4">{product.description}</p>
             </div>
             {
                 product.products && (
                     <div className="p-4">
-                    <p>Que incluye: </p>
-                    {
-                        product.products.map((item) => (
-                            <ProductItemCombo key={product.id} product={item.product} quantity={item.quantity}/>
-                        ))
-                    }
+                        <p>Que incluye: </p>
+                        {
+                            product.products.map((item) => (
+                                <ProductItemCombo key={product.id} product={item.product} quantity={item.quantity} />
+                            ))
+                        }
                     </div>
                 )
             }

@@ -8,7 +8,7 @@ export async function _DEV_SplitDeposit(amount,authtoken) {
                 'Content-Type': "application/json"
             },
             body: JSON.stringify({
-                value: +amount,
+                value: amount,
                 authtoken
             })
         });

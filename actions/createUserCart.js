@@ -14,7 +14,7 @@ export async function createUserCart(data, type) {
             id_user: id,
           },
           {
-            ticket_enabled: false
+            ticket_enabled: false,
           },
           {
             OR: [
@@ -24,9 +24,21 @@ export async function createUserCart(data, type) {
           },
         ],
       },
+      include: {
+        product: true,
+        combo: true,
+      },
     });
 
+    if (isCartCreated && isCartCreated.combo) {
+      isCartCreated.product = { ...isCartCreated.combo };
+      delete isCartCreated.combo;
+    }
+
+
     if (isCartCreated) {
+      if(isCartCreated.quantity >= isCartCreated.product.stock) return {error: "NO_STOCK"}
+
       await prisma.cartUserProducts.update({
         where: {
           id: isCartCreated.id,
@@ -41,13 +53,13 @@ export async function createUserCart(data, type) {
     }
 
     data.id_user = id;
-    if(type == "combo"){
-       data.id_combo =  data.id_product
-       delete data.id_product
+    if (type == "combo") {
+      data.id_combo = data.id_product;
+      delete data.id_product;
     }
 
     const cartCreated = await prisma.cartUserProducts.create({
-      data
+      data,
     });
 
     revalidatePath("/");

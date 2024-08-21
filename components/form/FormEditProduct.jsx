@@ -24,6 +24,7 @@ export default function FormEditProduct({ product, categories }) {
             name: "",
             description: "",
             price: null,
+            stock: "",
             categorieID: ""
         }
     })
@@ -83,6 +84,7 @@ export default function FormEditProduct({ product, categories }) {
         !watch("name") &&
         !watch("description") &&
         !watch("price") &&
+        !watch("stock") &&
         !watch("categorieID")
 
     return (
@@ -118,7 +120,7 @@ export default function FormEditProduct({ product, categories }) {
                             Subir Imagen
                         </div>
                     </label>
-                    <input onClick={(e)=>{
+                    <input onClick={(e) => {
                         e.target.value = null
                     }} onInput={previewImage} id="images" type="file" accept="image/*" hidden />
                     {product.images.map((img) => (
@@ -137,6 +139,15 @@ export default function FormEditProduct({ product, categories }) {
                         min={0}
                     />
                 </div>
+                <FormInput
+                    register={register("stock", { valueAsNumber: true, min: { value: true, message: "Minimo de stock debe ser mayor a 0" }, required: { value: true, message: "Este campo es requerido" } })}
+                    type="number"
+                    className="bg-foreground mb-2"
+                    placeholder={product.stock}
+                    error={formState.errors.stock?.message}
+                    label={"Stock"}
+                    step={"1"}
+                />
                 <div className="gap-2 grid grid-cols-[1fr_max-content]">
                     <Button disabled={loadingEdit || isEmpty} className="font-bold">
                         {loadingEdit ? <Loader /> : "Editar Producto"}

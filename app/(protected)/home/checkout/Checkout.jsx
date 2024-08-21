@@ -20,11 +20,14 @@ import AlertWarning from "@/components/ui/AlertWarning";
 import BackButton from "@/components/buttons/BackButton";
 export default function Checkout({ checkoutData }) {
   const [loading, startBuying] = useTransition();
+  const [error, setError] = useState(false);
   const [success, setSucess] = useState();
   const confirmPay = () => {
     startBuying(async () => {
       const result = await buyProducts(checkoutData);
       if (result?.error) {
+        console.log(result)
+        setError(result)
         return;
       }
       setSucess(true);
@@ -94,6 +97,16 @@ export default function Checkout({ checkoutData }) {
             <DrawerDescription>
               Por el momento esta accion no se puede deshacer.
             </DrawerDescription>
+            <div className="!text-start">
+              {error && error.error == "NO_STOCK_PRODUCT" && <AlertWarning title={"Producto sin stock !"} description={<div>
+                <p>Hay un producto en tu carrito que no tiene stock suficiente</p>
+                <p><span className="font-bold">Producto</span>: {error.product_name}</p>
+                <p><span className="font-bold">Stock Actual</span>: {error.currentStock}</p>
+                <p><span className="font-bold">Cantidad a comprar</span>: {error.quantity}</p>
+              </div>} />
+              }
+            </div>
+
           </DrawerHeader>
           <DrawerFooter>
             <Button

@@ -7,6 +7,7 @@ import ControlledModal from "../ControlledModal";
 import Link from "next/link";
 
 export default function AddToCart({ product }) {
+  const [error, setError] = useState(false)
   const [loading, startAdding] = useTransition();
   const [continueShopping, setContinueShopping] = useState();
 
@@ -20,7 +21,6 @@ export default function AddToCart({ product }) {
       const result = await createUserCart(data, typeProduct);
       if (result?.error) {
         setError(result.error);
-        return;
       }
 
       setContinueShopping(true);
@@ -29,13 +29,14 @@ export default function AddToCart({ product }) {
 
   return (
     <>
-      <Button disabled={loading} onClick={addCart} className="w-full mt-4">
+      <Button disabled={loading || !product.stock} onClick={addCart} className="w-full mt-4">
         {loading ? <Loader /> : "Añadir al carrito"}
       </Button>
       <ControlledModal
-        title="Producto agregado al carrito 🛒"
-        description={<p>Se ha agregado exitosamente <span className="font-bold">{product.name}</span></p>}
+        title={error ? "Insuficinete Stock :(" :"Producto agregado al carrito 🛒"}
+        description={error ?  <p>No hay suficiente stock para agregar al carrito <span className="font-bold">{product.name}</span></p> : <p>Se ha agregado exitosamente <span className="font-bold">{product.name}</span></p>}
         open={continueShopping}
+        error={error}
         setOpen={setContinueShopping}
         cancelLabel="Continuar comprando"
       >

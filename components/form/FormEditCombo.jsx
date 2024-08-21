@@ -77,6 +77,7 @@ export default function FormEditCombo({ productos, combo }) {
     const isEmpty =
         !watch("name") &&
         !watch("description") &&
+        !watch("stock") &&
         !watch("price")
 
 
@@ -149,7 +150,7 @@ export default function FormEditCombo({ productos, combo }) {
             return multiplyDecimal(product.price, product.quantity)
         }))
         setPriceTotal(currentPriceTotal)
-        setValue("price", currentPriceTotal)
+        // setValue("price", currentPriceTotal)
     }, [addedProducts])
 
 
@@ -216,6 +217,15 @@ export default function FormEditCombo({ productos, combo }) {
                             step={".01"}
                         />
                     </div>
+                    <FormInput
+                            register={register("stock", {valueAsNumber: true, min: {value: true, message: "Minimo de stock debe ser mayor a 0"}, required: { value: true, message: "Este campo es requerido" } })}
+                            type="number"
+                            className="bg-foreground mb-2"
+                            placeholder={combo.stock}
+                            error={errors.stock?.message}
+                            label={"Stock"}
+                            step={"1"}
+                        />
                     <div className="grid grid-cols-[1fr_max-content] gap-2">
                         <Button disabled={loading || isEmpty} className="font-bold">
                             {loading ? <Loader /> : "Editar Combo"}

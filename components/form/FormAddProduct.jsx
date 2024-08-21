@@ -25,6 +25,7 @@ export default function FormAddProduct({ categories }) {
             name: "",
             description: "",
             price: "",
+            stock: "",
             categorieID: ""
         }
     });
@@ -148,6 +149,15 @@ export default function FormAddProduct({ categories }) {
                             step={".01"}
                         />
                     </div>
+                    <FormInput
+                            register={register("stock", {valueAsNumber: true, min: {value: true, message: "Minimo de stock debe ser mayor a 0"}, required: { value: true, message: "Este campo es requerido" } })}
+                            type="number"
+                            className="bg-foreground mb-2"
+                            placeholder="Cantidad de productos disponibles"
+                            error={errors.stock?.message}
+                            label={"Stock"}
+                            step={"1"}
+                        />
                     <Button disabled={loading} className="font-bold">
                         {loading ? <Loader /> : "Añadir Producto"}
                     </Button>

@@ -22,7 +22,9 @@ export default function ProductCard({ product }) {
         <div className="flex-col justify-between h-full p-2 flex">
           <Link href={"/home/products/" + product.id}>
             <p className="font-bold">{product.name}</p>
-
+            <div className="border border-border bg-gray-background rounded-md my-1 w-fit text-text-secundary text-xs p-2">
+              <span className="font-bold">Stock: {product.stock}</span>
+            </div>
             {/* <p className="truncate max-w-[20ch]">{product.description}</p> */}
             <p className="font-bold text-xl text-gradient-principal text-gradient bg-gradient-principal">
               ${product.price}
