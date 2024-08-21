@@ -7,18 +7,22 @@ import ThemeToggle from "@/components/buttons/theme-toggle";
 import { authUser } from "@/lib/authUser";
 import Link from "next/link";
 import { MdOutlineFastfood, MdOutlineFoodBank, MdOutlineLocalPizza } from "react-icons/md";
-import { getTotalSellerTickets } from "@/actions/getTotalSellerTickets";
+import { getSellerStats } from "@/actions/getSellerStats";
+import { Button } from "@/components/ui/button";
+import SellerStats from "@/components/SellerStats";
+import { data } from "autoprefixer";
 
 export default async function SellerHome() {
     const user = await authUser()
     // const combos = await getCombos();
+    //ya pero y richard?
     //Por veces no agarraba el logout asiq esto lo solucionaxd
     async function logout() {
         "use server"
         await signOut();
     }
 
-    const tickets = await getTotalSellerTickets()
+    const { totalTickets, totalSales, mostSoldProductName, mostSoldComboName } = await getSellerStats();
 
     return (
         <>
@@ -29,9 +33,9 @@ export default async function SellerHome() {
                     <SettingButton logout={logout} user={user}>
                         <div>
                             <h3 className="text-text-secundary p-4 pb-2 font-bold text-lg">Historial</h3>
-                            <Link href={"seller/history"}>
+                            <Link href={"seller/stats"}>
                                 <div className="border-t border-border border-b p-4">
-                                    <p className="font-bold">Historial de acciones</p>
+                                    <p className="font-bold">Estadisticas</p>
                                 </div>
                             </Link>
                         </div>
@@ -83,20 +87,27 @@ export default async function SellerHome() {
                         </div>
                     </Link>
                 </div>
-
-                <div className="px-4 mb-2">
-                    <h2 className="text-lg mb-4 font-bold">Ventas</h2>
-                    <div className="border border-border bg-foreground font-bold rounded-lg">
-                        <div className="flex flex-row p-2">
-                            <p className="text-xs">Total de tickets vendidos: <span className="text-gradient bg-gradient-principal">{tickets}</span> </p>
-                        </div>
-                        <div className="flex flex-row p-2">
-                            <p className="text-xs">Producto mas vendido: <span className="text-gradient bg-gradient-principal">Chory</span> </p>
-                        </div>
-                        <div className="flex flex-row p-2">
-                            <p className="text-xs">Combo mas vendido: <span className="text-gradient bg-gradient-principal">Chory + Soda</span> </p>
-                        </div>
-                    </div>
+                <h2 className="font-bold px-4 text-lg">Estadisticas</h2>
+                <div className="flex flex-col p-4 gap-4">
+                    <SellerStats
+                        title={"Tickets Vendidos"}
+                        data={totalTickets}
+                    />
+                    <SellerStats
+                        title={"Ganancias Totales"}
+                        data={totalSales.toFixed(2)}
+                    />
+                    <SellerStats
+                        title={"Producto mas Vendido"}
+                        data={mostSoldProductName}
+                    />
+                    <SellerStats
+                        title={"Combo mas Vendido"}
+                        data={mostSoldComboName}
+                    />
+                </div>
+                <div className="p-4">
+                    <Button className="w-full" asChild><Link href={"seller/stats"}>Más Detalles</Link></Button>
                 </div>
             </div>
         </>
