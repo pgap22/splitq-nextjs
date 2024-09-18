@@ -88,14 +88,14 @@ export default async function SellerHome() {
                     </Link>
                 </div>
                 <h2 className="font-bold px-4 text-lg">Estadisticas</h2>
-                <div className="flex flex-col p-4 gap-4">
+                <div className="flex flex-col px-4  gap-4">
                     <SellerStats
                         title={"Tickets Vendidos"}
                         data={totalTickets}
                     />
                     <SellerStats
                         title={"Ganancias Totales"}
-                        data={totalSales.toFixed(2)}
+                        data={"$"+totalSales.toFixed(2)}
                     />
                     <SellerStats
                         title={"Producto mas Vendido"}
@@ -106,7 +106,7 @@ export default async function SellerHome() {
                         data={mostSoldComboName}
                     />
                 </div>
-                <div className="p-4">
+                <div className="px-4 mb-4">
                     <Button className="w-full" asChild><Link href={"seller/stats"}>Más Detalles</Link></Button>
                 </div>
             </div>
