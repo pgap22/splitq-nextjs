@@ -34,7 +34,7 @@ export async function buyProducts(checkout) {
         }
         return item;
       })
-      .find((product) => product.quantity >= product.product.stock);
+      .find((product) => product.quantity > product.product.stock);
     console.log(productsCart);
 
     if (productWithNoStock)
