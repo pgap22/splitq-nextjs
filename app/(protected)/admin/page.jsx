@@ -2,7 +2,7 @@ import { Logo } from "@/components/Logo";
 import IconBox from "@/components/ui/IconBox";
 import { authUser } from "@/lib/authUser";
 import { Settings } from "lucide-react";
-import { MdOutline10K, MdOutlineSettings, MdOutlineStorefront, MdOutlineVerifiedUser } from "react-icons/md";
+import { MdOutline10K, MdOutlineComputer, MdOutlineHardware, MdOutlineSettings, MdOutlineStorefront, MdOutlineVerifiedUser } from "react-icons/md";
 import HeaderAdmin from "./headerAdmin";
 import Link from "next/link";
 
@@ -36,24 +36,24 @@ export default async function Home() {
                             />
                         </ActionLayout>
                     </Link>
-                    
+
                     <Link href={"/admin/manageProfile"}>
-                    <ActionLayout
-                        description={"Administrar Perfiles"}
-                    >
-                        <IconBox
-                            Icon={MdOutlineStorefront}
-                        />
-                    </ActionLayout>
+                        <ActionLayout
+                            description={"Administrar Perfiles"}
+                        >
+                            <IconBox
+                                Icon={MdOutlineStorefront}
+                            />
+                        </ActionLayout>
                     </Link>
-                    
+
                 </div>
             </div>
 
             <div className="mt-4">
                 <p className="text-xl font-bold text-text-secundary p-4">Categoria</p>
                 <div>
-                <Link href={"/admin/createCategories"}>
+                    <Link href={"/admin/createCategories"}>
                         <ActionLayout
                             description={"Crear Categoria"}
                         >
@@ -62,15 +62,29 @@ export default async function Home() {
                             />
                         </ActionLayout>
                     </Link>
-                <Link href={"/admin/manageCategories"}>
+                    <Link href={"/admin/manageCategories"}>
                         <ActionLayout
                             description={"Administrar Categorias"}
-                            >
+                        >
                             <IconBox
                                 Icon={MdOutlineStorefront}
-                                />
+                            />
                         </ActionLayout>
-                </Link>
+                    </Link>
+                </div>
+            </div>
+            <div className="mt-4">
+                <p className="text-xl font-bold text-text-secundary p-4">SplitPay</p>
+                <div>
+                    <Link href={"/admin/splitpay"}>
+                        <ActionLayout
+                            description={"Administrar Dispositivos SplitPay"}
+                        >
+                            <IconBox
+                                Icon={MdOutlineComputer}
+                            />
+                        </ActionLayout>
+                    </Link>
                 </div>
             </div>
         </div>

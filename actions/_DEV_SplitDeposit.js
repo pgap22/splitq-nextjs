@@ -1,6 +1,8 @@
 "use server"
+
+
 //Only for dev propurses while we are getting hardware
-export async function _DEV_SplitDeposit(amount,authtoken) {
+export async function _DEV_SplitDeposit(amount,splitpayjwt) {
     try {
         const res = await fetch(process.env.API_SPLITPAY+"/deposit", {
             method: "POST",
@@ -9,10 +11,11 @@ export async function _DEV_SplitDeposit(amount,authtoken) {
             },
             body: JSON.stringify({
                 value: amount,
-                authtoken
+                splitpayjwt,
             })
         });
         const data = await res.json();
+        console.log(data)
         return data;
     } catch (error) {
         console.log(error)

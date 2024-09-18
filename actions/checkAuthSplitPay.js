@@ -1,5 +1,5 @@
 "use server"
-export async function checkAuthSplitPay(authtoken) {
+export async function checkAuthSplitPay(splitpayjwt) {
     try {
         const res = await fetch(process.env.API_SPLITPAY+"/check_authtoken", {
             method: "POST",
@@ -7,7 +7,7 @@ export async function checkAuthSplitPay(authtoken) {
                 'Content-Type': "application/json"
             },
             body: JSON.stringify({
-                authtoken
+                splitpayjwt
             })
         });
         const data = await res.json();

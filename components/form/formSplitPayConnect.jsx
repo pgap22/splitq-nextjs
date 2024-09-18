@@ -7,11 +7,9 @@ import { Button } from "@/components/ui/button"
 import {
     InputOTP,
     InputOTPGroup,
-    InputOTPSeparator,
     InputOTPSlot,
 } from "@/components/ui/input-otp"
 import { socket } from "@/lib/socketio";
-import { useSession } from "next-auth/react";
 import { useState, useTransition } from "react";
 import { Controller, useForm } from "react-hook-form"
 import { useLocalStorage } from "usehooks-ts";
@@ -34,7 +32,7 @@ export default function FormSplitPayConnect({ session }) {
                 return
             }
 
-            if (authResult.reason == "AUTHCODE_INVALID") {
+            if (authResult.error == "AUTHCODE_INVALID") {
                 setError("El codigo de autentificacion para SplitPay es invalido !")
                 return
             }

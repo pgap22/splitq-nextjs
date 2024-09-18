@@ -30,7 +30,7 @@ model Users {
   refoundsAsMod    UserRefoundBalance[] @relation("mod")
   orders           Orders[]
   tickets          Tickets[]
-  splitpay_session SplitPay[]
+  splitpay_session SplitPaySession?
 }
 
 model Categories {
@@ -190,15 +190,27 @@ model UserRefoundBalance {
   user Users  @relation("user", fields: [id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
-model SplitPay {
-  id      String  @id @default(uuid())
-  balance Float
-  id_user String?
-
-  user Users? @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
+enum SplitPayStatus {
+  not_configured
+  active
 }
 
-model SplitPayCode{
-  id String @id @default(uuid())
-  code String
+model SplitPay {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  key       String
+  accesCode String?
+  status          SplitPayStatus   @default(not_configured)
+  splitPaySession SplitPaySession?
+}
+
+model SplitPaySession {
+  id          String @id @default(uuid())
+  balance     Float
+  id_user     String @unique
+  id_splitpay String @unique
+
+  splitpay SplitPay @relation(fields: [id_splitpay], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user     Users    @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }

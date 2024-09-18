@@ -1,5 +1,5 @@
 "use server"
-export default async function finalizeSplitPayDeposit(authtoken){
+export default async function finalizeSplitPayDeposit(splitpayjwt){
     try {
         const res = await fetch(process.env.API_SPLITPAY+"/finalize_deposit", {
             method: 'POST',
@@ -7,7 +7,7 @@ export default async function finalizeSplitPayDeposit(authtoken){
                 'Content-Type': "application/json"
             },
             body: JSON.stringify({
-                authtoken
+                splitpayjwt
             })
         })
         const data = await res.json();

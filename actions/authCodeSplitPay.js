@@ -1,7 +1,7 @@
 "use server"
 
 import { auth } from "@/auth";
-
+import jwt from "jsonwebtoken"
 export default async function authcodeSplitPay(authcode) {
   try {
     const session = await auth();
@@ -12,11 +12,11 @@ export default async function authcodeSplitPay(authcode) {
       },
       body: JSON.stringify({
         authcode,
-        id_user: session.user.id
+        token_jwt: jwt.sign({id: session.user.id}, process.env.JWT_SPLITPAY_SECRET)
       })
     })
     const data = await res.json();
-
+    console.log(data)
     return data;
 
   } catch (error) {

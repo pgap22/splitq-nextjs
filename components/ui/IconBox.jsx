@@ -8,7 +8,7 @@ export default React.forwardRef(function IconBox({className, Icon,isButton = tru
     variants: {
       variant:{
         gradientCircle: "border-gradient bg-gradient-principal rounded-full",
-        square: "rounded-md bg-foreground border-border",
+        square: "rounded-md bg-foreground border-border hover:opacity-80 transition-all duration-150",
         squareGradient: "border-gradient bg-gradient-principal rounded-md"
       }
     },
