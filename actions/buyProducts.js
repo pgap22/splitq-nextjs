@@ -125,7 +125,8 @@ export async function buyProducts(checkout) {
         balance: newBalance,
       },
     });
-
+    
+    revalidatePath("/")
     return true;
   } catch (error) {
     console.log(error);

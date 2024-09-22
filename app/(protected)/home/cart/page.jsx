@@ -15,7 +15,7 @@ export default async function CartPage() {
     let total = 0
     if (products.length) {
         productPrices = products.filter(item=> item.enableToBuy).map(item => multiplyDecimal(item.quantity, item.product.price))
-        total = sumDecimal(...productPrices)
+        total = productPrices.length ? sumDecimal(...productPrices) : 0
     }
 
     const noProducts = !products.some(product => product.enableToBuy)

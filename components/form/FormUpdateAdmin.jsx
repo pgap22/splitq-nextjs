@@ -98,12 +98,12 @@ export default function UpdateAdmin({name, email, role, id, balance, freezebalan
                     <FormInput
                         label={"Balance del perfil"}
                         placeholder={"Balance del perfil"}
-                        register={register("balance")}
+                        register={register("balance", {valueAsNumber: true})}
                     />
                     <FormInput
                         label={"Balance congelado del perfil"}
                         placeholder={"Balance congelado del perfil"}
-                        register={register("freezebalance")}
+                        register={register("freezebalance", {valueAsNumber: true})}
                     />
                 </div>
                     )
