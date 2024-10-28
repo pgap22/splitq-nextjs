@@ -12,7 +12,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html className="dark" style={"color-scheme: dark;"} lang="en">
       <body className={lato.className}>
         <ThemeProvider
           attribute="class"
