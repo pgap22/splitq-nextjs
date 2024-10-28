@@ -7,7 +7,6 @@ import { useToggle } from "usehooks-ts";
 
 export default function ActionItem({ action }) {
     const [show, toggleShow] = useToggle(false);
-    console.log(action)
     return (
         <div onClick={toggleShow} className="border-b cursor-pointer last:border-none p-4 border-border">
             <div className="flex justify-between items-center">

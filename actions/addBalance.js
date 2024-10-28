@@ -1,9 +1,15 @@
-"use server"
+"use server";
 import prisma from "@/db/prisma";
 import { authUser } from "@/lib/authUser";
 import { sumDecimal } from "@/lib/decimal";
 import { revalidatePath } from "next/cache";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
+// Extiende dayjs con los plugins necesarios
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export default async function addBalance(userID, newBalance) {
     try {
@@ -14,7 +20,7 @@ export default async function addBalance(userID, newBalance) {
                     userID: userID,
                     modID: currentMod.id,
                     balance: newBalance,
-                    createdAt: new Date()
+                    createdAt: dayjs().tz("America/El_Salvador").toDate()
                 }
             }),
             prisma.users.findFirst({
@@ -22,7 +28,7 @@ export default async function addBalance(userID, newBalance) {
                     id: userID,
                 },
             })
-        ])
+        ]);
 
         await prisma.users.update({
             where: {
@@ -31,11 +37,12 @@ export default async function addBalance(userID, newBalance) {
             data: {
                 balance: sumDecimal(newBalance, user.balance)
             }
-        })
-        revalidatePath("/mod/user/" + userID)
-        return true
+        });
+        
+        revalidatePath("/mod/user/" + userID);
+        return true;
     } catch (error) {
-        console.log(error)
-        return { error: "Hubo un error con el servidor" }
+        console.log(error);
+        return { error: "Hubo un error con el servidor" };
     }
 }

@@ -3,11 +3,20 @@
 import prisma from "@/db/prisma";
 import { authUser } from "@/lib/authUser";
 import { revalidatePath } from "next/cache";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+// Configura dayjs con los plugins necesarios
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export async function refoundModAction(action, id) {
   try {
     const userMod = await authUser();
-    if (action == "accepted") {
+    const currentTime = dayjs().tz("America/El_Salvador").toDate();
+
+    if (action === "accepted") {
       const refoundUpdated = await prisma.userRefoundBalance.update({
         where: {
           id,
@@ -16,7 +25,7 @@ export async function refoundModAction(action, id) {
         data: {
           status: "accepted",
           id_mod: userMod.id,
-          checkedAt: new Date(),
+          checkedAt: currentTime,
         },
       });
 
@@ -32,7 +41,7 @@ export async function refoundModAction(action, id) {
       });
     }
 
-    if (action == "denied") {
+    if (action === "denied") {
       const refoundUpdated = await prisma.userRefoundBalance.update({
         where: {
           id,
@@ -41,7 +50,7 @@ export async function refoundModAction(action, id) {
         data: {
           status: "denied",
           id_mod: userMod.id,
-          checkedAt: new Date(),
+          checkedAt: currentTime,
         },
       });
 

@@ -3,6 +3,13 @@
 import prismaDev from "@/db/prismaDev";
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+// Extiende dayjs con los plugins necesarios
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export async function buyProducts(checkout) {
   try {
@@ -17,7 +24,7 @@ export async function buyProducts(checkout) {
     //Detect Stock on Buying
     const productsCart = await prismaDev.cartUserProducts.findMany({
       where: {
-        AND: [{ id_user: session.user.id }, { enableToBuy: true }, {ticket_enabled: false}],
+        AND: [{ id_user: session.user.id }, { enableToBuy: true }, { ticket_enabled: false }],
       },
       include: {
         product: true,
@@ -45,29 +52,23 @@ export async function buyProducts(checkout) {
         quantity: productWithNoStock.quantity,
       };
 
-    //enable tickets
+    // Enable tickets
     await prismaDev.cartUserProducts.updateMany({
       where: {
         AND: [
-          {
-            id_user: user_id,
-          },
-          {
-            enableToBuy: true,
-          },
-          {
-            ticket_enabled: false,
-          },
+          { id_user: user_id },
+          { enableToBuy: true },
+          { ticket_enabled: false },
         ],
       },
       data: {
         enableToBuy: false,
         ticket_enabled: true,
-        purchaseAt: new Date(),
+        purchaseAt: dayjs().tz("America/El_Salvador").toDate(),
       },
     });
 
-    //TODO Testing new tables change it for tickets but rn only for bills
+    // Process orders
     const products_orders = checkout.products.map((product) => ({
       product_name: product.product.name,
       quantity: +product.quantity,
@@ -83,25 +84,13 @@ export async function buyProducts(checkout) {
     const updateQuery = updateStockItems.map((item) => {
       if (item.isCombo) {
         return prismaDev.combo.update({
-          where: {
-            id: item.id_product,
-          },
-          data: {
-            stock: {
-              decrement: item.quantity,
-            },
-          },
+          where: { id: item.id_product },
+          data: { stock: { decrement: item.quantity } },
         });
       }
       return prismaDev.products.update({
-        where: {
-          id: item.id_product,
-        },
-        data: {
-          stock: {
-            decrement: item.quantity,
-          },
-        },
+        where: { id: item.id_product },
+        data: { stock: { decrement: item.quantity } },
       });
     });
 
@@ -118,15 +107,11 @@ export async function buyProducts(checkout) {
     });
 
     await prismaDev.users.update({
-      where: {
-        id: user_id,
-      },
-      data: {
-        balance: newBalance,
-      },
+      where: { id: user_id },
+      data: { balance: newBalance },
     });
     
-    revalidatePath("/")
+    revalidatePath("/");
     return true;
   } catch (error) {
     console.log(error);
