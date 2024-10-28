@@ -5,7 +5,7 @@ export default async function SplitPayPage() {
     return (
         <section className="flex flex-col items-center text-center">
             <h2 className="font-bold text-3xl text-gradient bg-aqua-gradient">SplitPay</h2>
-            <FormSplitPayConnect session={session} />
+            <FormSplitPayConnect session={session} dev={process.env.NODE_ENV === 'development'}  />
         </section>
     )
 }

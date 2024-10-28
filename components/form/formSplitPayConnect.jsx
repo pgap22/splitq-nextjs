@@ -13,7 +13,7 @@ import { socket } from "@/lib/socketio";
 import { useState, useTransition } from "react";
 import { Controller, useForm } from "react-hook-form"
 import { useLocalStorage } from "usehooks-ts";
-export default function FormSplitPayConnect({ session }) {
+export default function FormSplitPayConnect({ session, dev}) {
     const { handleSubmit, control } = useForm();
     const [authtoken, setAuthtoken] = useLocalStorage("authtoken", "");
     const [loading, startTransition] = useTransition();
@@ -113,8 +113,8 @@ const OnDepositSplitPay = ({ setSuccess }) => {
     }
 
     //!ONLY DEV
-    const handleDevDeposit = (amount)=>{
-        startTransition(async()=>{
+    const handleDevDeposit = (amount) => {
+        startTransition(async () => {
             const data = await _DEV_SplitDeposit(amount, authtoken)
             console.log(data)
         })
@@ -127,14 +127,18 @@ const OnDepositSplitPay = ({ setSuccess }) => {
             <p>Cuando hayas finalizado de depositar haz click en el boton para completar la recarga</p>
             <Button onClick={handleFinalizarDeposito} disabled={loading}>Finalizar Deposito</Button>
 
-            <h2 className="text-red-500 mt-5">Dev MODE</h2>
-            <div className="grid grid-cols-5">
-                <Button disabled={loading} onClick={()=> handleDevDeposit(1)} variant="outline">$1.00</Button>
-                <Button disabled={loading} onClick={()=> handleDevDeposit(0.5)} variant="outline">$0.50</Button>
-                <Button disabled={loading} onClick={()=> handleDevDeposit(0.25)} variant="outline">$0.25</Button>
-                <Button disabled={loading} onClick={()=> handleDevDeposit(0.10)} variant="outline">$0.10</Button>
-                <Button disabled={loading} onClick={()=> handleDevDeposit(0.05)} variant="outline">$0.05</Button>
-            </div>
+            {dev && (
+                <>
+                    <h2 className="text-red-500 mt-5">Dev MODE</h2>
+                    <div className="grid grid-cols-5">
+                        <Button disabled={loading} onClick={() => handleDevDeposit(1)} variant="outline">$1.00</Button>
+                        <Button disabled={loading} onClick={() => handleDevDeposit(0.5)} variant="outline">$0.50</Button>
+                        <Button disabled={loading} onClick={() => handleDevDeposit(0.25)} variant="outline">$0.25</Button>
+                        <Button disabled={loading} onClick={() => handleDevDeposit(0.10)} variant="outline">$0.10</Button>
+                        <Button disabled={loading} onClick={() => handleDevDeposit(0.05)} variant="outline">$0.05</Button>
+                    </div>
+                </>
+            )}
         </div>
     )
 }
