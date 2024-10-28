@@ -43,7 +43,7 @@ export default function Checkout({ checkoutData }) {
           Ahora puedes canjear tus productos comprados con los tickets que has
           adquirido !
         </p>
-        <Button>
+        <Button asChild>
           <Link href={"/home/tickets"}>Ir a mis tickets</Link>
         </Button>
       </>
