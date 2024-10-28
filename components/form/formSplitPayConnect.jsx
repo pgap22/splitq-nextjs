@@ -51,7 +51,7 @@ export default function FormSplitPayConnect({ session, dev}) {
         })
     }
 
-    if (success) return <OnDepositSplitPay setSuccess={setSuccess} />
+    if (success) return <OnDepositSplitPay setSuccess={setSuccess} dev={dev} />
 
     return (
         <>
@@ -89,7 +89,7 @@ export default function FormSplitPayConnect({ session, dev}) {
 }
 
 
-const OnDepositSplitPay = ({ setSuccess }) => {
+const OnDepositSplitPay = ({ setSuccess, dev}) => {
     const [authtoken, setAuthtoken, remove] = useLocalStorage("authtoken", "");
     const [loading, startTransition] = useTransition();
     const [error, setError] = useState();
