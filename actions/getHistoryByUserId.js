@@ -4,6 +4,7 @@ import prisma from "@/db/prisma";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import prismaDev from "@/db/prismaDev";
 
 // Configura dayjs con los plugins necesarios
 dayjs.extend(utc);
@@ -12,7 +13,7 @@ dayjs.extend(timezone);
 export async function getHistoryByUserId(id_user) {
   if (!id_user) return { error: "No userid provided" };
 
-  const [refounds, recharges, cart] = await Promise.all([
+  const [refounds, recharges, cart, tickets_refound] = await Promise.all([
     prisma.userRefoundBalance.findMany({
       where: {
         id_user,
@@ -52,7 +53,34 @@ export async function getHistoryByUserId(id_user) {
         },
       },
     }),
+    prisma.cartUserProducts.findMany({
+      where: {
+        id_user,
+        refunded: true,
+      },
+      include: {
+        product: {
+          select: {
+            name: true,
+            price: true,
+          },
+        },
+        combo: {
+          select: {
+            name: true,
+            price: true,
+          },
+        },
+      },
+    }),
   ]);
+
+  const ticketRefoundAction = tickets_refound.map((ticketRefound) => ({
+    date: dayjs(ticketRefound.refundedAt).tz("America/El_Salvador").toDate(),
+    value: ticketRefound.product || ticketRefound.combo,
+    quantity: ticketRefound.quantity,
+    type: "ticket_refund",
+  }));
 
   const refoundsActions = refounds.map((refound) => {
     const actions = [
@@ -110,12 +138,15 @@ export async function getHistoryByUserId(id_user) {
     ...refoundsActions.flat(),
     ...rechargesActions,
     ...cartActions.flat(),
+    ...ticketRefoundAction,
   ];
 
   const groupedActions = allActions
     .reduce((acc, action) => {
-      const dateKey = dayjs(action.date).tz("America/El_Salvador").format("YYYY-MM-DD");
-      console.log(dateKey)
+      const dateKey = dayjs(action.date)
+        .tz("America/El_Salvador")
+        .format("YYYY-MM-DD");
+      console.log(dateKey);
       const existingGroup = acc.find((group) => group.date === dateKey);
       if (existingGroup) {
         existingGroup.actions.push(action);
@@ -127,7 +158,9 @@ export async function getHistoryByUserId(id_user) {
     .sort((a, b) => dayjs(b.date).diff(dayjs(a.date)));
 
   groupedActions.forEach((date) => {
-    date.actions = date.actions.sort((a, b) => dayjs(b.date).diff(dayjs(a.date)));
+    date.actions = date.actions.sort((a, b) =>
+      dayjs(b.date).diff(dayjs(a.date))
+    );
   });
 
   return groupedActions;

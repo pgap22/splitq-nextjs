@@ -6,6 +6,7 @@ import { socket } from "@/lib/socketio";
 
 import { useEffect, useState, useTransition } from "react";
 import {
+  MdOutlineAutorenew,
   MdOutlineCheckCircle,
   MdOutlineLocalActivity,
 } from "react-icons/md";
@@ -49,18 +50,19 @@ export default function TicketsView({ user_id, initialTickets }) {
     )
   }, [])
 
-  const showTickets = (array)=> array
-  .filter((ticket) => {
-    if (active == "enable" && !ticket.ticket_redeem) return ticket;
-    if (active == "claimed" && ticket.ticket_redeem) return ticket;
-  })
-  .map((ticket) => (
-    <TicketCard ticket={ticket} />
-  ))
-  
+  const showTickets = (array) => array
+    .filter((ticket) => {
+      if (active == "enable" && (!ticket.ticket_redeem && !ticket.request_refund)) return ticket;
+      if (active == "claimed" && ticket.ticket_redeem) return ticket;
+      if (active == "refund" && ticket.request_refund) return ticket
+    })
+    .map((ticket) => (
+      <TicketCard ticket={ticket} />
+    ))
+
   return (
     <>
-      <div className="grid grid-cols-2 border-b border-border mb-4">
+      <div className="grid grid-cols-3 border-b border-border mb-4">
         <IconTabs
           label={"Disponibles"}
           Icon={MdOutlineLocalActivity}
@@ -72,6 +74,13 @@ export default function TicketsView({ user_id, initialTickets }) {
           label={"Canjeados"}
           Icon={MdOutlineCheckCircle}
           type={"claimed"}
+          active={active}
+          setItemType={setItemType}
+        />
+        <IconTabs
+          label={"Rembolsos"}
+          Icon={MdOutlineAutorenew}
+          type={"refund"}
           active={active}
           setItemType={setItemType}
         />

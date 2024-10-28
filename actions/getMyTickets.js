@@ -20,6 +20,7 @@ export async function getMyTickets() {
                     }
                 ]
             },
+            
             include: {
                 product: {
                     include: {
@@ -32,6 +33,9 @@ export async function getMyTickets() {
                         seller: true
                     }
                 }
+            },
+            orderBy: {
+                purchaseAt: 'desc'
             }
         })).map((item) => {
             if (item.combo) {

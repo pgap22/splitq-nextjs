@@ -120,6 +120,12 @@ model CartUserProducts {
   //If it is true has been claimed
   ticket_redeem Boolean @default(false) //TODO May Delete
 
+  request_refund Boolean? @default(false)
+  refunded Boolean @default(false)
+  refundedAt DateTime?
+  refoundPrice Float?
+
+
   claimedAt DateTime? //TODO May delete
 
   purchaseAt DateTime?
@@ -196,11 +202,11 @@ enum SplitPayStatus {
 }
 
 model SplitPay {
-  id        String   @id @default(uuid())
-  name      String
-  createdAt DateTime @default(now())
-  key       String
-  accesCode String?
+  id              String           @id @default(uuid())
+  name            String
+  createdAt       DateTime         @default(now())
+  key             String
+  accesCode       String?
   status          SplitPayStatus   @default(not_configured)
   splitPaySession SplitPaySession?
 }

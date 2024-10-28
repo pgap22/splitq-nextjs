@@ -14,7 +14,11 @@ export async function confirmTicket(id) {
     try {
         const ticket = await prisma.cartUserProducts.update({
             where: {
-                id
+                id,
+                AND: [
+                    {refunded: false},
+                    {request_refund: false}
+                ]
             },
             data: {
                 ticket_redeem: true,

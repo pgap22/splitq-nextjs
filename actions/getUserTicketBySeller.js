@@ -22,6 +22,10 @@ export async function getUserTicketBySeller(id) {
                     where: {
                         ticket_enabled: true,
                         ticket_redeem: false,
+                        AND: [
+                            {refunded: false},
+                            {request_refund: false}
+                        ]
                     },
                     include: {
                         product: {

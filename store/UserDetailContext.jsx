@@ -5,7 +5,7 @@ export const UserDetailContext = createContext()
 
 
 export const UserDetailProvider = ({ children }) => {
-    const [userDetails, setUserDetails] = useState(null);
+    const [userDetails, setUserDetails] = useState({});
     return (
         <UserDetailContext.Provider
 

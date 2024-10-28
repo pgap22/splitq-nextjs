@@ -1,5 +1,6 @@
 "use client"
 import { multiplyDecimal } from "@/lib/decimal";
+import { cn } from "@/lib/utils";
 import clsx from "clsx";
 import dayjs from "dayjs";
 import { MdOutlineArrowDropDownCircle } from "react-icons/md";
@@ -33,7 +34,7 @@ const ActionIcon = ({ type }) => {
         <div className={clsx("w-4 aspect-square rounded-full",
             type == "recharge" && "bg-green-500",
             type == "purchase" && "bg-blue-500",
-            type == "refound" && "bg-yellow-500",
+            type == "refound" || type == "ticket_refund" && "bg-yellow-500",
             type == "ticket" && "bg-sky-200"
         )}>
         </div>
@@ -52,6 +53,7 @@ const ActionTitle = ({ type, action }) => {
         purchase: "Compra",
         refound: refoundMap[action.status],
         ticket: "Canjeo",
+        ticket_refund: "Rembolso Ticket"
     };
     return (
         <p className="font-bold text-lg">
@@ -62,6 +64,8 @@ const ActionTitle = ({ type, action }) => {
 
 const ActionValue = ({ action }) => {
     const { type, value } = action;
+
+    console.log(value)
     if (type == "recharge" || type == "refound")
         return (
             <>
@@ -80,21 +84,21 @@ const ActionValue = ({ action }) => {
                 }
             </>
         );
-    if (type == "purchase" || type == "ticket")
+    if (type == "purchase" || type == "ticket" || type == "ticket_refund")
         return (
             <div>
                 <p>
                     Producto: <span className="text-blue-300">{value.name}</span>
                 </p>
                 {
-                    type == "purchase" && <p>Precio Individual: <span className="text-yellow-500 font-bold">${value.price}</span></p>
+                    (type == "purchase" || type == "ticket_refund") && <p>Precio Individual: <span className="text-yellow-500 font-bold">${value.price}</span></p>
                 }
                 <p>
                     Cantidad: <span className="text-blue-300">{action.quantity}</span>
                 </p>
 
                 {
-                    type == "purchase" && <p>Total: <span className="text-red-500 font-bold">${multiplyDecimal(value.price, action.quantity)}</span></p>
+                    (type == "purchase" || type == "ticket_refund") && <p>Total: <span className={cn("font-bold", type == "ticket_refund" ? "text-yellow-500" : "text-red-500")}>${multiplyDecimal(value.price, action.quantity)}</span></p>
                 }
             </div>
         );

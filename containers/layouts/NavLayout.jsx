@@ -12,7 +12,7 @@ import {
 export default async function UserLayout({ children }) {
   return (
     <div className="sm:grid sm:grid-cols-[max-content_minmax(0,1fr)] sm:h-[100dvh]">
-      <main className="p-4 mb-24 sm:order-2">{children}</main>
+      <main className="p-4 mb-16  sm:order-2">{children}</main>
       <div className="fixed items-center sm:static sm:w-fit sm:p-4 sm:gap-4 sm:border-r sm:border-border sm:flex sm:flex-col  bg-foreground bottom-0 justify-items-center nav w-full grid grid-cols-5 py-1">
         <Link className="hidden sm:block" href={"/home"}>
           <MdOutlineHome size={26} />
