@@ -8,7 +8,8 @@
     "build": "npx prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "npx prisma migrate deploy && npx prisma generate && npx next build && npx next start"
+    "deploy": "npx prisma migrate deploy && npx prisma generate && npx next build && npx next start",
+    "seed": "node db/seed.mjs"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.5.0",

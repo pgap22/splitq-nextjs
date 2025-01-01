@@ -7,13 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Roles {
+  admin
+  user
+  mod
+  seller
+}
+
 model Users {
   id              String             @id @default(uuid())
   name            String
   lastname        String?
   email           String
   password        String
-  role            String             @default("user")
+  role            Roles              @default(user)
   balance         Float?             @default(0.00)
   freezebalance   Float?             @default(0.00)
   token           String?
@@ -120,11 +127,10 @@ model CartUserProducts {
   //If it is true has been claimed
   ticket_redeem Boolean @default(false) //TODO May Delete
 
-  request_refund Boolean? @default(false)
-  refunded Boolean @default(false)
-  refundedAt DateTime?
-  refoundPrice Float?
-
+  request_refund Boolean?  @default(false)
+  refunded       Boolean   @default(false)
+  refundedAt     DateTime?
+  refoundPrice   Float?
 
   claimedAt DateTime? //TODO May delete
 

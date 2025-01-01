@@ -32,6 +32,7 @@ export async function getSalesByProductAndCombo() {
             }
         },
         where: {
+            refunded: false,
             ticket_enabled: true,
             OR: [
                 {

@@ -55,17 +55,17 @@ export async function getTotalSellerTickets() {
 
 import { auth } from "@/auth";
 import prisma from "@/db/prisma";
-import prismaDev from "@/db/prismaDev";
 
 export async function getSellerStats() {
   const user = await auth();
   const id_user = user.user.id;
-  const tickets = await prismaDev.cartUserProducts.findMany({
+  const tickets = await prisma.cartUserProducts.findMany({
     include: {
       product: true,
       combo: true,
     },
     where: {
+      refunded: false,
       OR: [
         {
           product: {

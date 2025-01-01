@@ -4,7 +4,6 @@ import prisma from "@/db/prisma";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
-import prismaDev from "@/db/prismaDev";
 
 // Configura dayjs con los plugins necesarios
 dayjs.extend(utc);

@@ -36,7 +36,7 @@ export async function createUser(data) {
         }
     })
     
-    if(test != "local"){
+    if(test != "local" && !isNotUser){
         await sendVerificationEmailApi(user.id);
     }
 

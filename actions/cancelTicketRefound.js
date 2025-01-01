@@ -8,7 +8,7 @@ export async function cancelTicketRefund(id) {
     await prisma.cartUserProducts.update({
       where: {
         id,
-        AND: [{ ticket_enabled: true }, {refund: false}],
+        AND: [{ ticket_enabled: true }, {refunded: false}],
       },
       data: {
         request_refund: false,

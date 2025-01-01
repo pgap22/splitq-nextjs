@@ -37,7 +37,7 @@ export default function CreateProfile() {
     const signup = (data) => {
         setWarning(false)
         startTransition(async () => {
-            const result = await createUser(data);
+            const result = await createUser(data, false);
             if (result.error) {
                 setWarning(result.error)
                 return

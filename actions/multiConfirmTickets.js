@@ -12,23 +12,22 @@ dayjs.extend(timezone);
 
 export default async function multiConfirmTickets(tickets) {
   try {
-    const myTickets = await Promise.all(
-      tickets.map((ticketId) =>
-        prisma.cartUserProducts.update({
-          where: {
-            id: ticketId,
-            AND: [{ refunded: false }, { request_refund: false }],
-          },
-          data: {
-            ticket_redeem: true,
-            claimedAt: dayjs().tz("America/El_Salvador").toDate(),
-          },
-        })
-      )
-    );
+    const updatedTickets = await prisma.cartUserProducts.updateMany({
+      where: {
+        id: {
+          in: tickets, 
+        },
+        refunded: false,
+        request_refund: false,
+      },
+      data: {
+        ticket_redeem: true,
+        claimedAt: dayjs().tz("America/El_Salvador").toDate(),
+      },
+    });
 
     revalidatePath("/");
-    return myTickets;
+    return updatedTickets;
   } catch (error) {
     console.log(error);
     return { error: "Hubo un error en el servidor" };
