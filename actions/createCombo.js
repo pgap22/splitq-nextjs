@@ -2,12 +2,12 @@
 
 import prisma from "@/db/prisma"
 import { authUser } from "@/lib/authUser"
+import { revalidatePath } from "next/cache"
 
 export async function createCombo(data, products) {
     try {
-
-        if(products.length < 1) return {error: "Agrega al menos dos productos al combo !"}
-
+        if(products.length < 1) return {error: "Agrega al menos un producto al combo !"}
+        
         const existComboName = await prisma.combo.findFirst({
             where: {
                 name: data.name
@@ -34,6 +34,7 @@ export async function createCombo(data, products) {
         const combosProducts = await prisma.comboProducts.createMany({
             data: comboProducts
         })
+        revalidatePath("/")
         return true
     } catch (error) {
         console.log(error)

@@ -35,15 +35,55 @@ model Users {
 
   refoundBalance   UserRefoundBalance[] @relation("user")
   refoundsAsMod    UserRefoundBalance[] @relation("mod")
-  orders           Orders[]
+  invoices         Invoices[]
   tickets          Tickets[]
   splitpay_session SplitPaySession?
+  items            Items[]
 }
 
 model Categories {
   id        String     @id @default(uuid())
   name      String
   productos Products[]
+  items     Items[]
+}
+
+//New Table For Products
+model Items {
+  id          String            @id @default(uuid())
+  name        String
+  price       Float
+  stock       Int               @default(0)
+  item_type   TicketProductType
+  description String?
+  id_seller   String
+  id_category String?
+
+  createdAt DateTime @default(now())
+
+  category    Categories?  @relation(fields: [id_category], references: [id])
+  seller      Users        @relation(fields: [id_seller], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  images      ItemImages[]
+  items_combo ItemsCombo[] @relation("Combo")
+  combos      ItemsCombo[] @relation("Product")
+}
+
+model ItemsCombo {
+  id              String @id @default(uuid())
+  id_item_combo   String
+  id_item_product String
+  quantity        Int    @default(0)
+
+  combo   Items @relation("Combo", fields: [id_item_combo], references: [id], onUpdate: Cascade)
+  product Items @relation("Product", fields: [id_item_product], references: [id], onUpdate: Cascade)
+}
+
+model ItemImages {
+  id        String @id @default(uuid())
+  url       String
+  public_id String @default("") //Cloudinary public id and localapi
+  id_item   String
+  item      Items  @relation(fields: [id_item], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Products {
@@ -60,7 +100,6 @@ model Products {
   images      ProductImages[]
   categorie   Categories         @relation(fields: [categorieID], references: [id], onDelete: Cascade)
   seller      Users              @relation(fields: [seller_id], references: [id])
-  ticketsOn   Tickets[]
 }
 
 model ProductImages {
@@ -83,7 +122,6 @@ model Combo {
   seller           Users              @relation(fields: [id_seller], references: [id], onDelete: Cascade)
   products         ComboProducts[]
   CartUserProducts CartUserProducts[]
-  ticketsOn        Tickets[]
 }
 
 model ComboProducts {
@@ -142,40 +180,66 @@ model CartUserProducts {
   user       Users     @relation(fields: [id_user], references: [id], onDelete: Cascade)
 }
 
-model Tickets {
-  id         String  @id @default(uuid())
-  id_user    String
-  id_product String?
-  id_combo   String?
-
-  ticket_redeem Boolean   @default(false)
-  claimedAt     DateTime?
-  quantity      Int
-
-  product Products? @relation(fields: [id_product], references: [id], onDelete: Cascade)
-  combo   Combo?    @relation(fields: [id_combo], references: [id], onDelete: Cascade)
-  user    Users     @relation(fields: [id_user], references: [id], onDelete: Cascade)
+enum TicketProductType {
+  PRODUCT
+  COMBO
 }
 
-model Orders {
+enum TicketStatus {
+  TICKET_ENABLED //user already buy this ticket
+  REDEEMED //user already redeem this ticket
+  REFOUND_REQUST //user want to make a refound of this ticket
+  REFOUNDED //user did a refound of this ticket
+}
+
+model Tickets {
+  id             String            @id @default(uuid())
+  id_user        String
+  id_product     String
+  product_name   String
+  product_type   TicketProductType
+  ticket_status  TicketStatus      @default(TICKET_ENABLED)
+  quantity       Int
+  price          Float
+  ticket_redeem  Boolean           @default(false)
+  request_refund Boolean           @default(false)
+  refunded       Boolean           @default(false)
+  refundedAt     DateTime?
+  claimedAt      DateTime?
+
+  user        Users         @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ticketsItem TicketsItem[]
+}
+
+//In case there is a ticketCombo
+model TicketsItem {
+  id                String @id @default(uuid())
+  product_name      String
+  producto_quantity String
+  id_ticket         String
+
+  ticket Tickets @relation(fields: [id_ticket], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model Invoices {
   id         String   @id @default(uuid())
   id_user    String
   totalPrice Float
   createdAt  DateTime @default(now())
 
-  user           Users            @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  ordersProducts OrdersProducts[]
+  user             Users              @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  invoicesProducts InvoicesProducts[]
 }
 
 //Maybe not a relationship with products cuz, dont want to update dynamic data, want to store static
-model OrdersProducts {
+model InvoicesProducts {
   id            String @id @default(uuid())
-  id_order      String
+  id_invoice    String
   product_name  String
   product_price Float
   quantity      Int
 
-  order Orders @relation(fields: [id_order], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  invoice Invoices @relation(fields: [id_invoice], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 enum UserRefoundStatus {

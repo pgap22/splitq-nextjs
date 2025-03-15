@@ -60,7 +60,7 @@ export default async function SellerHome() {
 
                 <div>
 
-                    <Link href={"/seller/createProduct"}>
+                    <Link href={"/seller/createItem"}>
                         <div className=" border-t border-b border-border p-4">
                             <div className="flex flex-row items-center gap-4">
                                 <IconBox Icon={MdOutlineLocalPizza} />
@@ -69,16 +69,16 @@ export default async function SellerHome() {
                         </div>
                     </Link>
 
-                    <Link href={"/seller/createCombo"}>
+                    {/* <Link href={"/seller/createCombo"}>
                         <div className="border-b border-border p-4">
                             <div className="flex flex-row items-center gap-4">
                                 <IconBox Icon={MdOutlineFastfood} />
                                 <h1>Crear un combo</h1>
                             </div>
                         </div>
-                    </Link>
+                    </Link> */}
 
-                    <Link href={"/seller/manageProducts"}>
+                    <Link href={"/seller/manageItems"}>
                         <div className="border-b border-border p-4">
                             <div className="flex flex-row items-center gap-4">
                                 <IconBox Icon={MdOutlineFoodBank} />

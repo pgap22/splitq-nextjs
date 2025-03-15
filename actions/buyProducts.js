@@ -6,6 +6,7 @@ import { auth } from "@/auth";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import { getCheckout } from "./getCheckout";
 
 // Extiende dayjs con los plugins necesarios
 dayjs.extend(utc);
@@ -14,35 +15,19 @@ dayjs.extend(timezone);
 export async function buyProducts(checkout) {
   try {
     const session = await auth();
-    const { enableToBuy, newBalance, user_id, subTotal } = checkout;
+    const {
+      enableToBuy,
+      newBalance,
+      user_id,
+      subTotal,
+      productWithNoStock,
+      products,
+    } = await getCheckout();
 
     if (!enableToBuy)
       return {
         error: "No cuentas el saldo suficiente para comprar !",
       };
-
-    //Detect Stock on Buying
-    const productsCart = await prismaDev.cartUserProducts.findMany({
-      where: {
-        AND: [{ id_user: session.user.id }, { enableToBuy: true }, { ticket_enabled: false }],
-      },
-      include: {
-        product: true,
-        combo: true,
-      },
-    });
-
-    const productWithNoStock = productsCart
-      .map((item) => {
-        if (item.combo) {
-          item.product = { ...item.combo };
-          delete item.combo;
-          return item;
-        }
-        return item;
-      })
-      .find((product) => product.quantity > product.product.stock);
-    console.log(productsCart);
 
     if (productWithNoStock)
       return {
@@ -52,6 +37,7 @@ export async function buyProducts(checkout) {
         quantity: productWithNoStock.quantity,
       };
 
+    //TODO THIS WILL BE QUITED :)
     // Enable tickets
     await prismaDev.cartUserProducts.updateMany({
       where: {
@@ -69,18 +55,20 @@ export async function buyProducts(checkout) {
     });
 
     // Process orders
-    const products_orders = checkout.products.map((product) => ({
+    const products_orders = products.map((product) => ({
       product_name: product.product.name,
       quantity: +product.quantity,
       product_price: +product.product.price,
     }));
 
-    const updateStockItems = checkout.products.map((product) => ({
+    //Update Stock
+    const updateStockItems = products.map((product) => ({
       id_product: product.product.id,
       quantity: +product.quantity,
       isCombo: !!product.product.products,
     }));
 
+    //ew
     const updateQuery = updateStockItems.map((item) => {
       if (item.isCombo) {
         return prismaDev.combo.update({
@@ -94,23 +82,41 @@ export async function buyProducts(checkout) {
       });
     });
 
+    //New Ticket System
+    const ticketsForRedeem = products.map((product) => ({
+      id_product: product.id_product ? product.id_product : product.id_combo,
+      id_user: session.user.id,
+      price: product.product.price,
+      product_name: product.product.name,
+      product_type: product.id_product ? "PRODUCT" : "COMBO",
+      quantity: product.quantity,
+      ticket_status: "TICKET_ENABLED",
+    }));
+
     await Promise.all(updateQuery);
 
-    const order = await prismaDev.orders.create({
+    //Create invoice
+    await prismaDev.invoices.create({
       data: {
         id_user: session.user.id,
         totalPrice: subTotal,
-        ordersProducts: {
+        invoicesProducts: {
           create: products_orders,
         },
       },
     });
 
+    //Create Tickets
+    await prismaDev.tickets.createMany({
+      data: ticketsForRedeem,
+    });
+
+    //Update Balance
     await prismaDev.users.update({
       where: { id: user_id },
       data: { balance: newBalance },
     });
-    
+
     revalidatePath("/");
     return true;
   } catch (error) {

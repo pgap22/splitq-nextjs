@@ -7,7 +7,7 @@ export default function FormSelect({
     rules,
     control,
     placeholder,
-    items,
+    items = [],
     value,
     label,
     error,
@@ -23,14 +23,14 @@ export default function FormSelect({
             render={({ field }) =>
                 <div>
                      <label className={cn(error && "!text-red-500", "label-valid")}>{label}</label>
-                    <Select disabled={disabled} defaultValue={value} value={field.value} onValueChange={field.onChange}>
-                        <SelectTrigger  className={cn(error && "!border-red-500 !text-red-500", value && "text-text", "hidden md:flex")}>
+                    <Select required disabled={disabled} defaultValue={value} value={field.value} onValueChange={field.onChange}>
+                        <SelectTrigger  className={cn(error && "!border-red-500 !text-red-500", value && "text-text", "hidden md:flex mt-2")}>
                             <SelectValue placeholder={placeholder} />
                         </SelectTrigger>
                         <SelectContent className="!bg-foreground">
                             <SelectGroup>
                                 {
-                                    items.map(item => <SelectItem key={item.id} className="!bg-background" value={item.id}>{item.name}</SelectItem>)
+                                    items.map(item => <SelectItem key={item.id} value={item.id}>{item.name}</SelectItem>)
                                 }
                             </SelectGroup>
                         </SelectContent>

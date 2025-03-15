@@ -1,9 +1,9 @@
 "use client"
 import Link from "next/link";
-import { MdArrowBack, MdArrowForward, MdDelete } from "react-icons/md";
+import { MdArrowBack, MdDelete } from "react-icons/md";
 import IconBox from "@/components/ui/IconBox";
 import FormInput from "@/components/form/FormInput";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/Loader";
 import { useState, useTransition } from "react";
@@ -14,12 +14,11 @@ import { useRouter } from "next/navigation";
 import { deleteCategorie } from "@/actions/deleteCategorie";
 import FormSelect from "./FormSelect"
 import { Checkbox } from "../ui/checkbox";
-import { data } from "autoprefixer";
 
 
 
-export default function FormUpdateCategories({name, id, categorias, AllCategories}) {
-    
+export default function FormUpdateCategories({ name, id, categorias, AllCategories }) {
+
 
     const router = useRouter()
     const [success, setSucess] = useState()
@@ -30,20 +29,16 @@ export default function FormUpdateCategories({name, id, categorias, AllCategorie
     const [loadingDelete, startDelete] = useTransition()
     const [selectedCategory, setSelectedCategory] = useState(null);
 
-
-    const { register, handleSubmit, formState, getValues ,watch, control, setValue } = useForm({
+    const { register, handleSubmit, formState, getValues, watch, control, setValue } = useForm({
         defaultValues: {
             name: name,
             categorieID: ""
         }
     })
 
-    
-    
-
     const FilteredCategories = AllCategories.filter(categoria => categoria.id !== id)
 
-    const submitData = (data)=>{
+    const submitData = (data) => {
         startTransition(async () => {
             const result = await updateCategorie(id, data);
             if (result.error) {
@@ -55,11 +50,11 @@ export default function FormUpdateCategories({name, id, categorias, AllCategorie
         })
     }
 
-    
+
 
     function deleteUser() {
-        
-        startDelete(async()=>{
+
+        startDelete(async () => {
             const result = await deleteCategorie(id, getValues("categorieID"))
             router.push("/admin/manageCategories")
         })
@@ -68,20 +63,20 @@ export default function FormUpdateCategories({name, id, categorias, AllCategorie
     function disableSelect() {
         if (clicked) {
             setClicked(false)
-        } else{
+        } else {
             setValue("categorieID", "")
-            setClicked(true)    
+            setClicked(true)
         }
     }
-    
+
 
     return (
         <div>
             <div className="flex flex-col mb-8 gap-4">
                 <Link href={"/admin/manageCategories"}>
-                        <IconBox
-                            Icon={MdArrowBack} variant={'square'}
-                        />
+                    <IconBox
+                        Icon={MdArrowBack} variant={'square'}
+                    />
                 </Link>
                 <h1 className="text-2xl">Editar Categoria</h1>
             </div>
@@ -98,25 +93,25 @@ export default function FormUpdateCategories({name, id, categorias, AllCategorie
                     placeholder={"Nombre de la categoria"}
                     register={register("name")}
                 />
-                
+
 
                 <div className="grid grid-cols-[1fr_max-content] w-full gap-3">
-                <Button disabled={loading} type="submit" className="font-bold w-full">
-                    {loading ? <Loader /> : "Editar Categoria"}
-                </Button>
-                <IconBox
-                            Icon={MdDelete}
-                            variant={"square"}
-                            type={"button"}
-                            onClick={()=>{
-                                setConfirm(true)
-                            }}
-                        />
+                    <Button disabled={loading} type="submit" className="font-bold w-full">
+                        {loading ? <Loader /> : "Editar Categoria"}
+                    </Button>
+                    <IconBox
+                        Icon={MdDelete}
+                        variant={"square"}
+                        type={"button"}
+                        onClick={() => {
+                            setConfirm(true)
+                        }}
+                    />
                 </div>
 
             </form>
 
-            <Dialog open={success} onOpenChange={(data)=>{
+            <Dialog open={success} onOpenChange={(data) => {
                 if (!data) {
                     router.push("/admin/manageCategories")
                 }
@@ -137,8 +132,8 @@ export default function FormUpdateCategories({name, id, categorias, AllCategorie
                     </DialogHeader>
                     <DialogDescription>
 
-                    
-                        <FormSelect 
+
+                        <FormSelect
                             control={control}
                             name={"categorieID"}
                             rules={{
@@ -152,21 +147,21 @@ export default function FormUpdateCategories({name, id, categorias, AllCategorie
                             error={formState.errors.categorieID?.message}
                             disabled={clicked}
                         />
-                     
 
-                    <div className="flex gap-2 items-center mt-4">
-                        <Checkbox id="terms" onCheckedChange={disableSelect}/>
-                        <label
-                            htmlFor="terms"
-                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        >
-                        ¿Desea eliminar todos los productos en esta categoria?
-                        </label>
-                    </div>
+
+                        <div className="flex gap-2 items-center mt-4">
+                            <Checkbox id="terms" onCheckedChange={disableSelect} />
+                            <label
+                                htmlFor="terms"
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                                ¿Desea eliminar todos los productos en esta categoria?
+                            </label>
+                        </div>
 
                     </DialogDescription>
                     <DialogFooter>
-                        <Button onClick={()=>{
+                        <Button onClick={() => {
                             setConfirm(false)
                         }}>
                             <p>Cancelar</p>

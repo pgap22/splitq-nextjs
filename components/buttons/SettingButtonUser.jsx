@@ -96,9 +96,9 @@ function SideMenu({ style, user, close, logout }) {
               <p className="font-bold">Historial de acciones</p>
             </div>
           </Link>
-          <Link href={"/home/orders"}>
+          <Link href={"/home/invoices"}>
             <div className="border-border border-b p-4">
-              <p className="font-bold">Ordenes / Facturas</p>
+              <p className="font-bold">Facturas</p>
             </div>
           </Link>
         </div>

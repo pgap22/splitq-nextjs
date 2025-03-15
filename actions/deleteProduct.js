@@ -2,7 +2,7 @@
 import prisma from "@/db/prisma"
 export default async function deleteProduct(id) {
     try {
-        await prisma.combo.delete({
+        await prisma.products.delete({
             where: {
                 id
             }

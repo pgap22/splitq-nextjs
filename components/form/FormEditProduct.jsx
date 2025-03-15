@@ -47,7 +47,6 @@ export default function FormEditProduct({ product, categories }) {
 
     const uploadImage = () => {
 
-
         startUploading(async () => {
             const imgFormData = new FormData();
             imgFormData.set("file", imgUploadPreview)
@@ -140,7 +139,7 @@ export default function FormEditProduct({ product, categories }) {
                     />
                 </div>
                 <FormInput
-                    register={register("stock", { valueAsNumber: true, min: { value: true, message: "Minimo de stock debe ser mayor a 0" }, required: { value: true, message: "Este campo es requerido" } })}
+                    register={register("stock", { valueAsNumber: true, min: { value: true, message: "Minimo de stock debe ser mayor a 0" } })}
                     type="number"
                     className="bg-foreground mb-2"
                     placeholder={product.stock}

@@ -24,7 +24,7 @@ export default function Checkout({ checkoutData }) {
   const [success, setSucess] = useState();
   const confirmPay = () => {
     startBuying(async () => {
-      const result = await buyProducts(checkoutData);
+      const result = await buyProducts();
       if (result?.error) {
         console.log(result)
         setError(result)

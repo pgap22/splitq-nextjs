@@ -10,6 +10,7 @@ import IconBox from "@/components/ui/IconBox";
 
 export default async function ProductPage({ params }) {
     const product = await getItemById(params.id);
+    console.log(product)
     return (
         <>
             <div className="flex justify-between items-center absolute z-10 p-4">

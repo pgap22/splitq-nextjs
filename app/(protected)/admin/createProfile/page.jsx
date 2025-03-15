@@ -85,7 +85,7 @@ export default function CreateProfile() {
                             </SelectTrigger>
                             <SelectContent className="!bg-foreground">
                                 <SelectGroup>
-                                    <SelectLabel>Rol</SelectLabel>
+                                    {/* <SelectLabel>Rol</SelectLabel> */}
                                     <SelectItem className="!bg-background" value="mod">Moderador</SelectItem>
                                     <SelectItem className="!bg-background" value="seller">Vendedor</SelectItem>
                                 </SelectGroup>

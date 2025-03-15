@@ -52,7 +52,7 @@ export default function SellerProducts({ items, params }) {
 }
 
 const InitialProducts = ({ items, query, type }) => {
-    if (!items.length) return;
+    if (!items?.length) return;
     const products = query ? items.filter(item => item.name.toLowerCase().startsWith(query)) : items
     return (
         <>

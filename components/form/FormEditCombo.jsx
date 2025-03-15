@@ -22,8 +22,9 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-  } from "@/components/ui/dialog"
+} from "@/components/ui/dialog"
 import deleteCombo from "@/actions/deleteCombo"
+import { objDiff } from "@/lib/objDiff"
 
 export default function FormEditCombo({ productos, combo }) {
     const [loading, startTransition] = useTransition();
@@ -31,6 +32,7 @@ export default function FormEditCombo({ productos, combo }) {
     const [error, setError] = useState();
     const router = useRouter();
     const [addedProducts, setAddedProducts] = useState([]);
+    const [initProducts, setInitProducts] = useState([]);
     const { register, handleSubmit, formState, getValues, control, watch, setValue, formState: { errors } } = useForm({
         defaultValues: {
             name: "",
@@ -38,7 +40,6 @@ export default function FormEditCombo({ productos, combo }) {
             price: "",
         }
     });
-
 
     const submitCombo = (data) => {
         startTransition(async () => {
@@ -63,10 +64,10 @@ export default function FormEditCombo({ productos, combo }) {
         })
     }
 
-    const handleDelete = ()=>{
-        startTransition(async()=>{
+    const handleDelete = () => {
+        startTransition(async () => {
             const result = await deleteCombo(combo.id);
-            if(result?.error){
+            if (result?.error) {
                 setError(result.error);
                 return
             }
@@ -74,11 +75,13 @@ export default function FormEditCombo({ productos, combo }) {
         })
     }
 
+
     const isEmpty =
         !watch("name") &&
         !watch("description") &&
         !watch("stock") &&
-        !watch("price")
+        !watch("price") &&
+        objDiff(addedProducts, initProducts)
 
 
     const modifyQuantityProduct = (action, data, value) => {
@@ -142,7 +145,7 @@ export default function FormEditCombo({ productos, combo }) {
         if (!combo.products.length) return
 
         if (!addedProducts.length) {
-            console.log(combo)
+            setInitProducts(combo.products.map(item => ({ ...item, ...item.product })))
             setAddedProducts(combo.products.map(item => ({ ...item, ...item.product })));
             return
         }
@@ -218,14 +221,14 @@ export default function FormEditCombo({ productos, combo }) {
                         />
                     </div>
                     <FormInput
-                            register={register("stock", {valueAsNumber: true, min: {value: true, message: "Minimo de stock debe ser mayor a 0"}, required: { value: true, message: "Este campo es requerido" } })}
-                            type="number"
-                            className="bg-foreground mb-2"
-                            placeholder={combo.stock}
-                            error={errors.stock?.message}
-                            label={"Stock"}
-                            step={"1"}
-                        />
+                        register={register("stock", { valueAsNumber: true, min: { value: true, message: "Minimo de stock debe ser mayor a 0" } })}
+                        type="number"
+                        className="bg-foreground mb-2"
+                        placeholder={combo.stock}
+                        error={errors.stock?.message}
+                        label={"Stock"}
+                        step={"1"}
+                    />
                     <div className="grid grid-cols-[1fr_max-content] gap-2">
                         <Button disabled={loading || isEmpty} className="font-bold">
                             {loading ? <Loader /> : "Editar Combo"}
@@ -247,8 +250,8 @@ export default function FormEditCombo({ productos, combo }) {
                                     <Button disabled={loading} onClick={handleDelete}>
                                         {
                                             loading
-                                            ? <Loader />
-                                            : "Eliminar"
+                                                ? <Loader />
+                                                : "Eliminar"
                                         }
                                     </Button>
                                     <DialogClose disabled={loading} asChild>

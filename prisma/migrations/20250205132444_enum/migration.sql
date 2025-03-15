@@ -1,0 +1,5 @@
+-- CreateEnum
+CREATE TYPE "TicketStatus" AS ENUM ('IN_CART_DISABLED', 'IN_CART_ENABLED', 'TICKET_ENABLED', 'REDEEMED', 'REFOUND_REQUST', 'REFOUNDED');
+
+-- AlterTable
+ALTER TABLE "Tickets" ADD COLUMN     "ticket_status" "TicketStatus" NOT NULL DEFAULT 'IN_CART_ENABLED';

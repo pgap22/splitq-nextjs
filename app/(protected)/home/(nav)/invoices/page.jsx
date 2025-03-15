@@ -8,7 +8,7 @@ import Link from "next/link";
 export default async function OrdersPage() {
 
     const session = await auth();
-    const orders = await prisma.orders.findMany({
+    const invoices = await prisma.invoices.findMany({
         where: {
             id_user: session.user.id
         },
@@ -17,24 +17,22 @@ export default async function OrdersPage() {
         }
     })
 
-    console.log(orders)
-
     return (
         <>
             <BackButton href={"/home"} />
-            <h1 className="font-bold text-2xl mt-2">Historial de Ordenes</h1>
+            <h1 className="font-bold text-2xl mt-2">Historial de Facturas</h1>
             <div className="mt-4 flex flex-col gap-4">
                 {
-                    orders.map(order => <Order key={order.id} order={order} />)
+                    invoices.map(order => <Invoice key={order.id} order={order} />)
                 }
             </div>
         </>
     )
 }
 
-const Order = ({ order }) => {
+const Invoice = ({ order }) => {
     return (
-        <Link href={"/home/orders/" + order.id}>
+        <Link href={"/home/invoices/" + order.id}>
             <div className="border border-border rounded bg-foreground p-4">
                 <p className="font-bold mb-2">Orden de Compra</p>
                 <div className="flex items-center justify-between">
